@@ -14,7 +14,7 @@ Intro to SE lab group 6.
 * MYSQL
 
 
-## DESCRIPTION ##
+## Description ##
 This project is aiming to build a Facebook clone web application. This will include implementing a backend database and an efficient front end.
 
 ## Features ##

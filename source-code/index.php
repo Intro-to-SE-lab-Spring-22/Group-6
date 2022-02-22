@@ -5,6 +5,6 @@
   <title>Default Title</title>
 </head>
 <body>
-  <?="Default Body Text?>
+  <?="Default Body Text"?>
 </body>
 </html>

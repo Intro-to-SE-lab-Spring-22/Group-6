@@ -37,7 +37,7 @@
                         <label>Password</label>
                         <input type="password" class="form-control" name="password" id="password" />
                     </div>
-                    <button type="submit" name="submit" id="submit" class="btn btn-outline-primary btn-lg btn-block">
+                    <button type="submit" name="submit_signup" id="submit_signup" class="btn btn-outline-primary btn-lg btn-block">
                         Sign up
                     </button>
                 </form>

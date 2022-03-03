@@ -24,13 +24,12 @@
             <label>Password</label>
             <input type="password" id="password"><br>
           </div>
-          <button type="submit" id="submit" value="Log In" class="btn btn-outline-primary btn-lg btn-block" onclick="submitButton()">
+          <button type="submit" id="submit_log_in" value="Log In" class="btn btn-outline-primary btn-lg btn-block" onclick="submitButton()">
             Log In
           </button>
-          <button type="submit" name="submit" class="btn btn-outline-primary btn-lg btn-block">
+          <a href="create_acct.php" class="btn btn-outline-primary btn-lg btn-block">
             Sign Up
-          </button>
-          
+          </a>
       </div>
     </div>
   </div>

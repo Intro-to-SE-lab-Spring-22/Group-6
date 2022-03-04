@@ -15,7 +15,7 @@
     <div class="App">
         <div class="vertical-center">
             <div class="inner-block">
-                <form action="" method="post">
+                <form action="Controller/register.php" method="POST">
                     <h3>Register</h3>
                     <div class="form-group">
                         <label>Username</label>

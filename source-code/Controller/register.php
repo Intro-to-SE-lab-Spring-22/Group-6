@@ -48,7 +48,7 @@ if(isset($_POST["submit_signup"])){
                 // Password hash
                 $password_hash = password_hash($password, PASSWORD_BCRYPT);
                 // Query
-                $sql = "INSERT INTO users (id, firstName, lastName, name, email, password) VALUES ('{$username}', '{$firstName}', '{$lastName}', '{fullName}', '{$email}', '{$password_hash}')";
+                $sql = "INSERT INTO users (id, firstName, lastName, name, email, password) VALUES ('{$username}', '{$firstName}', '{$lastName}', '{$fullName}', '{$email}', '{$password_hash}')";
                 
                 // Create mysql query
                 $sqlQuery = mysqli_query($connection, $sql);

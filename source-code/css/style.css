@@ -84,7 +84,7 @@ body::-webkit-scrollbar-thumb{
   position: fixed;
   background-color: #2554FF;
   transition: width 200ms ease;
-  overflow: scroll;
+  /* overflow: scroll; */
   
 }
 

@@ -39,11 +39,11 @@ if(isset($_POST["submit_signup"])){
 
            
             
-            echo "Made it here!!";
+
             if((preg_match("/^[a-zA-Z ]*$/", $_first_name)) && (preg_match("/^[a-zA-Z ]*$/", $_last_name)) &&
              (filter_var($_email, FILTER_VALIDATE_EMAIL))){
                 
-                echo "Adding user";
+                
                 $fullName = $firstName . " " . $lastName;
                 // Password hash
                 $password_hash = password_hash($password, PASSWORD_BCRYPT);

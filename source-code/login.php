@@ -6,8 +6,9 @@ require_once('credentials.php');
 if (isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
     $username = $_REQUEST['username'];
     $password = $_REQUEST['password'];
-
     $conn = new mysqli($hn, $un, $pw, $db);
+
+
 
     if ($conn->connect_error) {
         die($conn->connect_error);
@@ -22,8 +23,7 @@ if (isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
     }
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_array()) {
-            //if (password_verify($password, $row['password'])) {
-            if ($password == $row['password']) {
+            if (password_verify($password,$row['password'])) {
                 echo json_encode(array("success" => "true", "location" => "testpage.php"));
                 $_SESSION['username'] = $username;
                 break;

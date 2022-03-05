@@ -11,6 +11,15 @@
   <script src="https://kit.fontawesome.com/c56bd8cfd4.js" crossorigin="anonymous"></script>
 </head>
 
+<?php
+session_start();
+if(!isset($_SESSION{'username'})){
+    header('Location: index.php');
+    exit();
+} 
+?>
+
+
 <body>
     <nav class="navbar">
         <ul class="navbar-nav">
@@ -52,7 +61,5 @@
         </body>
         
     </main>
-</body>
-
-<body>
+    </body>
     

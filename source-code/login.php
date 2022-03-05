@@ -24,7 +24,7 @@ if (isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_array()) {
             if (password_verify($password,$row['password'])) {
-                echo json_encode(array("success" => "true", "location" => "testpage.php"));
+                echo json_encode(array("success" => "true", "location" => "home.php"));
                 $_SESSION['username'] = $username;
                 break;
             }

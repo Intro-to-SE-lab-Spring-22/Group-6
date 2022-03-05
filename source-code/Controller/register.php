@@ -56,10 +56,13 @@ if(isset($_POST["submit_signup"])){
                 if(!$sqlQuery){
                     die("MySQL query failed!" . mysqli_error($connection));
                 } 
+                header('Location: ../home.php');
+                exit();
             }
         }        
     }
     else{
     //This will be to inform user that they must input information.
     }
+    
 }

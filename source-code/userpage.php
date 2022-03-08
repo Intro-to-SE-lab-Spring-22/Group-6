@@ -1,3 +1,93 @@
+<?php
+session_start();
+
+require_once("verify_user.php");
+require_once('credentials.php');
+
+$user_username = $_SESSION["username"];
+$display_username = $_GET["user"];
+
+$conn = new mysqli($hn, $un, $pw, $db);
+
+if ($conn->connect_error) {
+    die($conn->connect_error);
+}
+
+$firstname = $lastname = $email = "";
+$user_exists = $are_friends = $request_sent = $request_pending = false;
+$button_text = "Add Friend";
+$button_function = "add_friend()";
+
+// Display data
+$query = "SELECT * FROM users
+WHERE id = '$display_username'";
+
+$result = $conn->query($query);
+
+if (!$result) {
+    die($conn->error);
+}
+if ($result->num_rows > 0) {
+    $user_exists = true;
+    while ($row = $result->fetch_array()) {
+        $firstname = $row["firstName"];
+        $lastname = $row["lastName"];
+        $email = $row["email"];
+        break;
+    }
+}
+
+if ($user_exists && $user_username != $display_username) {
+    // Check if already friends
+    $query = "SELECT * FROM friends WHERE id_sender = '$user_username' AND id_receiver = '$display_username'";
+
+    $result = $conn->query($query);
+
+    if (!$result) {
+        die($conn->error);
+    }
+
+    if ($result->num_rows > 0) {
+        $are_friends = true;
+        $button_function = "remove_friend()";
+        $button_text = 'Remove Friend';
+    }
+    else {
+        // Check if friend request already sent
+        $query = "SELECT * FROM pendingfriends WHERE from_id = '$user_username' AND to_id = '$display_username'";
+
+        $result = $conn->query($query);
+
+        if (!$result) {
+            die($conn->error);
+        }
+
+        if ($result->num_rows > 0) {
+            $request_sent = true;
+            $button_function = "cancel_friend_request()";
+            $button_text = 'Cancel Friend Request';
+        }
+        else {
+            // Check if friend request is pending
+            $query = "SELECT * FROM pendingfriends WHERE to_id = '$user_username' AND from_id = '$display_username'";
+
+            $result = $conn->query($query);
+
+            if (!$result) {
+                die($conn->error);
+            }
+
+            if ($result->num_rows > 0) {
+                $request_pending = true;
+                $button_function = "accept_friend_request()";
+                $button_text = 'Accept Friend Request';
+            }
+        }
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,15 +100,6 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script src="https://kit.fontawesome.com/c56bd8cfd4.js" crossorigin="anonymous"></script>
 </head>
-
-<?php
-session_start();
-if(!isset($_SESSION{'username'})){
-    header('Location: index.php');
-    exit();
-} 
-?>
-
 
 <body>
     <nav class="navbar">
@@ -55,13 +136,23 @@ if(!isset($_SESSION{'username'})){
         </ul>
     </nav>
     <main>
-        <h1>
-            THIS IS A SAMPLE HEADER
-        </h1>
-        <p>
-            AND THIS WOULD BE ANY SAMPLE TEXT THAT WE WOULD PUT IN HERE. LIKE POSTS AND OTHER PARTS OF THE UI THAT WILL BE FOCUSSED ON
-        </p>       
+        <?php 
+        if ($user_exists) {
+            echo "<h1>$display_username</h1>";
+            echo "<p>$firstname $lastname<br>";
+            echo "<p>$email</p>";
+
+            if ($display_username != $user_username) {
+                echo "<br>";
+                echo "<button type=\"submit\" id=\"submit_log_in\" value=\"$button_text\" class=\"btn btn-outline-primary btn-lg btn-block\" onclick=\"$button_function\">";
+                echo $button_text;
+                echo "</button>";
+            }
+        }
+        else {
+            echo "<p>User does not exist!</p>";
+        }
+        ?>
     </main>
 </body>
 </html>
-    

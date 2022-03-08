@@ -1,7 +1,7 @@
 <?php
 // Info from Heroku dashboard
-$hn = '####';
-$un = '####';
-$pw = '####';
-$db = 'heroku_d72d6317a6f4d86';
+$hn = getenv("DATABASE_URL");
+$un = getenv("DATABASE_USERNAME");
+$pw = getenv("DATABASE_PASSWORD");
+$db = getenv("DATABASE_NAME");
 ?>

@@ -1,1 +1,23 @@
-{}
+{
+    "name": "group_6/fbclone",
+    "description": "A facebook clone web application",
+    "authors": [
+        {
+            "name": "Addison Green",
+            "email": "amg960@msstate.edu"
+        },
+        {
+            "name": "Joshua Whitman",
+            "email": "jsw625@msstate.edu"
+        },
+        {
+            "name": "Christian Johnson",
+            "email": "cpj95@msstate.edu"
+        },
+        {
+            "name": "Matthew Robinson",
+            "email": "mbr253@msstate.edu"
+        }
+    ],
+    "require": {}
+}

@@ -37,55 +37,6 @@ if ($result->num_rows > 0) {
     }
 }
 
-if ($user_exists && $user_username != $display_username) {
-    // Check if already friends
-    $query = "SELECT * FROM friends WHERE id_sender = '$user_username' AND id_receiver = '$display_username'";
-
-    $result = $conn->query($query);
-
-    if (!$result) {
-        die($conn->error);
-    }
-
-    if ($result->num_rows > 0) {
-        $are_friends = true;
-        $button_function = "remove_friend()";
-        $button_text = 'Remove Friend';
-    }
-    else {
-        // Check if friend request already sent
-        $query = "SELECT * FROM pendingfriends WHERE from_id = '$user_username' AND to_id = '$display_username'";
-
-        $result = $conn->query($query);
-
-        if (!$result) {
-            die($conn->error);
-        }
-
-        if ($result->num_rows > 0) {
-            $request_sent = true;
-            $button_function = "cancel_friend_request()";
-            $button_text = 'Cancel Friend Request';
-        }
-        else {
-            // Check if friend request is pending
-            $query = "SELECT * FROM pendingfriends WHERE to_id = '$user_username' AND from_id = '$display_username'";
-
-            $result = $conn->query($query);
-
-            if (!$result) {
-                die($conn->error);
-            }
-
-            if ($result->num_rows > 0) {
-                $request_pending = true;
-                $button_function = "accept_friend_request()";
-                $button_text = 'Accept Friend Request';
-            }
-        }
-    }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -101,7 +52,7 @@ if ($user_exists && $user_username != $display_username) {
   <script src="https://kit.fontawesome.com/c56bd8cfd4.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body onload="<?="friend_request('$display_username', 'false')"?>">
     <nav class="navbar">
         <ul class="navbar-nav">
             <li class="nav-item" id="home">
@@ -144,8 +95,8 @@ if ($user_exists && $user_username != $display_username) {
 
             if ($display_username != $user_username) {
                 echo "<br>";
-                echo "<button type=\"submit\" id=\"submit_log_in\" value=\"$button_text\" class=\"btn btn-outline-primary btn-lg btn-block\" onclick=\"$button_function\">";
-                echo $button_text;
+                echo "<button type=\"submit\" id=\"submit_friend_request\" class=\"btn btn-outline-primary btn-small btn-block\" onclick=\"friend_request('$display_username', 'true')\">";
+                echo " ";
                 echo "</button>";
             }
         }
@@ -156,3 +107,21 @@ if ($user_exists && $user_username != $display_username) {
     </main>
 </body>
 </html>
+
+<script>
+function friend_request(username, update) {
+    var username = username;
+    var update = update;
+
+    $.post(
+        "friend_request.php",
+        {
+            username: username,
+            update: update
+        },
+        function(result) {
+            document.getElementById('submit_friend_request').innerHTML = result;
+        }
+    );
+}
+</script>

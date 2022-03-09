@@ -12,11 +12,7 @@
 </head>
 
 <?php
-session_start();
-if(!isset($_SESSION{'username'})){
-    header('Location: index.php');
-    exit();
-} 
+require_once("verify_user.php");
 ?>
 
 

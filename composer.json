@@ -1,8 +1,23 @@
 {
-    "name": "Group 6 FB clone",
-    "description": "This will be a LAMP project that will mimic a facebook-like application",
-    "authors": ["Joshua Whitman", "Addison Green", "Christian Johnson", "Matthew Robinson"],
-    "require": {
-
-    }
+    "name": "group_6/fbclone",
+    "description": "A facebook clone web application",
+    "authors": [
+        {
+            "name": "Addison Green",
+            "email": "amg960@msstate.edu"
+        },
+        {
+            "name": "Joshua Whitman",
+            "email": "jsw625@msstate.edu"
+        },
+        {
+            "name": "Christian Johnson",
+            "email": "cpj95@msstate.edu"
+        },
+        {
+            "name": "Matthew Robinson",
+            "email": "mbr253@msstate.edu"
+        }
+    ],
+    "require": {}
 }

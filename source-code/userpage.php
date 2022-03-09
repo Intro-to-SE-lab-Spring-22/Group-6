@@ -1,3 +1,44 @@
+<?php
+session_start();
+
+require_once("verify_user.php");
+require_once('credentials.php');
+
+$user_username = $_SESSION["username"];
+$display_username = $_GET["user"];
+
+$conn = new mysqli($hn, $un, $pw, $db);
+
+if ($conn->connect_error) {
+    die($conn->connect_error);
+}
+
+$firstname = $lastname = $email = "";
+$user_exists = $are_friends = $request_sent = $request_pending = false;
+$button_text = "Add Friend";
+$button_function = "add_friend()";
+
+// Display data
+$query = "SELECT * FROM users
+WHERE id = '$display_username'";
+
+$result = $conn->query($query);
+
+if (!$result) {
+    die($conn->error);
+}
+if ($result->num_rows > 0) {
+    $user_exists = true;
+    while ($row = $result->fetch_array()) {
+        $firstname = $row["firstName"];
+        $lastname = $row["lastName"];
+        $email = $row["email"];
+        break;
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,12 +52,7 @@
   <script src="https://kit.fontawesome.com/c56bd8cfd4.js" crossorigin="anonymous"></script>
 </head>
 
-<?php
-require_once("verify_user.php");
-?>
-
-
-<body>
+<body onload="<?="friend_request('$display_username', 'false')"?>">
     <nav class="navbar">
         <ul class="navbar-nav">
             <li class="nav-item" id="home">
@@ -51,13 +87,41 @@ require_once("verify_user.php");
         </ul>
     </nav>
     <main>
-        <h1>
-            THIS IS A SAMPLE HEADER
-        </h1>
-        <p>
-            AND THIS WOULD BE ANY SAMPLE TEXT THAT WE WOULD PUT IN HERE. LIKE POSTS AND OTHER PARTS OF THE UI THAT WILL BE FOCUSSED ON
-        </p>       
+        <?php 
+        if ($user_exists) {
+            echo "<h1>$display_username</h1>";
+            echo "<p>$firstname $lastname<br>";
+            echo "<p>$email</p>";
+
+            if ($display_username != $user_username) {
+                echo "<br>";
+                echo "<button type=\"submit\" id=\"submit_friend_request\" class=\"btn btn-outline-primary btn-small btn-block\" onclick=\"friend_request('$display_username', 'true')\">";
+                echo " ";
+                echo "</button>";
+            }
+        }
+        else {
+            echo "<p>User does not exist!</p>";
+        }
+        ?>
     </main>
 </body>
 </html>
-    
+
+<script>
+function friend_request(username, update) {
+    var username = username;
+    var update = update;
+
+    $.post(
+        "friend_request.php",
+        {
+            username: username,
+            update: update
+        },
+        function(result) {
+            document.getElementById('submit_friend_request').innerHTML = result;
+        }
+    );
+}
+</script>

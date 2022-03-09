@@ -53,7 +53,6 @@ function submitButton() {
       password: password
     },
     function(result) {
-      document.getElementById('placeholder').innerHTML = result;
       var json = JSON.parse(result);
 
       if (json.success == "true") {

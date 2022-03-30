@@ -1,36 +1,5 @@
 <?php
-session_start();
-
 require_once("verify_user.php");
-
-require_once('credentials.php');
-
-$conn = new mysqli($hn, $un, $pw, $db);
-
-if ($conn->connect_error) {
-    die($conn->connect_error);
-}
-
-$username = $_SESSION["username"];
-$firstname = $lastname = $email = "";
-
-$query = "SELECT * FROM users
-WHERE id = '$username'";
-
-$result = $conn->query($query);
-
-if (!$result) {
-    die($conn->error);
-}
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_array()) {
-        $firstname = $row["firstName"];
-        $lastname = $row["lastName"];
-        $email = $row["email"];
-        break;
-    }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -43,10 +12,31 @@ if ($result->num_rows > 0) {
 </head>
 
 <body>
-  <p>
-      <?= $username ?><br>
-      <?= $firstname ?><br>
-      <?= $lastname ?><br>
-      <?= $email ?><br>
+    Content<br><textarea id="content" name="content" rows="6" cols = "75"></textarea><br>
+    <input type="submit" id="submit" value="Create Post" onclick="submitButton()">
 </body>
 </html>
+
+<script>
+
+function submitButton() {
+  var content = document.getElementById('content').value;
+
+  $.post(
+    "create_post.php",
+    {
+        content: content
+    },
+    function(result) {
+        alert(result);
+        var json = JSON.parse(result);
+
+        if (json.success == "true") {
+            document.location = json.location;
+        }
+    }
+  );
+
+}
+
+</script>

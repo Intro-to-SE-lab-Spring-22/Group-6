@@ -137,3 +137,64 @@ body::-webkit-scrollbar-thumb{
 .navbar:hover .link-text{
   display:block;
 }
+
+.topnav {
+  margin: auto;
+  width: 100%;
+  overflow: hidden;
+  background-color: #e9e9e9;
+  flex-shrink: 0;
+  display: flex;
+  background-color: #008cff;
+}
+
+.topnav a {
+  align-items: center;
+  float: right;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+/* .topnav a:hover {
+  background-color: #ddd;
+  color: black;
+} */
+
+/* Style the "active" element to highlight the current page */
+/* .topnav a.active {
+  background-color: #2196F3;
+  color: white;
+} */
+
+.topnav input[type=text] {
+  margin: auto;
+  width: 50%;
+  
+  border-radius: 25px;
+  border: 2px solid black;
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 8px 14px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav button{
+  /* border-radius: 25px;
+  border: 1px solid black;
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 8px 14px;
+  text-decoration: none;
+  font-size: 17px; */
+
+}

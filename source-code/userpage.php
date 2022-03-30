@@ -86,6 +86,22 @@ if ($result->num_rows > 0) {
 
         </ul>
     </nav>
+    <div id="right" class="column">
+        <nav class="topnav">
+                
+                
+                <!-- <label for="search">Search</label>   -->
+                
+                <!-- <a href="search"> -->
+                <input type="text" placeholder="Search">
+                <a href="search.php" id="search">
+                    <!-- <button type="submit"> -->
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span class="link-text">Search</span>
+                    <!-- </button> -->
+                
+                </a>
+        </nav>
     <main>
         <?php 
         if ($user_exists) {

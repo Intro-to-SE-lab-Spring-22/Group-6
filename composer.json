@@ -19,5 +19,7 @@
             "email": "mbr253@msstate.edu"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    }
 }

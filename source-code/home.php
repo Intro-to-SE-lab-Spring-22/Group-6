@@ -15,9 +15,13 @@
 require_once("verify_user.php");
 ?>
 
-
 <body>
+    
+    
+
+
     <nav class="navbar">
+        
         <ul class="navbar-nav">
             <li class="nav-item" id="home">
                 <a href="home.php" class="nav-link">
@@ -26,11 +30,11 @@ require_once("verify_user.php");
                     <span class="link-text">Home</span>
                 </a>
             </li>
-            <li class="nav-item" id="search">
+            <li class="nav-item" id="compose">
                 <a href="#" class="nav-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M500.3 443.7l-119.7-119.7c27.22-40.41 40.65-90.9 33.46-144.7C401.8 87.79 326.8 13.32 235.2 1.723C99.01-15.51-15.51 99.01 1.724 235.2c11.6 91.64 86.08 166.7 177.6 178.9c53.8 7.189 104.3-6.236 144.7-33.46l119.7 119.7c15.62 15.62 40.95 15.62 56.57 0C515.9 484.7 515.9 459.3 500.3 443.7zM79.1 208c0-70.58 57.42-128 128-128s128 57.42 128 128c0 70.58-57.42 128-128 128S79.1 278.6 79.1 208z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M467.1 241.1L351.1 288h94.34c-7.711 14.85-16.29 29.28-25.87 43.01l-132.5 52.99h85.65c-59.34 52.71-144.1 80.34-264.5 52.82l-68.13 68.13c-9.38 9.38-24.56 9.374-33.94 0c-9.375-9.375-9.375-24.56 0-33.94l253.4-253.4c4.846-6.275 4.643-15.19-1.113-20.95c-6.25-6.25-16.38-6.25-22.62 0l-168.6 168.6C24.56 58 366.9 8.118 478.9 .0846c18.87-1.354 34.41 14.19 33.05 33.05C508.7 78.53 498.5 161.8 467.1 241.1z"/></svg>
                     
-                    <span class="link-text">Search</span>
+                    <span class="link-text">Compose</span>
                 </a>
             </li>
             <li class="nav-item" id="profile">
@@ -50,14 +54,32 @@ require_once("verify_user.php");
 
         </ul>
     </nav>
-    <main>
-        <h1>
-            THIS IS A SAMPLE HEADER
-        </h1>
-        <p>
-            AND THIS WOULD BE ANY SAMPLE TEXT THAT WE WOULD PUT IN HERE. LIKE POSTS AND OTHER PARTS OF THE UI THAT WILL BE FOCUSSED ON
-        </p>       
-    </main>
+    <div id="right" class="column">
+        <nav class="topnav">
+                
+                
+                <!-- <label for="search">Search</label>   -->
+                
+                <!-- <a href="search"> -->
+                <input type="text" placeholder="Search">
+                <a href="search.php" id="search">
+                    <!-- <button type="submit"> -->
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span class="link-text">Search</span>
+                    <!-- </button> -->
+                
+                </a>
+        </nav>
+        
+        <main>
+            <h1>
+                THIS IS A SAMPLE HEADER
+            </h1>
+            <p>
+                AND THIS WOULD BE ANY SAMPLE TEXT THAT WE WOULD PUT IN HERE. LIKE POSTS AND OTHER PARTS OF THE UI THAT WILL BE FOCUSSED ON
+            </p>       
+        </main>
+    </div>    
 </body>
 </html>
     

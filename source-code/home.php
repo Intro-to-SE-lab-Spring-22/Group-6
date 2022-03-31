@@ -56,8 +56,27 @@ require_once("verify_user.php");
         </h1>
         <p>
             AND THIS WOULD BE ANY SAMPLE TEXT THAT WE WOULD PUT IN HERE. LIKE POSTS AND OTHER PARTS OF THE UI THAT WILL BE FOCUSSED ON
-        </p>       
+        </p> 
+
     </main>
 </body>
 </html>
     
+<script>
+    $(window).scroll(function(){
+        if($(window).scrollTop() + $(window).height() >= $(document).height()){
+            
+            $.ajax({
+                    // url: '' file that will fetch db data
+                    // type: "get",
+                    // beforeSend: function (){
+                        $('.ajax-loader').show();
+                    },
+                    success: function (data) {
+                        $(".row").append(data);
+                    }
+                }
+            })
+        }
+    })
+</script>

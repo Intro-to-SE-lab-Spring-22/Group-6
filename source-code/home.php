@@ -54,6 +54,9 @@ require_once("verify_user.php");
 
         </ul>
     </nav>
+
+
+
     <div id="right" class="column">
         <nav class="topnav">
                 
@@ -113,6 +116,25 @@ require_once("verify_user.php");
 
         </main>
     </div>    
+main
 </body>
 </html>
     
+<script>
+    $(window).scroll(function(){
+        if($(window).scrollTop() + $(window).height() >= $(document).height()){
+            
+            $.ajax({
+                    // url: '' file that will fetch db data
+                    // type: "get",
+                    // beforeSend: function (){
+                        $('.ajax-loader').show();
+                    },
+                    success: function (data) {
+                        $(".row").append(data);
+                    }
+                }
+            })
+        }
+    })
+</script>

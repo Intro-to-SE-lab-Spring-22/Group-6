@@ -198,3 +198,64 @@ body::-webkit-scrollbar-thumb{
   font-size: 17px; */
 
 }
+
+.homepage h1 {
+  text-align: center;
+  font-weight: bold
+}
+
+/* Post Styling */
+
+.post {
+  margin: 1rem auto;
+  width: clamp(20rem, 60%, 60%);
+  background-color: white;
+  padding: 1rem;
+}
+
+@media screen and (max-width: 480px) {
+  .post {
+    width: 90%
+  }
+}
+
+.post h2 {
+  color: #008cff;
+  font-weight: 550;
+}
+
+.post-footer {
+  width: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.post-icon-holder {
+  display: inline;
+}
+
+.post-icon {
+  display: inline;
+  margin-right: 1rem;
+  transition: color 0.2s;
+}
+
+.post-icon:hover {
+  color: #008cff;
+}
+
+.post-icon-like.is-liked {
+  color: #008cff;
+}
+
+.post-icon p {
+  display: inline;
+  color: black;
+}
+
+.post-date {
+  display: inline;
+  margin-left: auto;
+  margin-right: 0;
+}

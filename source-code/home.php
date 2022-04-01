@@ -77,7 +77,9 @@ require_once("verify_user.php");
             </h1>
 
             <div class="post">
-                <h2>Username</h2>
+                <a href="userpage.php?user=username">
+                    <h2>username</h2>
+                </a>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
@@ -94,11 +96,15 @@ require_once("verify_user.php");
                             <p>12</p>
                         </div>
                         <div class="post-icon post-icon-comment">
-                            <i class="fa-solid fa-comment"></i>
+                            <a href="testpage.php">
+                                <i class="fa-solid fa-comment"></i>
+                            </a>      
                             <p>12</p>
                         </div>
                         <div class="post-icon post-icon-edit">
-                            <i class="fa-solid fa-pencil"></i>
+                            <a href="testpage.php">
+                                <i class="fa-solid fa-pencil"></i>
+                            </a>         
                         </div>
                     </div>
                     <div class="post-date">March 31, 2022 8:41 PM</div>  

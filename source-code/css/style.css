@@ -232,12 +232,13 @@ body::-webkit-scrollbar-thumb{
 }
 
 .post-icon-holder {
-  display: inline;
+  display: flex;
 }
 
 .post-icon {
-  display: inline;
   margin-right: 1rem;
+  display: flex;
+  align-items: center;
   transition: color 0.2s;
 }
 
@@ -245,17 +246,24 @@ body::-webkit-scrollbar-thumb{
   color: #008cff;
 }
 
+.post-icon a {
+  color: inherit;
+}
+
+.post-icon a:hover {
+  color: inherit;
+}
+
 .post-icon-like.is-liked {
   color: #008cff;
 }
 
 .post-icon p {
-  display: inline;
   color: black;
+  margin: 0 0 0 0.2rem;
 }
 
 .post-date {
-  display: inline;
   margin-left: auto;
   margin-right: 0;
 }

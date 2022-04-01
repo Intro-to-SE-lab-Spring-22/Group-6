@@ -71,13 +71,46 @@ require_once("verify_user.php");
                 </a>
         </nav>
         
-        <main>
+        <main class="homepage">
             <h1>
-                THIS IS A SAMPLE HEADER
+                Your Timeline
             </h1>
-            <p>
-                AND THIS WOULD BE ANY SAMPLE TEXT THAT WE WOULD PUT IN HERE. LIKE POSTS AND OTHER PARTS OF THE UI THAT WILL BE FOCUSSED ON
-            </p>       
+
+            <div class="post">
+                <a href="userpage.php?user=username">
+                    <h2>username</h2>
+                </a>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+                    nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+                    culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+                <div class="post-footer">
+                    <div class="post-icon-holder">
+                        <div class="post-icon post-icon-like">
+                            <i class="fa-solid fa-heart"></i>
+                            <p>12</p>
+                        </div>
+                        <div class="post-icon post-icon-comment">
+                            <a href="testpage.php">
+                                <i class="fa-solid fa-comment"></i>
+                            </a>      
+                            <p>12</p>
+                        </div>
+                        <div class="post-icon post-icon-edit">
+                            <a href="testpage.php">
+                                <i class="fa-solid fa-pencil"></i>
+                            </a>         
+                        </div>
+                    </div>
+                    <div class="post-date">March 31, 2022 8:41 PM</div>  
+                </div>
+            </div>
+
         </main>
     </div>    
 </body>

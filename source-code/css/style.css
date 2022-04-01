@@ -137,3 +137,133 @@ body::-webkit-scrollbar-thumb{
 .navbar:hover .link-text{
   display:block;
 }
+
+.topnav {
+  margin: auto;
+  width: 100%;
+  overflow: hidden;
+  background-color: #e9e9e9;
+  flex-shrink: 0;
+  display: flex;
+  background-color: #008cff;
+}
+
+.topnav a {
+  align-items: center;
+  float: right;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+/* .topnav a:hover {
+  background-color: #ddd;
+  color: black;
+} */
+
+/* Style the "active" element to highlight the current page */
+/* .topnav a.active {
+  background-color: #2196F3;
+  color: white;
+} */
+
+.topnav input[type=text] {
+  margin: auto;
+  width: 50%;
+  
+  border-radius: 25px;
+  border: 2px solid black;
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 8px 14px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav button{
+  /* border-radius: 25px;
+  border: 1px solid black;
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 8px 14px;
+  text-decoration: none;
+  font-size: 17px; */
+
+}
+
+.homepage h1 {
+  text-align: center;
+  font-weight: bold
+}
+
+/* Post Styling */
+
+.post {
+  margin: 1rem auto;
+  width: clamp(20rem, 60%, 60%);
+  background-color: white;
+  padding: 1rem;
+}
+
+@media screen and (max-width: 480px) {
+  .post {
+    width: 90%
+  }
+}
+
+.post h2 {
+  color: #008cff;
+  font-weight: 550;
+}
+
+.post-footer {
+  width: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.post-icon-holder {
+  display: flex;
+}
+
+.post-icon {
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.post-icon:hover {
+  color: #008cff;
+}
+
+.post-icon a {
+  color: inherit;
+}
+
+.post-icon a:hover {
+  color: inherit;
+}
+
+.post-icon-like.is-liked {
+  color: #008cff;
+}
+
+.post-icon p {
+  color: black;
+  margin: 0 0 0 0.2rem;
+}
+
+.post-date {
+  margin-left: auto;
+  margin-right: 0;
+}

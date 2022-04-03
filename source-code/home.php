@@ -9,6 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script src="https://kit.fontawesome.com/c56bd8cfd4.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
 <?php
@@ -74,67 +75,62 @@ require_once("verify_user.php");
                 </a>
         </nav>
         
-        <main class="homepage">
+        <main class="homepage" >
             <h1>
                 Your Timeline
             </h1>
+            <div id="homepage">
 
-            <div class="post">
-                <a href="userpage.php?user=username">
-                    <h2>username</h2>
-                </a>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
-                    nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
-                    culpa qui officia deserunt mollit anim id est laborum.
-                </p>
-                <div class="post-footer">
-                    <div class="post-icon-holder">
-                        <div class="post-icon post-icon-like">
-                            <i class="fa-solid fa-heart"></i>
-                            <p>12</p>
-                        </div>
-                        <div class="post-icon post-icon-comment">
-                            <a href="testpage.php">
-                                <i class="fa-solid fa-comment"></i>
-                            </a>      
-                            <p>12</p>
-                        </div>
-                        <div class="post-icon post-icon-edit">
-                            <a href="testpage.php">
-                                <i class="fa-solid fa-pencil"></i>
-                            </a>         
-                        </div>
-                    </div>
-                    <div class="post-date">March 31, 2022 8:41 PM</div>  
-                </div>
             </div>
 
-        </main>
-    </div>    
-main
-</body>
-</html>
-    
-<script>
-    $(window).scroll(function(){
-        if($(window).scrollTop() + $(window).height() >= $(document).height()){
             
+        </main>
+    </div>
+    <script type="text/javascript">
+        var start = 0;
+        var limit = 5;
+        var reachedMax = false;
+        
+        $(document).ready(function (){
+            
+            getPost();
+        });
+
+        $(window).scroll(function(){
+            if($(window).scrollTop() + $(window).height() >= $(document).height()){
+                getPost();
+            
+            }
+        });
+
+
+        function getPost(){
+            if (reachedMax){
+                return;
+            }
             $.ajax({
-                    // url: '' file that will fetch db data
-                    // type: "get",
-                    // beforeSend: function (){
-                        $('.ajax-loader').show();
-                    },
-                    success: function (data) {
-                        $(".row").append(data);
+                url: 'getpost.php',
+                type: "POST",
+                dataType: 'text',
+                data: {
+                    getData: 1,
+                    start: start,
+                    limit: limit
+                },
+                success: function(response) {
+                    if(response == "reachedMax")
+                        reachedMax == true;
+                    else {
+                        start += limit;
+                        $("#homepage").append(response);
                     }
                 }
             })
         }
-    })
-</script>
+    </script>
+
+
+
+</body>
+</html>
+    

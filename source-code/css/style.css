@@ -103,6 +103,7 @@ body::-webkit-scrollbar-thumb{
   flex-direction: column;
   align-items: center;
   height: 100%;
+  padding-top: 2rem;
 }
 
 .nav-item{
@@ -139,6 +140,7 @@ body::-webkit-scrollbar-thumb{
 }
 
 .topnav {
+  
   margin: auto;
   width: 100%;
   overflow: hidden;
@@ -146,9 +148,11 @@ body::-webkit-scrollbar-thumb{
   flex-shrink: 0;
   display: flex;
   background-color: #008cff;
+  position: fixed;
 }
 
 .topnav a {
+
   align-items: center;
   float: right;
   display: block;
@@ -198,7 +202,9 @@ body::-webkit-scrollbar-thumb{
   font-size: 17px; */
 
 }
-
+.homepage{
+  padding-top: 4rem;
+}
 .homepage h1 {
   text-align: center;
   font-weight: bold

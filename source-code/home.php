@@ -9,6 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script src="https://kit.fontawesome.com/c56bd8cfd4.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
 <?php
@@ -31,7 +32,7 @@ require_once("verify_user.php");
                 </a>
             </li>
             <li class="nav-item" id="compose">
-                <a href="#" class="nav-link">
+                <a href="testpage.php" class="nav-link">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M467.1 241.1L351.1 288h94.34c-7.711 14.85-16.29 29.28-25.87 43.01l-132.5 52.99h85.65c-59.34 52.71-144.1 80.34-264.5 52.82l-68.13 68.13c-9.38 9.38-24.56 9.374-33.94 0c-9.375-9.375-9.375-24.56 0-33.94l253.4-253.4c4.846-6.275 4.643-15.19-1.113-20.95c-6.25-6.25-16.38-6.25-22.62 0l-168.6 168.6C24.56 58 366.9 8.118 478.9 .0846c18.87-1.354 34.41 14.19 33.05 33.05C508.7 78.53 498.5 161.8 467.1 241.1z"/></svg>
                     
                     <span class="link-text">Compose</span>
@@ -74,67 +75,75 @@ require_once("verify_user.php");
                 </a>
         </nav>
         
-        <main class="homepage">
+        <main class="homepage" >
             <h1>
                 Your Timeline
             </h1>
+            <div id="homepage">
 
-            <div class="post">
-                <a href="userpage.php?user=username">
-                    <h2>username</h2>
-                </a>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
-                    nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
-                    culpa qui officia deserunt mollit anim id est laborum.
-                </p>
-                <div class="post-footer">
-                    <div class="post-icon-holder">
-                        <div class="post-icon post-icon-like">
-                            <i class="fa-solid fa-heart"></i>
-                            <p>12</p>
-                        </div>
-                        <div class="post-icon post-icon-comment">
-                            <a href="testpage.php">
-                                <i class="fa-solid fa-comment"></i>
-                            </a>      
-                            <p>12</p>
-                        </div>
-                        <div class="post-icon post-icon-edit">
-                            <a href="testpage.php">
-                                <i class="fa-solid fa-pencil"></i>
-                            </a>         
-                        </div>
-                    </div>
-                    <div class="post-date">March 31, 2022 8:41 PM</div>  
-                </div>
             </div>
 
-        </main>
-    </div>    
-main
-</body>
-</html>
-    
-<script>
-    $(window).scroll(function(){
-        if($(window).scrollTop() + $(window).height() >= $(document).height()){
             
+        </main>
+    </div>
+    <script type="text/javascript">
+        var start = 0;
+        var limit = 10;
+        var reachedMax = false;
+        console.log("TEST1") ;
+
+        $(window).scroll(function(){
+            console.log("TEST") ;
+            if($(window).scrollTop() + $(window).height() > $(document).height() -1.5)
+            {    
+                console.log("TEST get more posts") ;
+                getPost();
+            }
+            
+        });
+
+        $(document).ready(function (){
+            
+            
+            if($(window).height() >= $(document).height()) {
+                console.log("THE HEIGHT DOES NOT SEEM TO MATCH THE WINDOW, MUST LOAD MORE");
+                getPost();
+            }
+            
+        });
+
+        
+        
+
+
+        function getPost(){
+            
+            if (reachedMax){
+                return;
+            }
             $.ajax({
-                    // url: '' file that will fetch db data
-                    // type: "get",
-                    // beforeSend: function (){
-                        $('.ajax-loader').show();
-                    },
-                    success: function (data) {
-                        $(".row").append(data);
+                url: 'getpost.php',
+                type: "POST",
+                dataType: 'text',
+                data: {
+                    getData: 1,
+                    start: start,
+                    limit: limit
+                },
+                success: function(response) {
+                    if(response == "reachedMax")
+                        reachedMax == true;
+                    else {
+                        start += limit;
+                        $("#homepage").append(response);
                     }
                 }
             })
         }
-    })
-</script>
+    </script>
+
+
+
+</body>
+</html>
+    

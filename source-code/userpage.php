@@ -138,13 +138,10 @@ if ($result->num_rows > 0) {
         var start = 0;
         var limit = 10;
         var reachedMax = false;
-        console.log("TEST1") ;
 
         $(window).scroll(function(){
-            console.log("TEST") ;
             if($(window).scrollTop() + $(window).height() > $(document).height() -1.5)
             {    
-                console.log("TEST get more posts") ;
                 getPost();
             }
             
@@ -181,7 +178,7 @@ if ($result->num_rows > 0) {
                     limit: limit
                 },
                 success: function(response) {
-                    if(response == "reachedMax")
+                    if(response == 'reachedMax')
                         reachedMax == true;
                     else {
                         start += limit;

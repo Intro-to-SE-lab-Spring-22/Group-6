@@ -83,7 +83,7 @@ if(ISSET($_POST['getpost']))
 
         
         else{
-            echo "MADE IT HERE";
+            
             exit('reachedMax');
         }
     }
@@ -159,7 +159,6 @@ if(ISSET($_POST['getpost']))
 
         
         else{
-            echo "MADE IT HERE";
             exit('reachedMax');
         }
     }

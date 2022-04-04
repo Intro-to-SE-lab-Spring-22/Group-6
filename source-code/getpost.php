@@ -23,7 +23,7 @@ if(ISSET($_POST['getpost']))
 
             array_push($friendList, $row['id_receiver']);
         }
-        
+        array_push($friendList, $username);
         if (!$result) {
             die($connection->error);
         }

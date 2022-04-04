@@ -253,7 +253,7 @@ body::-webkit-scrollbar-thumb{
 }
 
 .post-icon:hover {
-  color: #008cff;
+  color: #83c7ff;
 }
 
 .post-icon a {
@@ -266,6 +266,10 @@ body::-webkit-scrollbar-thumb{
 
 .post-icon-like.is-liked {
   color: #008cff;
+}
+
+.post-icon-like.is-liked:hover {
+  color: #83c7ff;
 }
 
 .post-icon p {

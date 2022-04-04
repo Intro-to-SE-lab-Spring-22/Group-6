@@ -141,6 +141,31 @@ require_once("verify_user.php");
                 }
             })
         }
+
+        function likePost(postID) {
+            $.post(
+                "like_post.php",
+                {
+                    postID: postID
+                },
+                function(result) {
+
+                    var json = JSON.parse(result);
+
+                    if (json.success == "true") {
+                        var post = document.getElementById('p.' + postID);
+                        var like_element = post.querySelector('.post-icon-like');
+                        if (json.action == "liked") {
+                            like_element.classList.add("is-liked");
+                        }
+                        else {
+                            like_element.classList.remove("is-liked");
+                        }
+                        like_element.querySelector('p').innerHTML = json.numlikes;
+                    }
+                }
+            );
+        }
     </script>
 
 

@@ -45,8 +45,38 @@ if(ISSET($_POST['getpost']))
 
 
         while($data = mysqli_fetch_assoc($result)){
+
+            $query = "SELECT COUNT(*) as numlikes FROM likes WHERE postID = ".$data['postID'];
+
+            $subresult = $connection->query($query);
+            
+            if (!$subresult) {
+                die($connection->error);
+            }
+            
+            $subdata = mysqli_fetch_assoc($subresult);
+            $numlikes = $subdata['numlikes'];
+
+            $query = "SELECT COUNT(*) as already_liked FROM likes WHERE postID = '".$data['postID']."' AND username = '".$username."'";
+
+            $subresult = $connection->query($query);
+            
+            if (!$subresult) {
+                die($connection->error);
+            }
+
+            $subdata = mysqli_fetch_assoc($subresult);
+            $already_liked = intval($subdata['already_liked']);
+
+            if ($already_liked > 0) {
+                $like_class = " is-liked";
+            }
+            else {
+                $like_class = "";
+            }
+
             $response .='
-                <div class="post">
+                <div class="post" id="p.'.$data['postID'].'">
                 <a href="userpage.php?user='.$data['user_id'].'">
                     <h2>'.$data['user_id'].'</h2>
                 </a>
@@ -55,9 +85,11 @@ if(ISSET($_POST['getpost']))
                 </p>
                 <div class="post-footer">
                     <div class="post-icon-holder">
-                        <div class="post-icon post-icon-like">
-                            <i class="fa-solid fa-heart"></i>
-                            <p>12</p>
+                        <div class="post-icon post-icon-like'.$like_class.'">
+                            <div onclick=likePost('.$data['postID'].')>
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+                            <p>'.$numlikes.'</p>
                         </div>
                         <div class="post-icon post-icon-comment">
                             <a href="testpage.php">

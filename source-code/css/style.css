@@ -74,7 +74,8 @@ label {
 
 main {
   margin-left: 8rem;
-  padding: 1rem;
+  padding-left: 1rem;
+  padding-top: 4rem;
 }
 
 body::-webkit-scrollbar{

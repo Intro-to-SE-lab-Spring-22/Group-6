@@ -49,6 +49,8 @@ if ($result->num_rows > 0) {
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script src="https://kit.fontawesome.com/c56bd8cfd4.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 </head>
 
 <body onload="<?="friend_request('$display_username', 'false')"?>">
@@ -102,6 +104,7 @@ if ($result->num_rows > 0) {
                 </a>
         </nav>
     <main>
+
         <?php 
         if ($user_exists) {
             echo "<h1>$display_username</h1>";
@@ -119,7 +122,72 @@ if ($result->num_rows > 0) {
             echo "<p>User does not exist!</p>";
         }
         ?>
+        <div class="homepage" >
+            <h1>
+                Posts
+            </h1>
+            <div id="homepage">
+
+            </div>
+
+            
+        </div>
     </main>
+
+    <script>
+        var start = 0;
+        var limit = 10;
+        var reachedMax = false;
+
+        $(window).scroll(function(){
+            if($(window).scrollTop() + $(window).height() > $(document).height() -1.5)
+            {    
+                getPost();
+            }
+            
+        });
+
+        $(document).ready(function (){
+            
+            
+            if($(window).height() >= $(document).height()) {
+                console.log("THE HEIGHT DOES NOT SEEM TO MATCH THE WINDOW, MUST LOAD MORE");
+                getPost();
+            }
+            
+        });
+
+    
+    
+
+
+        function getPost(){
+            var user = "<?php echo $display_username ?>";
+            if (reachedMax){
+                return;
+            }
+            $.ajax({
+                url: 'getpost.php',
+                type: "POST",
+                dataType: 'text',
+                data: {
+                    getData: 1,
+                    userPost: 1,
+                    username: user,
+                    start: start,
+                    limit: limit
+                },
+                success: function(response) {
+                    if(response == 'reachedMax')
+                        reachedMax == true;
+                    else {
+                        start += limit;
+                        $("#homepage").append(response);
+                    }
+                }
+            })
+        }
+    </script>
 </body>
 </html>
 

@@ -88,7 +88,7 @@ require_once("verify_user.php");
     </div>
     <script type="text/javascript">
         var start = 0;
-        var limit = 5;
+        var limit = 10;
         var reachedMax = false;
         console.log("TEST1") ;
 
@@ -104,10 +104,16 @@ require_once("verify_user.php");
 
         $(document).ready(function (){
             
-            getPost();
+            
+            if($(window).height() >= $(document).height()) {
+                console.log("THE HEIGHT DOES NOT SEEM TO MATCH THE WINDOW, MUST LOAD MORE");
+                getPost();
+            }
+            
         });
 
-       
+        
+        
 
 
         function getPost(){

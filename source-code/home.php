@@ -127,6 +127,7 @@ require_once("verify_user.php");
                 dataType: 'text',
                 data: {
                     getData: 1,
+                    userPost: 0,
                     start: start,
                     limit: limit
                 },

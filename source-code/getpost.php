@@ -4,7 +4,6 @@ session_start();
 require_once('credentials.php');
 $connection = new mysqli($hn, $un, $pw, $db);
 if(ISSET($_POST['userPost'])) {
-    console.log($_POST['userPost']);
     if($_POST['userPost'] == 0){
         $postStart = $_POST['start'];
 
@@ -75,36 +74,41 @@ if(ISSET($_POST['userPost'])) {
                 }
     
                 $response .='
-                    <div class="post" id="p.'.$data['postID'].'">
-                    <a href="userpage.php?user='.$data['user_id'].'">
-                        <h2>'.$data['user_id'].'</h2>
-                    </a>
-                    <p>
-                        '.$data['content'].'
-                    </p>
-                    <div class="post-footer">
-                        <div class="post-icon-holder">
-                            <div class="post-icon post-icon-like'.$like_class.'">
-                                <div onclick=likePost('.$data['postID'].')>
-                                    <i class="fa-solid fa-heart"></i>
+                    
+                        <div class="post" id="p.'.$data['postID'].'" href="post.php?action=view&id='.$data['postID'].'">
+
+                            <a href="userpage.php?user='.$data['user_id'].'">
+                                <h2>'.$data['user_id'].'</h2>
+                            </a>
+                            <p>
+                            '.$data['content'].'
+                            </p>
+                            <div class="post-footer">
+                                <div class="post-icon-holder">
+                                    <div class="post-icon post-icon-like'.$like_class.'">
+                                        <div onclick=likePost('.$data['postID'].')>
+                                            <i class="fa-solid fa-heart"></i>
+                                        </div>
+                                        <p>'.$numlikes.'</p>
+                                    </div>
+                                    <div class="post-icon post-icon-comment">
+                                        <a href="">
+                                            <i class="fa-solid fa-comment"></i>
+                                        </a>      
+                                        <p>12</p>
+                                    </div>
+                                    <div>
+                                        <a href="post.php?action=view&id='.$data['postID'].'">
+                                            View Discussion
+                                        </a>
+                                    </div>
                                 </div>
-                                <p>'.$numlikes.'</p>
-                            </div>
-                            <div class="post-icon post-icon-comment">
-                                <a href="testpage.php">
-                                    <i class="fa-solid fa-comment"></i>
-                                </a>      
-                                <p>12</p>
-                            </div>
-                            <div class="post-icon post-icon-edit">
-                            <a href="testpage.php">
-                                <i class="fa-solid fa-pencil"></i>
-                            </a>         
+                                <div class="post-date">'.$data['created_at'].'</div>
+                            </div>  
+
+                                        
                         </div>
-                    </div>
-                    <div class="post-date">'.$data['created_at'].'</div>
-                </div>                
-            </div>    
+                        
             ';
         }
             exit($response);
@@ -193,9 +197,14 @@ if(ISSET($_POST['userPost'])) {
                             <p>12</p>
                         </div>
                         <div class="post-icon post-icon-edit">
-                            <a href="testpage.php">
+                            <a href="post.php?action=edit&id='.$data['postID'].'">
                                 <i class="fa-solid fa-pencil"></i>
                             </a>         
+                        </div>
+                        <div>
+                            <a href="post.php?action=view&id='.$data['postID'].'">
+                                View Discussion
+                            </a>
                         </div>
                     </div>
                     <div class="post-date">'.$data['created_at'].'</div>

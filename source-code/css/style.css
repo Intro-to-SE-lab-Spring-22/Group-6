@@ -217,6 +217,7 @@ body::-webkit-scrollbar-thumb{
 /* Post Styling */
 
 .post {
+  cursor: pointer;
   margin: 1rem auto;
   width: clamp(20rem, 60%, 60%);
   background-color: white;

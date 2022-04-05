@@ -168,6 +168,7 @@ else if ($_GET['action'] == 'view') {
                 
                 </a>
         </nav>
+    </div>
     <main>
         <?php
         if ($_GET['action'] == 'view' || $_GET['action'] == 'edit') {
@@ -246,6 +247,11 @@ else if ($_GET['action'] == 'view') {
                         </div>
                         <p>'.$numlikes.'</p>
                     </div>
+                    <div class="post-icon post-icon-comment">
+                        <div onclick="scrollToAddComment()">
+                            <i class="fa-solid fa-comment"></i>
+                        </div>
+                    </div>
                     '.$edit_button.'
                 </div>
                 <div class="post-date">'.$date_content.'</div>
@@ -275,9 +281,9 @@ else if ($_GET['action'] == 'view') {
                         if ($comment_query_data['username'] == $username) {
                             $comment_edit_button = '
                             <div class="comment-icon comment-icon-edit">
-                                <a href="comment.php?action=edit&id='.$row['commentID'].'">
+                                <div onclick="makeCommentEditable(this)">
                                     <i class="fa-solid fa-pencil"></i>
-                                </a>         
+                                </div>         
                             </div>';
                         }
                         else {
@@ -305,12 +311,24 @@ else if ($_GET['action'] == 'view') {
                                 <div class="comment-icon-holder">
                                     '.$comment_edit_button.'
                                 </div>
-                                <div class="post-date">'.$comment_date_content.'</div>  
+                                <div class="comment-date">'.$comment_date_content.'</div>  
                             </div>                
                         </div>
                         ';
                     }
-                }       
+                }
+                $comment_content .= '
+                <div class="comment" id="c.new">
+                    <a href="userpage.php?user='.$username.'">
+                        <h2>'.$username.'</h2>
+                    </a>
+                    <div class="grow-wrap comment-content">
+                        <textarea id="content" name="content" onInput="this.parentNode.dataset.replicatedValue = this.value"></textarea>
+                    </div>
+                    <div class="comment-footer">
+                        <button type="button" id="create_comment" class="btn btn-outline-primary btn-small btn-block" onclick="addComment()">Comment</button>
+                    </div>                
+                </div>';
             }
             else {
 
@@ -338,7 +356,7 @@ else if ($_GET['action'] == 'view') {
         else if ($_GET['action'] == 'create') {
             $post_content = '
                 <div class="grow-wrap post-content">
-                    <textarea id="content" name="content" onInput="this.parentNode.dataset.replicatedValue = this.value"></textarea>
+                    <textarea name="comment_content" onInput="this.parentNode.dataset.replicatedValue = this.value"></textarea>
                 </div>';
             $footer_content = '<button type="submit" id="submit_post" class="btn btn-outline-primary btn-small btn-block" onclick="createPost()">Save</button>';
 
@@ -357,10 +375,186 @@ else if ($_GET['action'] == 'view') {
         }
         ?>
     </main>
-</body>
-</html>
 
 <script>
+    function editComment(eventElement) {
+        var comment = eventElement.parentElement.parentElement;
+        var commentID = comment.id.substring(2);
+        var content = comment.querySelector('textarea').value;
+
+        $.post(
+            "edit_comment.php",
+            {
+                commentID: commentID,
+                content: content
+            },
+            function(result) {
+
+                var json = JSON.parse(result);
+
+                if (json.success == "true") {
+                    updateCommentBox(json.user, json.content, json.commentID, json.last_edited_at, 'edit');
+                }
+            }
+        );
+    }
+    function makeCommentEditable(eventElement) {
+        var commentID = eventElement.parentElement.parentElement.parentElement.parentElement.id;
+
+        var comment = document.getElementById(commentID);
+        var content = comment.querySelector('.comment-content').childNodes[0].nodeValue.trim();
+
+        comment.querySelector('.comment-content').remove();
+
+        var new_textbox_textarea = document.createElement('textarea');
+        new_textbox_textarea.name = 'comment_content';
+        new_textbox_textarea.oninput = function() {this.parentNode.dataset.replicatedValue = this.value};
+        var new_content_node = document.createTextNode(content);
+        new_textbox_textarea.appendChild(new_content_node);
+
+        var new_textbox_textarea_container = document.createElement('div');
+        new_textbox_textarea_container.classList.add('grow-wrap', 'comment-content');
+
+        new_textbox_textarea_container.appendChild(new_textbox_textarea);
+
+        var comment_footer = comment.querySelector('.comment-footer');
+        comment.insertBefore(new_textbox_textarea_container, comment_footer);
+
+        comment_footer.querySelector('.comment-icon-holder').remove();
+
+        var new_textbox_button = document.createElement('button');
+        new_textbox_button.type = 'button';
+        new_textbox_button.id = 'edit_comment';
+        new_textbox_button.classList.add('btn', 'btn-outline-primary', 'btn-small', 'btn-block');
+        new_textbox_button.onclick = function() {editComment(this)};
+
+        var new_textbox_button_text = document.createTextNode('Save');
+        new_textbox_button.appendChild(new_textbox_button_text);
+
+        var comment_date = comment_footer.querySelector('comment-date');
+        comment_footer.prepend(new_textbox_button);
+    }
+    function addComment() {
+
+        var postID = document.getElementsByClassName('post')[0].id.substring(2);
+        var content = document.getElementById('c.new').querySelector('textarea').value;
+
+        $.post(
+            "add_comment.php",
+            {
+                postID: postID,
+                content: content
+            },
+            function(result) {
+
+                var json = JSON.parse(result);
+
+                if (json.success == "true") {
+                    updateCommentBox(json.user, json.content, json.commentID, json.created_at, 'add');
+                    addNewCommentBox(json.user);
+                }
+            }
+        );
+    }
+    function updateCommentBox(user, content, commentID, created_at, action) {
+
+        // Remove text box
+        if (action == 'add') {
+            var comment_box = document.getElementById('c.new'); 
+        }
+        else {
+            var comment_box = document.getElementById('c.' + commentID);
+        }
+        comment_box.id = 'c.' + commentID;
+        var comment_footer = comment_box.querySelector('.comment-footer');
+        comment_box.querySelector('.comment-content').remove();
+
+        // Create content holder
+        var new_p = document.createElement('p');
+        new_p.classList.add('comment-content');
+        var new_content = document.createTextNode(content);
+        new_p.appendChild(new_content);
+        comment_box.insertBefore(new_p, comment_footer);
+
+        // Remove button
+        while (comment_footer.firstChild) {
+            comment_footer.removeChild(comment_footer.firstChild);
+        }
+
+        // Add icons to footer
+        var icon_holder = document.createElement('div');
+        icon_holder.classList.add('comment-icon-holder');
+
+        var edit_icon_container = document.createElement('div');
+        edit_icon_container.classList.add('comment-icon', 'comment-icon-edit');
+
+        var edit_icon_clickable = document.createElement('div');
+        edit_icon_clickable.onclick = function() {makeCommentEditable(this)};
+
+        var edit_icon_display = document.createElement('i');
+        edit_icon_display.classList.add('fa-solid', 'fa-pencil');
+
+        edit_icon_clickable.appendChild(edit_icon_display);
+        edit_icon_container.appendChild(edit_icon_clickable);
+        icon_holder.appendChild(edit_icon_container);
+        comment_footer.appendChild(icon_holder);
+
+        // Add date to footer
+        var date_holder = document.createElement('div');
+        date_holder.classList.add('comment-date');
+
+        if (action == 'add') {
+            var date_text = document.createTextNode('Created: ' + created_at);
+        }
+        else {
+            var date_text = document.createTextNode('Edited: ' + created_at);
+        }
+
+        date_holder.appendChild(date_text);
+        comment_footer.appendChild(date_holder);
+    }
+    function addNewCommentBox(user) {
+        // Create new text box
+        var new_textbox_header = document.createElement('h2');
+        var new_textbox_header_text = document.createTextNode(user);
+        new_textbox_header.appendChild(new_textbox_header_text);
+
+        var new_textbox_header_link = document.createElement('a');
+        new_textbox_header_link.href = 'userpage.php?user=' + user;
+        new_textbox_header_link.appendChild(new_textbox_header);
+
+        var new_textbox = document.createElement('div');
+        new_textbox.classList.add('comment');
+        new_textbox.id = 'c.new';
+        new_textbox.appendChild(new_textbox_header_link);
+
+        var new_textbox_textarea = document.createElement('textarea');
+        new_textbox_textarea.name = 'comment_content';
+        new_textbox_textarea.oninput = function() {this.parentNode.dataset.replicatedValue = this.value};
+
+        var new_textbox_textarea_container = document.createElement('div');
+        new_textbox_textarea_container.classList.add('grow-wrap', 'comment-content');
+
+        new_textbox_textarea_container.appendChild(new_textbox_textarea);
+
+        new_textbox.appendChild(new_textbox_textarea_container);
+
+        var new_textbox_button = document.createElement('button');
+        new_textbox_button.type = 'button';
+        new_textbox_button.id = 'create_comment';
+        new_textbox_button.classList.add('btn', 'btn-outline-primary', 'btn-small', 'btn-block');
+        new_textbox_button.onclick = function() {addComment()};
+
+        var new_textbox_button_text = document.createTextNode('Comment');
+        new_textbox_button.appendChild(new_textbox_button_text);
+
+        var new_textbox_footer = document.createElement('div');
+        new_textbox_footer.classList.add('comment-footer');
+        new_textbox_footer.appendChild(new_textbox_button);
+
+        new_textbox.appendChild(new_textbox_footer);
+        document.querySelector('main').appendChild(new_textbox);
+    }
     function likePost(postID) {
         $.post(
             "like_post.php",
@@ -424,4 +618,11 @@ else if ($_GET['action'] == 'view') {
             }
         );
     }
+    function scrollToAddComment() {
+        document.getElementById("c.new").scrollIntoView();
+    }
+
+
 </script>
+</body>
+</html>

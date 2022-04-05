@@ -59,21 +59,23 @@ require_once("verify_user.php");
 
 
     <div id="right" class="column">
-        <nav class="topnav">
+        <!-- <nav class="topnav"> -->
                 
                 
                 <!-- <label for="search">Search</label>   -->
                 
                 <!-- <a href="search"> -->
-                <input type="text" placeholder="Search">
-                <a href="search.php" id="search">
-                    <!-- <button type="submit"> -->
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <span class="link-text">Search</span>
-                    <!-- </button> -->
-                
-                </a>
-        </nav>
+                <form method="POST" action="search.php" class="topnav">
+                    <input type="text" name="search" placeholder="Search"  id='search'>
+                    <input type="submit" id="search" >
+                        <!-- <button type="submit"> -->
+                            <!-- <i class="fa-solid fa-magnifying-glass"  ></i> -->
+                            <span class="link-text">Search</span>
+                        <!-- </button> -->
+                    
+                    </input>
+                </form>
+        <!-- </nav> -->
         
         <main class="homepage" >
             <h1>
@@ -96,7 +98,7 @@ require_once("verify_user.php");
             console.log("TEST") ;
             if($(window).scrollTop() + $(window).height() > $(document).height() -1.5)
             {    
-                console.log("TEST get more posts") ;
+                
                 getPost();
             }
             

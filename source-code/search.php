@@ -12,41 +12,47 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
-<?php
-require_once("verify_user.php");
-require_once('credentials.php');
-$connection = new mysqli($hn, $un, $pw, $db);
-if(ISSET($_POST['searchVal'])){
-    $searchq = $_POST['searchVal'];
-    $searchq = preg_replace("#[^0-9a-z]#i","", $searchq);
-    
-    $query = "SELECT * FROM users WHERE firstName LIKE '%$searchq%' OR lastName LIKE '%$searchq%' or id LIKE '%$searchq%'";
 
-    $result = $connection->query($query); 
-    $data = '';
-    $response = '';
-    if($result->num_rows == 0){
-        $response = "THERE ARE NO RESULTS";
 
-    }
-    else{
-        while($data = mysqli_fetch_assoc($result))
-        {
-            
-            echo "hellow"   ;
+    <?php
+        require_once("verify_user.php");
+        require_once('credentials.php');
+        $connection = new mysqli($hn, $un, $pw, $db);
+       
+            if(ISSET($_POST['searchVal'])){
+                
+                $searchq = $_POST['searchVal'];
+                $searchq = preg_replace("#[^0-9a-z]#i","", $searchq);
+                
+                $query = "SELECT * FROM users WHERE firstName LIKE '%$searchq%' OR lastName LIKE '%$searchq%' or id LIKE '%$searchq%'";
 
-            $response .='
-                <div class="post">
-                    <a href="userpage.php?user='.$data['id'].'">
-                        <h2>'.$data['id'].'</h2>
-                    </a>                
-                </div>    
-            ';
+                $result = $connection->query($query); 
+                $data = '';
+                $response = '';
+                if($result->num_rows == 0){
+                    $response = "THERE ARE NO RESULTS";
+
+                }
+                else{
+                    while($data = mysqli_fetch_assoc($result))
+                    {
+                        
+
+                        $response .='
+                            <div class="post">
+                                <a href="userpage.php?user='.$data['id'].'">
+                                    <h2>'.$data['id'].'</h2>
+                                </a>                
+                            </div>    
+                        ';
+                    }
+                }
+                exit($response);
         }
-    }
-    exit($response);
-}
-?>
+                    
+        ?>
+            
+      
 
 <body>
     
@@ -122,6 +128,22 @@ if(ISSET($_POST['searchVal'])){
 
 
 <script>
+    function searchF(){
+            var searchTxt = "<?php echo $_POST['search'] ?>"
+            console.log(searchTxt);
+            if(searchTxt != "")
+            {
+                $.post("search.php", {searchVal: searchTxt}, function(result) {
+                $("#homepage").html(result);
+            
+                });
+            }
+
+        }
+    
+    $(document).ready(function (){
+        searchF();
+    });
 
     function searchq() {
         console.log("FIREING FUNCTION");

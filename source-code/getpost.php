@@ -4,7 +4,6 @@ session_start();
 require_once('credentials.php');
 $connection = new mysqli($hn, $un, $pw, $db);
 if(ISSET($_POST['userPost'])) {
-    console.log($_POST['userPost']);
     if($_POST['userPost'] == 0){
         $postStart = $_POST['start'];
 

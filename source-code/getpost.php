@@ -97,17 +97,16 @@ if(ISSET($_POST['userPost'])) {
                                 <p>12</p>
                             </div>
                             <div class="post-icon post-icon-edit">
-                                <a href="testpage.php">
-                                    <i class="fa-solid fa-pencil"></i>
-                                </a>         
-    
-                            </div>
-                            <div class="post-date">'.$data['created_at'].'</div>  
+                            <a href="testpage.php">
+                                <i class="fa-solid fa-pencil"></i>
+                            </a>         
                         </div>
-                    </div>                
-                </div>    
-                ';
-            }
+                    </div>
+                    <div class="post-date">'.$data['created_at'].'</div>
+                </div>                
+            </div>    
+            ';
+        }
             exit($response);
         }
         
@@ -197,10 +196,9 @@ if(ISSET($_POST['userPost'])) {
                             <a href="testpage.php">
                                 <i class="fa-solid fa-pencil"></i>
                             </a>         
-
                         </div>
-                        <div class="post-date">'.$data['created_at'].'</div>  
                     </div>
+                    <div class="post-date">'.$data['created_at'].'</div>
                 </div>                
             </div>    
             ';

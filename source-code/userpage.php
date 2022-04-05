@@ -192,6 +192,31 @@ if ($result->num_rows > 0) {
 </html>
 
 <script>
+function likePost(postID) {
+    $.post(
+        "like_post.php",
+        {
+            postID: postID
+        },
+        function(result) {
+
+            var json = JSON.parse(result);
+
+            if (json.success == "true") {
+                var post = document.getElementById('p.' + postID);
+                var like_element = post.querySelector('.post-icon-like');
+                if (json.action == "liked") {
+                    like_element.classList.add("is-liked");
+                }
+                else {
+                    like_element.classList.remove("is-liked");
+                }
+                like_element.querySelector('p').innerHTML = json.numlikes;
+            }
+        }
+    );
+}
+
 function friend_request(username, update) {
     var username = username;
     var update = update;

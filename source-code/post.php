@@ -210,6 +210,7 @@ else if ($_GET['action'] == 'view') {
                 $like_class = "";
             }
             $comment_content = "";
+
             if ($_GET['action'] == 'view') {
                 $post_content = '
                 <p class="post-content">
@@ -249,26 +250,67 @@ else if ($_GET['action'] == 'view') {
                 </div>
                 <div class="post-date">'.$date_content.'</div>
                 ';
-                $comment_content = '
-                <div class="comment" id="c.1">
-                    <a href="userpage.php?user=agreen27">
-                        <h2>agreen27</h2>
-                    </a>
-                    <p class="comment-content">
-                        Sample Comment Content
-                    </p>
-                    <div class="comment-footer">
-                        <div class="comment-icon-holder">
+
+                $query = "SELECT * FROM comments WHERE postID = '".$data['postID']."'";
+
+                $subresult = $conn->query($query);
+
+                if (!$subresult) {
+                    die($connection->error);
+                }
+                
+                if ($subresult->num_rows > 0) {
+                    while($row = mysqli_fetch_array($subresult)) {
+
+                        $query = "SELECT username FROM comments WHERE commentid = '".$row['commentID']."'";
+
+                        $comment_query_result = $conn->query($query);
+
+                        if (!$comment_query_result) {
+                            die($connection->error);
+                        }
+
+                        $comment_query_data = mysqli_fetch_array($comment_query_result);
+
+                        if ($comment_query_data['username'] == $username) {
+                            $comment_edit_button = '
                             <div class="comment-icon comment-icon-edit">
-                                <a href="comment.php?action=edit&id=1">
+                                <a href="comment.php?action=edit&id='.$row['commentID'].'">
                                     <i class="fa-solid fa-pencil"></i>
                                 </a>         
-                            </div>
+                            </div>';
+                        }
+                        else {
+                            $comment_edit_button = "";
+                        }
+
+                        if ($row['created_at'] == $row['last_edited_at']) {
+                            $date = new DateTime($row['created_at']);
+                            $comment_date_content = 'Created: '.date_format($date, 'M j, Y \a\t H:i:s');
+                        }
+                        else {
+                            $date = new DateTime($row['last_edited_at']);
+                            $comment_date_content = 'Edited: '.date_format($date, 'M j, Y \a\t H:i:s');
+                        }
+
+                        $comment_content .= '
+                        <div class="comment" id="c.'.$row['commentID'].'">
+                            <a href="userpage.php?user='.$row['username'].'">
+                                <h2>'.$row['username'].'</h2>
+                            </a>
+                            <p class="comment-content">
+                                '.$row['content'].'
+                            </p>
+                            <div class="comment-footer">
+                                <div class="comment-icon-holder">
+                                    '.$comment_edit_button.'
+                                </div>
+                                <div class="post-date">'.$comment_date_content.'</div>  
+                            </div>                
                         </div>
-                        <div class="post-date">Some Date</div>  
-                    </div>                
-                </div>
-                ';
+                        ';
+                    }
+                }       
             }
             else {
 
@@ -290,7 +332,7 @@ else if ($_GET['action'] == 'view') {
                         '.$footer_content.'   
                     </div>                
                 </div>    
-        '.$comment_content;;
+        '.$comment_content;
         echo $html_content; 
         }
         else if ($_GET['action'] == 'create') {

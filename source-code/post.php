@@ -601,7 +601,7 @@ else if ($_GET['action'] == 'view') {
     }
 
     function createPost() {
-        var content = document.getElementById('content').value;
+        var content = document.getElementsByClassName('post')[0].querySelector('textarea').value;
 
         $.post(
             "create_post.php",

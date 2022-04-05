@@ -23,7 +23,19 @@ if (isset($_REQUEST["content"])) {
         die($conn->error);
     }
 
-    echo json_encode(array("success" => "true", "location" => "home.php"));
+    $query = "SELECT LAST_INSERT_ID() as postID";
+
+    $result = $conn->query($query);
+
+    if (!$result) {
+        echo json_encode(array("success" => "false"));
+        die($conn->error);
+    }
+
+    $data = mysqli_fetch_assoc($result);
+    $new_postID = $data['postID'];
+
+    echo json_encode(array("success" => "true", "location" => "post.php?action=view&id=$new_postID"));
 }
 else {
     echo json_encode(array("success" => "false"));

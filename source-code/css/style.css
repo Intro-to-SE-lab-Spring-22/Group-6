@@ -234,6 +234,10 @@ body::-webkit-scrollbar-thumb{
   font-weight: 550;
 }
 
+.post-content {
+  margin-bottom: 1rem;
+}
+
 .post-footer {
   width: auto;
   display: flex;
@@ -280,4 +284,125 @@ body::-webkit-scrollbar-thumb{
 .post-date {
   margin-left: auto;
   margin-right: 0;
+}
+
+.post textarea {
+  width: 100%;
+  overflow: hidden;
+}
+
+.post button {
+  background-color: #008cff;
+  color: white;
+  border: none;
+  width: 10rem;
+}
+
+/* Comment Styling */
+.comment {
+  margin: 1rem auto;
+  width: clamp(18rem, 50%, 50%);
+  background-color: white;
+  padding: 1rem;
+}
+
+@media screen and (max-width: 480px) {
+  .comment {
+    width: 80%
+  }
+}
+
+.comment h2 {
+  color: #008cff;
+  font-weight: 550;
+}
+
+.comment-content {
+  margin-bottom: 1rem;
+}
+
+.comment-footer {
+  width: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.comment-icon-holder {
+  display: flex;
+}
+
+.comment-icon {
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.comment-icon:hover {
+  color: #83c7ff;
+}
+
+.comment-icon a {
+  color: inherit;
+}
+
+.comment-icon a:hover {
+  color: inherit;
+}
+
+.comment-date {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.comment textarea {
+  width: 100%;
+  overflow: hidden;
+}
+
+.comment button {
+  background-color: #008cff;
+  color: white;
+  border: none;
+  width: 10rem;
+}
+
+
+/* Reference: https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ */
+.grow-wrap {
+  /* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
+  display: grid;
+  width: 100%;
+}
+.grow-wrap::after {
+  /* Note the weird space! Needed to preventy jumpy behavior */
+  content: attr(data-replicated-value) " ";
+
+  /* This is how textarea text behaves */
+  white-space: pre-wrap;
+
+  /* Hidden from view, clicks, and screen readers */
+  visibility: hidden;
+}
+.grow-wrap > textarea {
+  /* You could leave this, but after a user resizes, then it ruins the auto sizing */
+  resize: none;
+
+  /* Firefox shows scrollbar on growth, you can hide like this. */
+  overflow: hidden;
+}
+.grow-wrap > textarea,
+.grow-wrap::after {
+  /* Identical styling required!! */
+  border: 2px solid #83c7ff;
+  padding: 0.5rem;
+  font: inherit;
+
+  min-width: 0;
+  min-height: 0;
+  overflow-wrap: break-word;
+
+  /* Place on top of each other */
+  grid-area: 1 / 1 / 2 / 2;
 }

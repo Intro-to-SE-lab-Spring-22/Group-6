@@ -28,7 +28,7 @@ if(ISSET($_POST['userPost'])) {
         }
 
     
-        echo "\n";
+        //echo "\n";
         if($result->num_rows > 0) {
             $query = "SELECT * FROM post WHERE user_id IN ('" . implode("', '", $friendList) 
             . "') ORDER BY created_at DESC LIMIT $start, $limit";
@@ -72,6 +72,29 @@ if(ISSET($_POST['userPost'])) {
                 else {
                     $like_class = "";
                 }
+
+                $query = "SELECT COUNT(*) as num_comments FROM comments WHERE postID = '".$data['postID']."'";
+    
+                $subresult = $connection->query($query);
+                
+                if (!$subresult) {
+                    die($connection->error);
+                }
+    
+                $subdata = mysqli_fetch_assoc($subresult);
+                $num_comments = intval($subdata['num_comments']);
+
+                if ($data['user_id'] == $username) {
+                    $edit_button = 
+                        '<div class="post-icon post-icon-edit">
+                            <a href="post.php?action=edit&id='.$data['postID'].'">
+                                <i class="fa-solid fa-pencil"></i>
+                            </a>         
+                        </div>';
+                }
+                else {
+                    $edit_button = "";
+                }
     
                 $response .='
                     
@@ -92,16 +115,11 @@ if(ISSET($_POST['userPost'])) {
                                         <p>'.$numlikes.'</p>
                                     </div>
                                     <div class="post-icon post-icon-comment">
-                                        <a href="">
+                                        <a href="post.php?action=view&id='.$data['postID'].'">
                                             <i class="fa-solid fa-comment"></i>
                                         </a>      
-                                        <p>12</p>
-                                    </div>
-                                    <div>
-                                        <a href="post.php?action=view&id='.$data['postID'].'">
-                                            View Discussion
-                                        </a>
-                                    </div>
+                                        <p>'.$num_comments.'</p>
+                                    </div>'.$edit_button.'
                                 </div>
                                 <div class="post-date">'.$data['created_at'].'</div>
                             </div>  
@@ -174,6 +192,29 @@ if(ISSET($_POST['userPost'])) {
                 $like_class = "";
             }
 
+            $query = "SELECT COUNT(*) as num_comments FROM comments WHERE postID = '".$data['postID']."'";
+    
+            $subresult = $connection->query($query);
+            
+            if (!$subresult) {
+                die($connection->error);
+            }
+
+            $subdata = mysqli_fetch_assoc($subresult);
+            $num_comments = intval($subdata['num_comments']);
+
+            if ($data['user_id'] == $username) {
+                $edit_button = 
+                    '<div class="post-icon post-icon-edit">
+                        <a href="post.php?action=edit&id='.$data['postID'].'">
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>         
+                    </div>';
+            }
+            else {
+                $edit_button = "";
+            }
+
             $response .='
                 <div class="post" id="p.'.$data['postID'].'">
                 <a href="userpage.php?user='.$data['user_id'].'">
@@ -191,21 +232,11 @@ if(ISSET($_POST['userPost'])) {
                             <p>'.$numlikes.'</p>
                         </div>
                         <div class="post-icon post-icon-comment">
-                            <a href="testpage.php">
+                            <a href="post.php?action=view&id='.$data['postID'].'">
                                 <i class="fa-solid fa-comment"></i>
                             </a>      
-                            <p>12</p>
-                        </div>
-                        <div class="post-icon post-icon-edit">
-                            <a href="post.php?action=edit&id='.$data['postID'].'">
-                                <i class="fa-solid fa-pencil"></i>
-                            </a>         
-                        </div>
-                        <div>
-                            <a href="post.php?action=view&id='.$data['postID'].'">
-                                View Discussion
-                            </a>
-                        </div>
+                            <p>'.$num_comments.'</p>
+                        </div>'.$edit_buttom.'
                     </div>
                     <div class="post-date">'.$data['created_at'].'</div>
                 </div>                

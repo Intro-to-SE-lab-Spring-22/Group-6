@@ -12,9 +12,47 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
-<?php
-require_once("verify_user.php");
-?>
+
+
+    <?php
+        require_once("verify_user.php");
+        require_once('credentials.php');
+        $connection = new mysqli($hn, $un, $pw, $db);
+       
+            if(ISSET($_POST['searchVal'])){
+                
+                $searchq = $_POST['searchVal'];
+                $searchq = preg_replace("#[^0-9a-z]#i","", $searchq);
+                
+                $query = "SELECT * FROM users WHERE firstName LIKE '%$searchq%' OR lastName LIKE '%$searchq%' or id LIKE '%$searchq%'";
+
+                $result = $connection->query($query); 
+                $data = '';
+                $response = '';
+                if($result->num_rows == 0){
+                    $response = "THERE ARE NO RESULTS";
+
+                }
+                else{
+                    while($data = mysqli_fetch_assoc($result))
+                    {
+                        
+
+                        $response .='
+                            <div class="post">
+                                <a href="userpage.php?user='.$data['id'].'">
+                                    <h2>'.$data['id'].'</h2>
+                                </a>                
+                            </div>    
+                        ';
+                    }
+                }
+                exit($response);
+        }
+                    
+        ?>
+            
+      
 
 <body>
     
@@ -32,7 +70,7 @@ require_once("verify_user.php");
                 </a>
             </li>
             <li class="nav-item" id="compose">
-                <a href="post.php?action=create" class="nav-link">
+                <a href="testpage.php" class="nav-link">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M467.1 241.1L351.1 288h94.34c-7.711 14.85-16.29 29.28-25.87 43.01l-132.5 52.99h85.65c-59.34 52.71-144.1 80.34-264.5 52.82l-68.13 68.13c-9.38 9.38-24.56 9.374-33.94 0c-9.375-9.375-9.375-24.56 0-33.94l253.4-253.4c4.846-6.275 4.643-15.19-1.113-20.95c-6.25-6.25-16.38-6.25-22.62 0l-168.6 168.6C24.56 58 366.9 8.118 478.9 .0846c18.87-1.354 34.41 14.19 33.05 33.05C508.7 78.53 498.5 161.8 467.1 241.1z"/></svg>
                     
                     <span class="link-text">Compose</span>
@@ -59,27 +97,24 @@ require_once("verify_user.php");
 
 
     <div id="right" class="column">
-        <!-- <nav class="topnav"> -->
+        <nav class="topnav">
                 
                 
                 <!-- <label for="search">Search</label>   -->
                 
                 <!-- <a href="search"> -->
-                <form method="POST" action="search.php" class="topnav">
-                    <input type="text" name="search" placeholder="Search"  id='search'>
-                    <input type="submit" id="search" >
-                        <!-- <button type="submit"> -->
-                            <!-- <i class="fa-solid fa-magnifying-glass"  ></i> -->
-                            <span class="link-text">Search</span>
-                        <!-- </button> -->
-                    
-                    </input>
-                </form>
-        <!-- </nav> -->
-        
+                <input type="text" name="search" placeholder="Search" onkeydown="searchq()">
+                <a href="search.php" id="search">
+                    <!-- <button type="submit"> -->
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span class="link-text">Search</span>
+                    <!-- </button> -->
+                
+                </a>
+        </nav>
         <main class="homepage" >
             <h1>
-                Your Timeline
+                Results
             </h1>
             <div id="homepage">
 
@@ -88,90 +123,35 @@ require_once("verify_user.php");
             
         </main>
     </div>
-    <script type="text/javascript">
-        var start = 0;
-        var limit = 10;
-        var reachedMax = false;
-        console.log("TEST1") ;
-
-        $(window).scroll(function(){
-            console.log("TEST") ;
-            if($(window).scrollTop() + $(window).height() > $(document).height() -1.5)
-            {    
-                
-                getPost();
-            }
-            
-        });
-
-        $(document).ready(function (){
-            
-            
-            if($(window).height() >= $(document).height()) {
-                console.log("THE HEIGHT DOES NOT SEEM TO MATCH THE WINDOW, MUST LOAD MORE");
-                getPost();
-            }
-            
-        });
-
-        
-        
-
-
-        function getPost(){
-            
-            if (reachedMax){
-                return;
-            }
-            $.ajax({
-                url: 'getpost.php',
-                type: "POST",
-                dataType: 'text',
-                data: {
-                    getData: 1,
-                    userPost: 0,
-                    start: start,
-                    limit: limit
-                },
-                success: function(response) {
-                    if(response == "reachedMax")
-                        reachedMax == true;
-                    else {
-                        start += limit;
-                        $("#homepage").append(response);
-                    }
-                }
-            })
-        }
-
-        function likePost(postID) {
-            $.post(
-                "like_post.php",
-                {
-                    postID: postID
-                },
-                function(result) {
-
-                    var json = JSON.parse(result);
-
-                    if (json.success == "true") {
-                        var post = document.getElementById('p.' + postID);
-                        var like_element = post.querySelector('.post-icon-like');
-                        if (json.action == "liked") {
-                            like_element.classList.add("is-liked");
-                        }
-                        else {
-                            like_element.classList.remove("is-liked");
-                        }
-                        like_element.querySelector('p').innerHTML = json.numlikes;
-                    }
-                }
-            );
-        }
-    </script>
-
-
 
 </body>
-</html>
+
+
+<script>
+    function searchF(){
+            var searchTxt = "<?php echo $_POST['search'] ?>"
+            console.log(searchTxt);
+            if(searchTxt != "")
+            {
+                $.post("search.php", {searchVal: searchTxt}, function(result) {
+                $("#homepage").html(result);
+            
+                });
+            }
+
+        }
     
+    $(document).ready(function (){
+        searchF();
+    });
+
+    function searchq() {
+        console.log("FIREING FUNCTION");
+        var searchTxt = $("input[name='search']").val();
+        console.log(searchTxt);
+        $.post("search.php", {searchVal: searchTxt}, function(result) {
+            $("#homepage").html(result);
+        
+        });
+    }
+</script>

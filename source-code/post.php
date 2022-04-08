@@ -171,6 +171,7 @@ else if ($_GET['action'] == 'view') {
     </div>
     <main>
         <?php
+        //decide function by get part of url
         if ($_GET['action'] == 'view' || $_GET['action'] == 'edit') {
             $query = "SELECT * FROM post WHERE postID = '".$_GET['id']."'";
             
@@ -181,7 +182,7 @@ else if ($_GET['action'] == 'view') {
             }
         
             $data = mysqli_fetch_assoc($result);
-
+            //get post like other pages. Loads the necessary data like comments and likes
             $query = "SELECT COUNT(*) as numlikes FROM likes WHERE postID = ".$data['postID'];
 
             $subresult = $conn->query($query);
@@ -211,7 +212,7 @@ else if ($_GET['action'] == 'view') {
                 $like_class = "";
             }
             $comment_content = "";
-
+            //view has no edit button
             if ($_GET['action'] == 'view') {
                 $post_content = '
                 <p class="post-content">
@@ -256,7 +257,7 @@ else if ($_GET['action'] == 'view') {
                 </div>
                 <div class="post-date">'.$date_content.'</div>
                 ';
-
+                //get comments
                 $query = "SELECT * FROM comments WHERE postID = '".$data['postID']."'";
 
                 $subresult = $conn->query($query);
@@ -331,7 +332,6 @@ else if ($_GET['action'] == 'view') {
                 </div>';
             }
             else {
-
                 // Reference: https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/
                 $post_content = '
                 <div class="grow-wrap post-content">
@@ -353,6 +353,8 @@ else if ($_GET['action'] == 'view') {
         '.$comment_content;
         echo $html_content; 
         }
+                    //create the posts
+
         else if ($_GET['action'] == 'create') {
             $post_content = '
                 <div class="grow-wrap post-content">
@@ -377,6 +379,7 @@ else if ($_GET['action'] == 'view') {
     </main>
 
 <script>
+    //eddit comment
     function editComment(eventElement) {
         var comment = eventElement.parentElement.parentElement;
         var commentID = comment.id.substring(2);
@@ -398,6 +401,7 @@ else if ($_GET['action'] == 'view') {
             }
         );
     }
+    //make it editable if you own the comment
     function makeCommentEditable(eventElement) {
         var commentID = eventElement.parentElement.parentElement.parentElement.parentElement.id;
 
@@ -435,7 +439,7 @@ else if ($_GET['action'] == 'view') {
         comment_footer.prepend(new_textbox_button);
     }
     function addComment() {
-
+        //add comments
         var postID = document.getElementsByClassName('post')[0].id.substring(2);
         var content = document.getElementById('c.new').querySelector('textarea').value;
 
@@ -456,6 +460,7 @@ else if ($_GET['action'] == 'view') {
             }
         );
     }
+    // add comment onto part of screen
     function updateCommentBox(user, content, commentID, created_at, action) {
 
         // Remove text box
@@ -555,6 +560,7 @@ else if ($_GET['action'] == 'view') {
         new_textbox.appendChild(new_textbox_footer);
         document.querySelector('main').appendChild(new_textbox);
     }
+    //similar to other pages likepost function. updating db and making button change color
     function likePost(postID) {
         $.post(
             "like_post.php",
@@ -579,7 +585,7 @@ else if ($_GET['action'] == 'view') {
             }
         );
     }
-
+    //edit button sends post to the controller
     function editPost(postID) {
         var content = document.getElementById('content').value;
 
@@ -599,7 +605,7 @@ else if ($_GET['action'] == 'view') {
             }
         );
     }
-
+    //send post to controller which sends to db
     function createPost() {
         var content = document.getElementsByClassName('post')[0].querySelector('textarea').value;
 

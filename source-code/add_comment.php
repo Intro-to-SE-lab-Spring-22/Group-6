@@ -2,7 +2,7 @@
 session_start();
 
 require_once('credentials.php');
-
+//controller for comments
 if (isset($_REQUEST["content"]) && isset($_REQUEST['postID'])) {
     $content = $_REQUEST["content"];
     $postID = $_REQUEST["postID"];
@@ -14,7 +14,7 @@ if (isset($_REQUEST["content"]) && isset($_REQUEST['postID'])) {
         echo json_encode(array("success" => "false"));
         die($conn->connect_error);
     }
-
+    //query
     $query = "SELECT COUNT(*) as post_exists FROM post WHERE postID = '$postID'";
 
     $result = $conn->query($query);
@@ -31,6 +31,7 @@ if (isset($_REQUEST["content"]) && isset($_REQUEST['postID'])) {
         echo json_encode(array("success" => "false"));
     }
     else {
+        //seeing which user created post
         $query = "SELECT user_id FROM post WHERE postID = '$postID'";
 
         $result = $conn->query($query);
@@ -42,7 +43,7 @@ if (isset($_REQUEST["content"]) && isset($_REQUEST['postID'])) {
 
         $data = mysqli_fetch_array($result);
         $post_user = $data['user_id'];
-
+        //make sure only friends can comment 
         $query = "SELECT COUNT(*) AS are_friends FROM friends WHERE id_sender = '$user' AND id_receiver = '$post_user'";
 
         $result = $conn->query($query);
@@ -59,6 +60,7 @@ if (isset($_REQUEST["content"]) && isset($_REQUEST['postID'])) {
             echo json_encode(array("success" => "false"));
         }
         else {
+            //add comments to  db
             $query = "INSERT INTO comments (postID, username, content) VALUES ('$postID', '$user', '$content')";
 
             $result = $conn->query($query);
@@ -93,7 +95,7 @@ if (isset($_REQUEST["content"]) && isset($_REQUEST['postID'])) {
 
             $date = new DateTime($data['created_at']);
             $created_at = date_format($date, 'M j, Y \a\t H:i:s');
-
+            //send comment data back to page
             echo json_encode(array("success" => "true", "user" => "$user", "content" => "$content", "commentID" => "$new_commentID", "created_at" => "$created_at"));
         }
     }

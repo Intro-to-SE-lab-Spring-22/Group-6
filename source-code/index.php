@@ -40,12 +40,12 @@
 </html>
 
 <script>
-
+//submit button that will activate on click
 function submitButton() {
   var username = document.getElementById('username').value;
   var password = document.getElementById('password').value;
 
-
+//send input fields to login.php
   $.post(
     "login.php",
     {
@@ -53,11 +53,13 @@ function submitButton() {
       password: password
     },
     function(result) {
-      var json = JSON.parse(result);
 
+      var json = JSON.parse(result);
+      //get result and if login is successful, will redirect you to the home page
       if (json.success == "true") {
         document.location = json.location;
       }
+      //else notify of faulty login credentials
       else {
         document.getElementById('placeholder').innerHTML = "Your username or password is incorrect";
       }

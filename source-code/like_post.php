@@ -6,14 +6,14 @@ require_once('credentials.php');
 if (isset($_REQUEST["postID"])) {
     $postID = $_REQUEST["postID"];
     $user = $_SESSION["username"];
-
+//take postid and update numlikes in database
     $conn = new mysqli($hn, $un, $pw, $db);
 
     if ($conn->connect_error) {
         die($conn->connect_error);
         echo json_encode(array("success" => "false", "reason" => "connection_error"));
     }
-
+    //query
     $query = "SELECT COUNT(*) as already_liked FROM likes WHERE postID = '".$postID."' AND username = '".$user."'";
 
     $result = $conn->query($query);
@@ -24,9 +24,9 @@ if (isset($_REQUEST["postID"])) {
     }
 
     $data = mysqli_fetch_assoc($result);
-
+    //see if user has already liked it
     $already_liked = intval($data['already_liked']);
-
+    //if the user wants to un-like the post, it will decrement the num of like sin the db
     if ($already_liked > 0) {
         $query = "DELETE FROM likes WHERE postID = '".$postID."' AND username = '".$user."'";
 

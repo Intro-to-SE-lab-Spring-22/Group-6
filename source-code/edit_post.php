@@ -14,7 +14,7 @@ if (isset($_REQUEST["content"]) && isset($_REQUEST["postID"])) {
         echo json_encode(array("success" => "false"));
         die($conn->connect_error);
     }
-
+    //get post results
     $query = "SELECT COUNT(*) AS post_exists FROM post WHERE postID = '$postID'";
 
     $result = $conn->query($query);
@@ -46,6 +46,7 @@ if (isset($_REQUEST["content"]) && isset($_REQUEST["postID"])) {
             echo json_encode(array("success" => "false"));
         }
         else {
+            //set the post to new updated content
             $query = "UPDATE post SET content = '$content' WHERE postID = '$postID'";
 
             $result = $conn->query($query);

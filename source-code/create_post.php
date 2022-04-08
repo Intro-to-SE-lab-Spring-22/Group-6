@@ -2,7 +2,7 @@
 session_start();
 
 require_once('credentials.php');
-
+//inserting post into database and getting last_insert_id
 if (isset($_REQUEST["content"])) {
     $content = $_REQUEST["content"];
     $user = $_SESSION["username"];

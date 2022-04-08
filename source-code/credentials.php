@@ -1,7 +1,7 @@
 <?php
 // Info from Heroku dashboard
-$hn = getenv("DATABASE_URL");
-$un = getenv("DATABASE_USERNAME");
-$pw = getenv("DATABASE_PASSWORD");
-$db = getenv("DATABASE_NAME");
+$hn = "localhost:3306";//getenv("DATABASE_URL");
+$un = "root";//getenv("DATABASE_USERNAME");
+$pw = '';//getenv("DATABASE_PASSWORD");
+$db = "FBCLONE";//getenv("DATABASE_NAME");
 ?>

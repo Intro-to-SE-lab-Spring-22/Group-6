@@ -31,9 +31,9 @@ if (isset($_SESSION['username'])) {
           </div>
           <div class="form-group">
             <label>Password</label>
-            <input type="password" id="password"><br>
+            <input type="password" name="password" id="password"><br>
           </div>
-          <button type="submit" id="submit_log_in" value="Log In" class="btn btn-outline-primary btn-lg btn-block" onclick="submitButton()">
+          <button type="submit" name="submit_log_in" id="submit_log_in" class="btn btn-outline-primary btn-lg btn-block" onclick="submitButton()">
             Log In
           </button>
           <a href="create_acct.php" class="btn btn-outline-primary btn-lg btn-block">

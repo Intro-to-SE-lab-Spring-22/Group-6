@@ -13,7 +13,7 @@ if (isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
     if ($conn->connect_error) {
         die($conn->connect_error);
     }
-
+    //getting usernames 
     $query = "SELECT * FROM users
     WHERE id = '$username'";
 
@@ -23,6 +23,8 @@ if (isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
     }
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_array()) {
+
+            //verify plaintext vs hash to allow log in
             if (password_verify($password,$row['password'])) {
                 echo json_encode(array("success" => "true", "location" => "home.php"));
                 $_SESSION['username'] = $username;

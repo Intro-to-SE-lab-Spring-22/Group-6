@@ -59,23 +59,12 @@ require_once("verify_user.php");
 
 
     <div id="right" class="column">
-        <!-- <nav class="topnav"> -->
-                
-                
-                <!-- <label for="search">Search</label>   -->
-                
-                <!-- <a href="search"> -->
-                <form method="POST" action="search.php" class="topnav">
-                    <input type="text" name="search" placeholder="Search"  id='search'>
-                    <input type="submit" id="search" >
-                        <!-- <button type="submit"> -->
-                            <!-- <i class="fa-solid fa-magnifying-glass"  ></i> -->
-                            <span class="link-text">Search</span>
-                        <!-- </button> -->
-                    
-                    </input>
-                </form>
-        <!-- </nav> -->
+        <form method="POST" action="search.php" class="topnav">
+            <input type="text" name="search" placeholder="Search"  id='search'>
+            <input type="submit" id="search" >
+                <span class="link-text">Search</span>
+            </input>
+        </form>
         
         <main class="homepage" >
             <h1>
@@ -94,6 +83,7 @@ require_once("verify_user.php");
         var reachedMax = false;
         console.log("TEST1") ;
 
+        //script to load more posts whenuser has reached bottom of page
         $(window).scroll(function(){
             console.log("TEST") ;
             if($(window).scrollTop() + $(window).height() > $(document).height() -1.5)
@@ -104,6 +94,7 @@ require_once("verify_user.php");
             
         });
 
+        //initial post loading for page, after nav and other objects have loaded
         $(document).ready(function (){
             
             
@@ -114,10 +105,7 @@ require_once("verify_user.php");
             
         });
 
-        
-        
-
-
+        //uses ajax to get posts. sends a POST to post.php requesting the post object. when recieved it appends it to the html elements.
         function getPost(){
             
             if (reachedMax){
@@ -143,7 +131,8 @@ require_once("verify_user.php");
                 }
             })
         }
-
+        
+        //Like posts. send post to like_post.php with postID num and will change the heart to blue once liked.
         function likePost(postID) {
             $.post(
                 "like_post.php",

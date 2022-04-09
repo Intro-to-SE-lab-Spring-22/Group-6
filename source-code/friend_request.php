@@ -17,7 +17,7 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["update"])) {
 
     $user_exists = $are_friends = $request_sent = $request_pending = false;
 
-    // Display data
+    //check that target user exists
     $query = "SELECT * FROM users
     WHERE id = '$display_username'";
 
@@ -30,8 +30,10 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["update"])) {
         $user_exists = true;
     }
 
+    //user exists and is distinct from logged-in user
     if ($user_exists && $user_username != $display_username) {
-        // Check if already friends
+
+        //check if already friends
         $query = "SELECT * FROM friends WHERE id_sender = '$user_username' AND id_receiver = '$display_username'";
     
         $result = $conn->query($query);
@@ -39,10 +41,14 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["update"])) {
         if (!$result) {
             die($conn->error);
         }
-    
+        
+        //are friends
         if ($result->num_rows > 0) {
             $are_friends = true;
+
+            //update friend status
             if ($update == "true") {
+                //remove friendship
                 $query = "DELETE FROM friends
                 WHERE id_sender='$display_username' AND id_receiver='$user_username'";
 
@@ -51,7 +57,7 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["update"])) {
                 if (!$result) {
                     die($conn->error);
                 }
-            
+
                 $query = "DELETE FROM friends
                 WHERE id_sender='$user_username' AND id_receiver='$display_username'";
 
@@ -62,12 +68,14 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["update"])) {
                 }
                 echo "Add Friend";
             }
+
+            //do not update friend status
             else {
                 echo "Remove Friend";
             }
         }
         else {
-            // Check if friend request already sent
+            //check if friend request already sent
             $query = "SELECT * FROM pendingfriends WHERE from_id = '$user_username' AND to_id = '$display_username'";
     
             $result = $conn->query($query);
@@ -76,9 +84,13 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["update"])) {
                 die($conn->error);
             }
     
+            //friend request already sent
             if ($result->num_rows > 0) {
                 $request_sent = true;
+
+                //update friend status
                 if ($update == "true") {
+                    //remove friend request
                     $query = "DELETE FROM pendingfriends
                     WHERE from_id='$user_username' AND to_id='$display_username'";
 
@@ -89,12 +101,13 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["update"])) {
                     }
                     echo "Add Friend";
                 }
+                //do not update friend status
                 else {
                     echo "Cancel Friend Request";
                 }
             }
             else {
-                // Check if friend request is pending
+                //check if friend request is pending
                 $query = "SELECT * FROM pendingfriends WHERE to_id = '$user_username' AND from_id = '$display_username'";
     
                 $result = $conn->query($query);
@@ -103,9 +116,13 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["update"])) {
                     die($conn->error);
                 }
     
+                //friend request is pending
                 if ($result->num_rows > 0) {
                     $request_pending = true;
+
+                    //update friend status
                     if ($update == "true") {
+                        //remove friend request
                         $query = "DELETE FROM pendingfriends
                         WHERE from_id='$display_username' AND to_id='$user_username'";
     
@@ -115,6 +132,7 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["update"])) {
                             die($conn->error);
                         }
 
+                        //add users to friends table
                         $query = "INSERT INTO friends
                         (id_sender, id_receiver) VALUES ('$user_username', '$display_username')";
     
@@ -135,12 +153,16 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["update"])) {
 
                         echo "Remove Friend";
                     }
+                    //do not update friend status
                     else {
                         echo "Accept Friend Request";
                     }
                 }
+                //not friends and no friend request
                 else {
+                    //update friend status
                     if ($update == "true") {
+                        //create friend request
                         $query = "INSERT INTO pendingfriends
                         VALUES ('$user_username', '$display_username')";
 
@@ -152,6 +174,7 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["update"])) {
 
                         echo "Cancel Friend Request";
                     }
+                    //do not update friend status
                     else {
                         echo "Add Friend";
                     }

@@ -18,12 +18,12 @@
         require_once("verify_user.php");
         require_once('credentials.php');
         $connection = new mysqli($hn, $un, $pw, $db);
-       
+            //function to get search results
             if(ISSET($_POST['searchVal'])){
-                
+                //sanitize
                 $searchq = $_POST['searchVal'];
                 $searchq = preg_replace("#[^0-9a-z]#i","", $searchq);
-                
+                //query
                 $query = "SELECT * FROM users WHERE firstName LIKE '%$searchq%' OR lastName LIKE '%$searchq%' or id LIKE '%$searchq%'";
 
                 $result = $connection->query($query); 
@@ -36,7 +36,7 @@
                 else{
                     while($data = mysqli_fetch_assoc($result))
                     {
-                        
+                    //put results into html        
 
                         $response .='
                             <div class="post">
@@ -128,6 +128,7 @@
 
 
 <script>
+    //javascript to send POST to php at top of the page
     function searchF(){
             var searchTxt = "<?php echo $_POST['search'] ?>"
             console.log(searchTxt);
@@ -140,11 +141,11 @@
             }
 
         }
-    
+    //search when document loads
     $(document).ready(function (){
         searchF();
     });
-
+    //search when you input text into textbox on another page and then hit submit
     function searchq() {
         console.log("FIREING FUNCTION");
         var searchTxt = $("input[name='search']").val();

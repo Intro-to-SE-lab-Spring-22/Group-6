@@ -5,7 +5,7 @@ include('../credentials.php');
 $connection = mysqli_connect($hn, $un, $pw, $db);
 
 
-
+//create account controller 
 $firstName = $lastName = $email = $username = $password = "";
 if(isset($_POST["submit_signup"])){
     $firstName = $_POST["firstname"];
@@ -30,7 +30,7 @@ if(isset($_POST["submit_signup"])){
             </div>';
         }
         else{
-            
+            //sanitize
             $_first_name = mysqli_real_escape_string($connection, $firstname);
             $_last_name = mysqli_real_escape_string($connection, $lastname);
             $_email = mysqli_real_escape_string($connection, $email);
@@ -38,7 +38,7 @@ if(isset($_POST["submit_signup"])){
             $_password = mysqli_real_escape_string($connection, $password);
 
            
-            
+            //filter invalid info
 
             if((preg_match("/^[a-zA-Z ]*$/", $_first_name)) && (preg_match("/^[a-zA-Z ]*$/", $_last_name)) &&
              (filter_var($_email, FILTER_VALIDATE_EMAIL))){

@@ -104,13 +104,14 @@ if ($result->num_rows > 0) {
                 </a>
         </nav>
     <main>
-
+        
         <?php 
+        //load personal data
         if ($user_exists) {
             echo "<h1>$display_username</h1>";
             echo "<p>$firstname $lastname<br>";
             echo "<p>$email</p>";
-
+            //if you are visiting another users page, you can request to be friends with them
             if ($display_username != $user_username) {
                 echo "<br>";
                 echo "<button type=\"submit\" id=\"submit_friend_request\" class=\"btn btn-outline-primary btn-small btn-block\" onclick=\"friend_request('$display_username', 'true')\">";
@@ -121,6 +122,7 @@ if ($result->num_rows > 0) {
         else {
             echo "<p>User does not exist!</p>";
         }
+        //below is posts
         ?>
         <div class="homepage" >
             <h1>
@@ -138,7 +140,7 @@ if ($result->num_rows > 0) {
         var start = 0;
         var limit = 10;
         var reachedMax = false;
-
+        //script similar to home that loads and appends posts to userpage
         $(window).scroll(function(){
             if($(window).scrollTop() + $(window).height() > $(document).height() -1.5)
             {    
@@ -160,7 +162,7 @@ if ($result->num_rows > 0) {
     
     
 
-
+        //send post to getpost.php and appends
         function getPost(){
             var user = "<?php echo $display_username ?>";
             if (reachedMax){
@@ -172,6 +174,7 @@ if ($result->num_rows > 0) {
                 dataType: 'text',
                 data: {
                     getData: 1,
+                    //userpost:1 signifies that it only needs the posts of one user, the username
                     userPost: 1,
                     username: user,
                     start: start,

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once('credentials.php');
+require_once('sql_queries.php');
 
 if (isset($_REQUEST["postID"])) {
     $postID = $_REQUEST["postID"];
@@ -14,89 +14,24 @@ if (isset($_REQUEST["postID"])) {
         echo json_encode(array("success" => "false", "reason" => "connection_error"));
     }
 
-    $query = "SELECT COUNT(*) as already_liked FROM likes WHERE postID = '".$postID."' AND username = '".$user."'";
+    if (postIsLikedByUser($postID, $user)) {
 
-    $result = $conn->query($query);
+        removeLikeFromPost($postID, $user);
 
-    if (!$result) {
-        die($conn->error);
-        echo json_encode(array("success" => "false", "reason" => "connection_error"));
-    }
+        $num_likes = getNumLikesById($postID);
 
-    $data = mysqli_fetch_assoc($result);
-
-    $already_liked = intval($data['already_liked']);
-
-    if ($already_liked > 0) {
-        $query = "DELETE FROM likes WHERE postID = '".$postID."' AND username = '".$user."'";
-
-        $result = $conn->query($query);
-
-        if (!$result) {
-            die($conn->error);
-            echo json_encode(array("success" => "false", "reason" => "connection_error"));
-        }
-
-        $query = "SELECT COUNT(*) as numlikes FROM likes WHERE postID = '".$postID."'";
-
-        $result = $conn->query($query);
-
-        if (!$result) {
-            die($conn->error);
-            echo json_encode(array("success" => "false", "reason" => "connection_error"));
-        }
-
-        $data = mysqli_fetch_assoc($result);
-
-        echo json_encode(array("success" => "true", "action" => "unliked", "numlikes" => $data['numlikes']));
+        echo json_encode(array("success" => "true", "action" => "unliked", "numlikes" => $num_likes));
     }
     else {
-        $query = "SELECT user_id FROM post WHERE postID = ".$postID;
-
-        $result = $conn->query($query);
-
-        if (!$result) {
-            die($conn->error);
-            echo json_encode(array("success" => "false", "reason" => "connection_error"));
-        }
-
-        $data = mysqli_fetch_assoc($result);
-
+        $data = getPostDataById($postID, $user);
         $post_user = $data['user_id'];
 
-        $query = "SELECT COUNT(*) as are_friends FROM friends WHERE id_sender = '".$post_user."' AND id_receiver = '".$user."'";
+        if (areFriends($post_user, $user) || $post_user == $user) {
 
-        $result = $conn->query($query);
+            addLikeToPost($postID, $user);
+            $num_likes = getNumLikesById($postID);
 
-        if (!$result) {
-            die($conn->error);
-        }
-
-        $data = mysqli_fetch_assoc($result);
-        $are_friends = intval($data['are_friends']);
-
-        if ($are_friends > 0 || $post_user == $user) {
-            $query = "INSERT INTO likes VALUES ('".$postID."', '".$user."')";
-
-            $result = $conn->query($query);
-
-            if (!$result) {
-                die($conn->error);
-                echo json_encode(array("success" => "false", "reason" => "connection_error"));
-            }
-
-            $query = "SELECT COUNT(*) as numlikes FROM likes WHERE postID = '".$postID."'";
-
-            $result = $conn->query($query);
-
-            if (!$result) {
-                die($conn->error);
-                echo json_encode(array("success" => "false", "reason" => "connection_error"));
-            }
-
-            $data = mysqli_fetch_assoc($result);
-
-            echo json_encode(array("success" => "true", "action" => "liked", "numlikes" => $data['numlikes']));
+            echo json_encode(array("success" => "true", "action" => "liked", "numlikes" => $num_likes));
             
         }
         else {

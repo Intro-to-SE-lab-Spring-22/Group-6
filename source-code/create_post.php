@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once('credentials.php');
+require_once('sql_queries.php');
 
 if (isset($_REQUEST["content"])) {
     $content = $_REQUEST["content"];
@@ -14,26 +14,7 @@ if (isset($_REQUEST["content"])) {
         die($conn->connect_error);
     }
 
-    $query = "INSERT INTO post (user_id, content) values ('$user', '$content')";
-
-    $result = $conn->query($query);
-
-    if (!$result) {
-        echo json_encode(array("success" => "false"));
-        die($conn->error);
-    }
-
-    $query = "SELECT LAST_INSERT_ID() as postID";
-
-    $result = $conn->query($query);
-
-    if (!$result) {
-        echo json_encode(array("success" => "false"));
-        die($conn->error);
-    }
-
-    $data = mysqli_fetch_assoc($result);
-    $new_postID = $data['postID'];
+    $new_postID = insertNewPost($user, $content);
 
     echo json_encode(array("success" => "true", "location" => "post.php?action=view&id=$new_postID"));
 }

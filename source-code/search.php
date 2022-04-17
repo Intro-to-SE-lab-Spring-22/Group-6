@@ -16,38 +16,31 @@
 
     <?php
         require_once("verify_user.php");
-        require_once('credentials.php');
-        $connection = new mysqli($hn, $un, $pw, $db);
-       
-            if(ISSET($_POST['searchVal'])){
-                
-                $searchq = $_POST['searchVal'];
-                $searchq = preg_replace("#[^0-9a-z]#i","", $searchq);
-                
-                $query = "SELECT * FROM users WHERE firstName LIKE '%$searchq%' OR lastName LIKE '%$searchq%' or id LIKE '%$searchq%'";
-
-                $result = $connection->query($query); 
-                $data = '';
-                $response = '';
-                if($result->num_rows == 0){
-                    $response = "THERE ARE NO RESULTS";
-
+        require_once('sql_queries.php');
+    
+        if (ISSET($_POST['searchVal'])){
+            
+            $searchq = $_POST['searchVal'];
+            $searchq = preg_replace("#[^0-9a-z]#i","", $searchq);
+            
+            $data = searchDatabase($searchq);
+            
+            $response = '';
+            if (count($data) == 0) {
+                $response = "THERE ARE NO RESULTS";
+            }
+            else{
+                foreach ($data as $row) {
+                    $response .='
+                        <div class="post">
+                            <a href="userpage.php?user='.$row['id'].'">
+                                <h2>'.$row['id'].'</h2>
+                            </a>                
+                        </div>    
+                    ';
                 }
-                else{
-                    while($data = mysqli_fetch_assoc($result))
-                    {
-                        
-
-                        $response .='
-                            <div class="post">
-                                <a href="userpage.php?user='.$data['id'].'">
-                                    <h2>'.$data['id'].'</h2>
-                                </a>                
-                            </div>    
-                        ';
-                    }
-                }
-                exit($response);
+            }
+            exit($response);
         }
                     
         ?>

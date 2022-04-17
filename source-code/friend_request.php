@@ -16,6 +16,8 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["update"])) {
                 removeFriends($user_username, $display_username);
                 echo "Add Friend";
             }
+
+            //do not update friend status
             else {
                 echo "Remove Friend";
             }
@@ -27,6 +29,7 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["update"])) {
                     removeFriendRequest($user_username, $display_username);
                     echo "Add Friend";
                 }
+                //do not update friend status
                 else {
                     echo "Cancel Friend Request";
                 }
@@ -40,16 +43,20 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["update"])) {
 
                         echo "Remove Friend";
                     }
+                    //do not update friend status
                     else {
                         echo "Accept Friend Request";
                     }
                 }
+                //not friends and no friend request
                 else {
+                    //update friend status
                     if ($update == "true") {
                         addFriendRequest($user_username, $display_username);
 
                         echo "Cancel Friend Request";
                     }
+                    //do not update friend status
                     else {
                         echo "Add Friend";
                     }

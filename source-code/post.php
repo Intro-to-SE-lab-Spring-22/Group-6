@@ -5,6 +5,10 @@ require_once('sql_queries.php');
 
 $username = $_SESSION["username"];
 
+//ensure that get requests are valid
+//no get request should default to create action
+//no post id should default to create action
+//no action should default to view action
 if (isset($_GET['id'])) {
     if (isset($_GET['action'])) {
         if ($_GET['action'] == 'create') {
@@ -70,6 +74,7 @@ else if ($_GET['action'] == 'view') {
 </head>
 
 <?php
+    //setup editable textbox
     if ($_GET['action'] == 'edit' || $_GET['action'] == 'create') {
         $onload = 'onload="document.getElementById(\'content\').parentNode.dataset.replicatedValue = document.getElementById(\'content\').value"';
     }
@@ -113,22 +118,16 @@ else if ($_GET['action'] == 'view') {
     <div id="right" class="column">
         <nav class="topnav">
                 
-                
-                <!-- <label for="search">Search</label>   -->
-                
-                <!-- <a href="search"> -->
                 <input type="text" placeholder="Search">
                 <a href="search.php" id="search">
-                    <!-- <button type="submit"> -->
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <span class="link-text">Search</span>
-                    <!-- </button> -->
-                
                 </a>
         </nav>
     </div>
     <main>
         <?php
+        //decide function by get request
         if ($_GET['action'] == 'view' || $_GET['action'] == 'edit') {
             
             $post_data = getPostDataById($_GET['id'], $_SESSION['username']);
@@ -139,14 +138,17 @@ else if ($_GET['action'] == 'view') {
             else {
                 $like_class = "";
             }
+
             $comment_content = "";
 
+            //load content for viewing
             if ($_GET['action'] == 'view') {
                 $post_content = '
                 <p class="post-content">
                     '.$post_data['content'].'
                 </p>';
 
+                //users can edit their own post
                 if ($post_username == $username) {
                     $edit_button = '
                     <div class="post-icon post-icon-edit">
@@ -155,6 +157,7 @@ else if ($_GET['action'] == 'view') {
                         </a>         
                     </div>';
                 }
+                //users cannot edit others' posts
                 else {
                     $edit_button = "";
                 }
@@ -163,11 +166,13 @@ else if ($_GET['action'] == 'view') {
                     $date = new DateTime($post_data['created_at']);
                     $date_content = 'Created: '.date_format($date, 'M j, Y \a\t H:i:s');
                 }
+                //post has been edited
                 else {
                     $date = new DateTime($post_data['last_edited_at']);
                     $date_content = 'Edited: '.date_format($date, 'M j, Y \a\t H:i:s');
                 }
 
+                //assemble post footer
                 $footer_content = '
                 <div class="post-icon-holder">
                     <div class="post-icon post-icon-like'.$like_class.'">
@@ -228,6 +233,7 @@ else if ($_GET['action'] == 'view') {
                     </div>
                     ';
                 }
+                //add textbox for creating a new comment
                 $comment_content .= '
                 <div class="comment" id="c.new">
                     <a href="userpage.php?user='.$username.'">
@@ -241,8 +247,8 @@ else if ($_GET['action'] == 'view') {
                     </div>                
                 </div>';
             }
+            //edit post
             else {
-
                 // Reference: https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/
                 $post_content = '
                 <div class="grow-wrap post-content">
@@ -251,6 +257,7 @@ else if ($_GET['action'] == 'view') {
                 $footer_content = '<button type="submit" id="submit_post" class="btn btn-outline-primary btn-small btn-block" onclick="editPost('.$_GET['id'].')">Save</button>';
             }
 
+            //assemble html
             $html_content = '
                 <div class="post" id="p.'.$post_data['postID'].'">
                     <a href="userpage.php?user='.$post_data['user_id'].'">
@@ -264,6 +271,8 @@ else if ($_GET['action'] == 'view') {
         '.$comment_content;
         echo $html_content; 
         }
+        
+        //create post
         else if ($_GET['action'] == 'create') {
             $post_content = '
                 <div class="grow-wrap post-content">
@@ -288,7 +297,9 @@ else if ($_GET['action'] == 'view') {
     </main>
 
 <script>
+    //edit comment
     function editComment(eventElement) {
+        //store input and relevant data
         var comment = eventElement.parentElement.parentElement;
         var commentID = comment.id.substring(2);
         var content = comment.querySelector('textarea').value;
@@ -309,30 +320,38 @@ else if ($_GET['action'] == 'view') {
             }
         );
     }
+    //transforms display comment to editable comment
     function makeCommentEditable(eventElement) {
+        //save comment id
         var commentID = eventElement.parentElement.parentElement.parentElement.parentElement.id;
 
+        //reference to comment element
         var comment = document.getElementById(commentID);
         var content = comment.querySelector('.comment-content').childNodes[0].nodeValue.trim();
 
+        //remove static content
         comment.querySelector('.comment-content').remove();
 
+        //add editable textarea
         var new_textbox_textarea = document.createElement('textarea');
         new_textbox_textarea.name = 'comment_content';
         new_textbox_textarea.oninput = function() {this.parentNode.dataset.replicatedValue = this.value};
         var new_content_node = document.createTextNode(content);
         new_textbox_textarea.appendChild(new_content_node);
 
+        //add container for textarea that grows with line breaks
         var new_textbox_textarea_container = document.createElement('div');
         new_textbox_textarea_container.classList.add('grow-wrap', 'comment-content');
 
         new_textbox_textarea_container.appendChild(new_textbox_textarea);
 
+        //add new footer
         var comment_footer = comment.querySelector('.comment-footer');
         comment.insertBefore(new_textbox_textarea_container, comment_footer);
 
         comment_footer.querySelector('.comment-icon-holder').remove();
 
+        //add button to save changes
         var new_textbox_button = document.createElement('button');
         new_textbox_button.type = 'button';
         new_textbox_button.id = 'edit_comment';
@@ -342,11 +361,12 @@ else if ($_GET['action'] == 'view') {
         var new_textbox_button_text = document.createTextNode('Save');
         new_textbox_button.appendChild(new_textbox_button_text);
 
+        //add date
         var comment_date = comment_footer.querySelector('comment-date');
         comment_footer.prepend(new_textbox_button);
     }
     function addComment() {
-
+        //add comments
         var postID = document.getElementsByClassName('post')[0].id.substring(2);
         var content = document.getElementById('c.new').querySelector('textarea').value;
 
@@ -370,32 +390,40 @@ else if ($_GET['action'] == 'view') {
             }
         );
     }
+    // add comment onto part of screen
     function updateCommentBox(user, content, commentID, created_at, action) {
 
-        // Remove text box
+        //reference to new textbox
         if (action == 'add') {
             var comment_box = document.getElementById('c.new'); 
         }
+        //reference to existing textbox
         else {
             var comment_box = document.getElementById('c.' + commentID);
         }
+
+        //update comment id if necessary
         comment_box.id = 'c.' + commentID;
+
+        //reference to footer
         var comment_footer = comment_box.querySelector('.comment-footer');
+
+        //remove existing content
         comment_box.querySelector('.comment-content').remove();
 
-        // Create content holder
+        //create content holder
         var new_p = document.createElement('p');
         new_p.classList.add('comment-content');
         var new_content = document.createTextNode(content);
         new_p.appendChild(new_content);
         comment_box.insertBefore(new_p, comment_footer);
 
-        // Remove button
+        //remove button and dates from footer
         while (comment_footer.firstChild) {
             comment_footer.removeChild(comment_footer.firstChild);
         }
 
-        // Add icons to footer
+        //add icons to footer
         var icon_holder = document.createElement('div');
         icon_holder.classList.add('comment-icon-holder');
 
@@ -413,13 +441,16 @@ else if ($_GET['action'] == 'view') {
         icon_holder.appendChild(edit_icon_container);
         comment_footer.appendChild(icon_holder);
 
-        // Add date to footer
+        //add date to footer
         var date_holder = document.createElement('div');
         date_holder.classList.add('comment-date');
 
+        //comment is not edited
         if (action == 'add') {
             var date_text = document.createTextNode('Created: ' + created_at);
         }
+
+        //comment is edited
         else {
             var date_text = document.createTextNode('Edited: ' + created_at);
         }
@@ -428,7 +459,7 @@ else if ($_GET['action'] == 'view') {
         comment_footer.appendChild(date_holder);
     }
     function addNewCommentBox(user) {
-        // Create new text box
+        //create new textbox header
         var new_textbox_header = document.createElement('h2');
         var new_textbox_header_text = document.createTextNode(user);
         new_textbox_header.appendChild(new_textbox_header_text);
@@ -437,11 +468,13 @@ else if ($_GET['action'] == 'view') {
         new_textbox_header_link.href = 'userpage.php?user=' + user;
         new_textbox_header_link.appendChild(new_textbox_header);
 
+        //create editable textbox
         var new_textbox = document.createElement('div');
         new_textbox.classList.add('comment');
         new_textbox.id = 'c.new';
         new_textbox.appendChild(new_textbox_header_link);
 
+        //add growable textarea
         var new_textbox_textarea = document.createElement('textarea');
         new_textbox_textarea.name = 'comment_content';
         new_textbox_textarea.oninput = function() {this.parentNode.dataset.replicatedValue = this.value};
@@ -453,6 +486,7 @@ else if ($_GET['action'] == 'view') {
 
         new_textbox.appendChild(new_textbox_textarea_container);
 
+        //add submit button
         var new_textbox_button = document.createElement('button');
         new_textbox_button.type = 'button';
         new_textbox_button.id = 'create_comment';
@@ -469,6 +503,7 @@ else if ($_GET['action'] == 'view') {
         new_textbox.appendChild(new_textbox_footer);
         document.querySelector('main').appendChild(new_textbox);
     }
+    //similar to other pages likepost function. updating db and making button change color
     function likePost(postID) {
         $.post(
             "like_post.php",
@@ -493,7 +528,7 @@ else if ($_GET['action'] == 'view') {
             }
         );
     }
-
+    //edit button sends post to the controller
     function editPost(postID) {
         var content = document.getElementById('content').value;
 
@@ -513,7 +548,7 @@ else if ($_GET['action'] == 'view') {
             }
         );
     }
-
+    //send post to controller which sends to db
     function createPost() {
         var content = document.getElementsByClassName('post')[0].querySelector('textarea').value;
 

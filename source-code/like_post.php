@@ -3,10 +3,10 @@ session_start();
 
 require_once('sql_queries.php');
 
+//add or remove like relationship
 if (isset($_REQUEST["postID"])) {
     $postID = $_REQUEST["postID"];
     $user = $_SESSION["username"];
-
     $conn = new mysqli($hn, $un, $pw, $db);
 
     if ($conn->connect_error) {

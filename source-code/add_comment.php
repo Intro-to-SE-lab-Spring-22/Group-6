@@ -25,9 +25,11 @@ if (isset($_REQUEST["content"]) && isset($_REQUEST['postID'])) {
 
             $data = getCommentDataById($new_commentID);
 
+            //get timestamp of comment
             $date = new DateTime($data['created_at']);
             $created_at = date_format($date, 'M j, Y \a\t H:i:s');
-
+            
+            //send comment data back to page
             echo json_encode(array("success" => "true", "user" => "$user", "content" => "$content", "commentID" => "$new_commentID", "created_at" => "$created_at"));
         }
     }

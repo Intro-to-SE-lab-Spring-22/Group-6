@@ -1,5 +1,5 @@
 <?php
-
+//connect to db
 session_start();
 require_once('sql_queries.php');
 
@@ -80,7 +80,7 @@ if(ISSET($_POST['userPost'])) {
     }
 
     else{
-
+        //this section is very similar to above section, it just is for getting posts of one user, ie the user logged in so that they can see all of their own posts on the user profile page
         $postloadUN = $_POST['username'];
 
         $start = $_POST['start'];

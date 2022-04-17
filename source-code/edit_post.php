@@ -19,6 +19,7 @@ if (isset($_REQUEST["content"]) && isset($_REQUEST["postID"])) {
         else {
             updatePost($postID, $content);
 
+            //send data back
             echo json_encode(array("success" => "true", "location" => "post.php?action=view&id=$postID"));
         }
     }

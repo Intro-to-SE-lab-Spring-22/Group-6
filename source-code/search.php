@@ -121,6 +121,7 @@
 
 
 <script>
+    //javascript to send POST to php at top of the page
     function searchF(){
             var searchTxt = "<?php echo $_POST['search'] ?>"
             console.log(searchTxt);
@@ -133,11 +134,11 @@
             }
 
         }
-    
+    //search when document loads
     $(document).ready(function (){
         searchF();
     });
-
+    //search when you input text into textbox on another page and then hit submit
     function searchq() {
         console.log("FIREING FUNCTION");
         var searchTxt = $("input[name='search']").val();

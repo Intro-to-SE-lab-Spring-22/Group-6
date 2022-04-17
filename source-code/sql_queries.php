@@ -376,9 +376,9 @@ function accessDB_GetUserFriends($user) {
 function accessDB_GetPostsByUserList($user_list, $start, $limit) {
     $start = intval($start);
     $limit = intval($limit);
-    $parameter_template_string = str_repeat("?,", count($friend_list) - 1) . "?";
+    $parameter_template_string = str_repeat("?,", count($user_list) - 1) . "?";
     $query = "SELECT * FROM post WHERE user_id IN ($parameter_template_string) ORDER BY created_at DESC LIMIT $start, $limit";
-    $parameters = $friend_list;
+    $parameters = $user_list;
     
     $stmt = runSQLStatement($query, $parameters);
 
@@ -564,7 +564,7 @@ function getUserFriends($user) {
 
 //wrapper function for getting posts by a list of users
 function getPostsByUserList($user_list, $start, $limit) {
-    $post_data = accessDB_GetPostsByFriendList($friend_list, $start, $limit);
+    $post_data = accessDB_GetPostsByUserList($user_list, $start, $limit);
 
     return $post_data;
 }

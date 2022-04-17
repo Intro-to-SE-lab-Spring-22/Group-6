@@ -103,9 +103,6 @@ if(ISSET($_POST['userPost'])) {
 
             $num_comments = getNumCommentsById($data['postID']);
 
-            echo $data['user_id'];
-            echo " ".$username;
-
             if ($data['user_id'] == $username) {
                 $edit_button = 
                     '<div class="post-icon post-icon-edit">

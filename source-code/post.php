@@ -1,7 +1,7 @@
 <?php
 
 require_once("verify_user.php");
-require_once('credentials.php');
+require_once('sql_queries.php');
 
 $username = $_SESSION["username"];
 
@@ -33,78 +33,25 @@ else {
     }
 }
 
-$conn = new mysqli($hn, $un, $pw, $db);
-
-if ($conn->connect_error) {
-    die($conn->connect_error);
-}
-
-//check that post id exists
 if ($_GET['action'] != 'create') {
-    $query = "SELECT COUNT(*) as post_exists FROM post WHERE postID=".$_GET['id'];
-
-    $result = $conn->query($query);
-
-    if (!$result) {
-        die($conn->error);
-    }
-
-    $data = mysqli_fetch_assoc($result);
-    $post_exists = intval($data['post_exists']);
-
-    //post does not exist
-    if ($post_exists == 0) {
+    
+    if (!postExists($_GET['id'])) {
         header('Location: home.php');
     }
 }
 
-//edit post
 if ($_GET['action'] == 'edit') {
-    //check that logged-in user created the post
-    $query = "SELECT user_id FROM post WHERE postID = '".$_GET['id']."'";
-
-    $result = $conn->query($query);
-
-    if (!$result) {
-        die($conn->error);
-    }
-
-    $data = mysqli_fetch_assoc($result);
-
-    //logged-in user did not create the post
-    if ($username != $data['user_id']) {
+    
+    if (!postBelongsToUser($_GET['id'], $username)) {
         header('Location: post.php?action=view&id='.$_GET['id']);
     }
 }
 
-//view post
 else if ($_GET['action'] == 'view') {
-    //check that logged-in user is friends with post creator
-    $query = "SELECT user_id FROM post WHERE postID = '".$_GET['id']."'";
-
-    $result = $conn->query($query);
-
-    if (!$result) {
-        die($conn->error);
-    }
-
-    $data = mysqli_fetch_assoc($result);
+    $data = getPostDataById($_GET['id'], $username);
     $post_username = $data['user_id'];
 
-    //check friend status
-    $query = "SELECT COUNT(*) AS are_friends FROM friends WHERE id_sender = '".$username."' AND id_receiver = '".$post_username."'";
-
-    $result = $conn->query($query);
-
-    if (!$result) {
-        die($conn->error);
-    }
-
-    $data = mysqli_fetch_assoc($result);
-    $are_friends = intval($data['are_friends']);
-
-    //not friends
-    if ($are_friends == 0 && $post_username != $username) {
+    if (!areFriends($username, $post_username) && $post_username != $username) {
         header('Location: home.php');
     }
 }
@@ -182,42 +129,10 @@ else if ($_GET['action'] == 'view') {
         <?php
         //decide function by get request
         if ($_GET['action'] == 'view' || $_GET['action'] == 'edit') {
-            $query = "SELECT * FROM post WHERE postID = '".$_GET['id']."'";
             
-            $result = $conn->query($query);
+            $post_data = getPostDataById($_GET['id'], $_SESSION['username']);
 
-            if (!$result) {
-                die($conn->error);
-            }
-        
-            $data = mysqli_fetch_assoc($result);
-
-            //get post like other pages. Loads the necessary data like comments and likes
-            $query = "SELECT COUNT(*) as numlikes FROM likes WHERE postID = ".$data['postID'];
-
-            $subresult = $conn->query($query);
-            
-            if (!$subresult) {
-                die($connection->error);
-            }
-            
-            $subdata = mysqli_fetch_assoc($subresult);
-            $numlikes = $subdata['numlikes'];
-
-            //check if logged-in user has already liked post
-            $query = "SELECT COUNT(*) as already_liked FROM likes WHERE postID = '".$data['postID']."' AND username = '".$username."'";
-
-            $subresult = $conn->query($query);
-            
-            if (!$subresult) {
-                die($connection->error);
-            }
-
-            $subdata = mysqli_fetch_assoc($subresult);
-            $already_liked = intval($subdata['already_liked']);
-
-            //like icon will be shaded
-            if ($already_liked > 0) {
+            if ($post_data['is_liked']) {
                 $like_class = " is-liked";
             }
             else {
@@ -230,7 +145,7 @@ else if ($_GET['action'] == 'view') {
             if ($_GET['action'] == 'view') {
                 $post_content = '
                 <p class="post-content">
-                    '.$data['content'].'
+                    '.$post_data['content'].'
                 </p>';
 
                 //users can edit their own post
@@ -247,14 +162,13 @@ else if ($_GET['action'] == 'view') {
                     $edit_button = "";
                 }
 
-                //post has not been edited
-                if ($data['created_at'] == $data['last_edited_at']) {
-                    $date = new DateTime($data['created_at']);
+                if ($post_data['created_at'] == $post_data['last_edited_at']) {
+                    $date = new DateTime($post_data['created_at']);
                     $date_content = 'Created: '.date_format($date, 'M j, Y \a\t H:i:s');
                 }
                 //post has been edited
                 else {
-                    $date = new DateTime($data['last_edited_at']);
+                    $date = new DateTime($post_data['last_edited_at']);
                     $date_content = 'Edited: '.date_format($date, 'M j, Y \a\t H:i:s');
                 }
 
@@ -262,10 +176,10 @@ else if ($_GET['action'] == 'view') {
                 $footer_content = '
                 <div class="post-icon-holder">
                     <div class="post-icon post-icon-like'.$like_class.'">
-                        <div onclick=likePost('.$data['postID'].')>
+                        <div onclick=likePost('.$post_data['postID'].')>
                             <i class="fa-solid fa-heart"></i>
                         </div>
-                        <p>'.$numlikes.'</p>
+                        <p>'.$post_data['num_likes'].'</p>
                     </div>
                     <div class="post-icon post-icon-comment">
                         <div onclick="scrollToAddComment()">
@@ -277,73 +191,47 @@ else if ($_GET['action'] == 'view') {
                 <div class="post-date">'.$date_content.'</div>
                 ';
 
-                //get comments
-                $query = "SELECT * FROM comments WHERE postID = '".$data['postID']."'";
+                $comment_data = getAllCommentDataByPostId($_GET['id']);
 
-                $subresult = $conn->query($query);
+                foreach($comment_data as $row) {
 
-                if (!$subresult) {
-                    die($connection->error);
-                }
-                
-                if ($subresult->num_rows > 0) {
-                    //cycle through returned comments
-                    while($row = mysqli_fetch_array($subresult)) {
-
-                        //get user that posted comments
-                        $query = "SELECT username FROM comments WHERE commentid = '".$row['commentID']."'";
-
-                        $comment_query_result = $conn->query($query);
-
-                        if (!$comment_query_result) {
-                            die($connection->error);
-                        }
-
-                        $comment_query_data = mysqli_fetch_array($comment_query_result);
-
-                        //logged-in user posted comment, can edit
-                        if ($comment_query_data['username'] == $username) {
-                            $comment_edit_button = '
-                            <div class="comment-icon comment-icon-edit">
-                                <div onclick="makeCommentEditable(this)">
-                                    <i class="fa-solid fa-pencil"></i>
-                                </div>         
-                            </div>';
-                        }
-                        //cannot edit others' comments
-                        else {
-                            $comment_edit_button = "";
-                        }
-
-                        //comment has been edited
-                        if ($row['created_at'] == $row['last_edited_at']) {
-                            $date = new DateTime($row['created_at']);
-                            $comment_date_content = 'Created: '.date_format($date, 'M j, Y \a\t H:i:s');
-                        }
-                        //comment has not been edited
-                        else {
-                            $date = new DateTime($row['last_edited_at']);
-                            $comment_date_content = 'Edited: '.date_format($date, 'M j, Y \a\t H:i:s');
-                        }
-
-                        //assemble comment content
-                        $comment_content .= '
-                        <div class="comment" id="c.'.$row['commentID'].'">
-                            <a href="userpage.php?user='.$row['username'].'">
-                                <h2>'.$row['username'].'</h2>
-                            </a>
-                            <p class="comment-content">
-                                '.$row['content'].'
-                            </p>
-                            <div class="comment-footer">
-                                <div class="comment-icon-holder">
-                                    '.$comment_edit_button.'
-                                </div>
-                                <div class="comment-date">'.$comment_date_content.'</div>  
-                            </div>                
-                        </div>
-                        ';
+                    if ($row['username'] == $username) {
+                        $comment_edit_button = '
+                        <div class="comment-icon comment-icon-edit">
+                            <div onclick="makeCommentEditable(this)">
+                                <i class="fa-solid fa-pencil"></i>
+                            </div>         
+                        </div>';
                     }
+                    else {
+                        $comment_edit_button = "";
+                    }
+
+                    if ($row['created_at'] == $row['last_edited_at']) {
+                        $date = new DateTime($row['created_at']);
+                        $comment_date_content = 'Created: '.date_format($date, 'M j, Y \a\t H:i:s');
+                    }
+                    else {
+                        $date = new DateTime($row['last_edited_at']);
+                        $comment_date_content = 'Edited: '.date_format($date, 'M j, Y \a\t H:i:s');
+                    }
+
+                    $comment_content .= '
+                    <div class="comment" id="c.'.$row['commentID'].'">
+                        <a href="userpage.php?user='.$row['username'].'">
+                            <h2>'.$row['username'].'</h2>
+                        </a>
+                        <p class="comment-content">
+                            '.$row['content'].'
+                        </p>
+                        <div class="comment-footer">
+                            <div class="comment-icon-holder">
+                                '.$comment_edit_button.'
+                            </div>
+                            <div class="comment-date">'.$comment_date_content.'</div>  
+                        </div>                
+                    </div>
+                    ';
                 }
                 //add textbox for creating a new comment
                 $comment_content .= '
@@ -364,16 +252,16 @@ else if ($_GET['action'] == 'view') {
                 // Reference: https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/
                 $post_content = '
                 <div class="grow-wrap post-content">
-                    <textarea id="content" name="content" onInput="this.parentNode.dataset.replicatedValue = this.value">'.$data['content'].'</textarea>
+                    <textarea id="content" name="content" onInput="this.parentNode.dataset.replicatedValue = this.value">'.$post_data['content'].'</textarea>
                 </div>';
                 $footer_content = '<button type="submit" id="submit_post" class="btn btn-outline-primary btn-small btn-block" onclick="editPost('.$_GET['id'].')">Save</button>';
             }
 
             //assemble html
             $html_content = '
-                <div class="post" id="p.'.$data['postID'].'">
-                    <a href="userpage.php?user='.$data['user_id'].'">
-                        <h2>'.$data['user_id'].'</h2>
+                <div class="post" id="p.'.$post_data['postID'].'">
+                    <a href="userpage.php?user='.$post_data['user_id'].'">
+                        <h2>'.$post_data['user_id'].'</h2>
                     </a>
                     '.$post_content.'
                     <div class="post-footer">
@@ -495,6 +383,9 @@ else if ($_GET['action'] == 'view') {
                 if (json.success == "true") {
                     updateCommentBox(json.user, json.content, json.commentID, json.created_at, 'add');
                     addNewCommentBox(json.user);
+                }
+                else {
+                    alert(json);
                 }
             }
         );
@@ -620,7 +511,7 @@ else if ($_GET['action'] == 'view') {
                 postID: postID
             },
             function(result) {
-
+                //alert(result);
                 var json = JSON.parse(result);
 
                 if (json.success == "true") {

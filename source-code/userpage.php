@@ -1,16 +1,10 @@
 <?php
 
 require_once("verify_user.php");
-require_once('credentials.php');
+require_once('sql_queries.php');
 
 $user_username = $_SESSION["username"];
 $display_username = $_GET["user"];
-
-$conn = new mysqli($hn, $un, $pw, $db);
-
-if ($conn->connect_error) {
-    die($conn->connect_error);
-}
 
 $firstname = $lastname = $email = "";
 $user_exists = $are_friends = $request_sent = $request_pending = false;
@@ -18,22 +12,14 @@ $button_text = "Add Friend";
 $button_function = "add_friend()";
 
 // Display data
-$query = "SELECT * FROM users
-WHERE id = '$display_username'";
+$data = getUserDataById($display_username);
 
-$result = $conn->query($query);
-
-if (!$result) {
-    die($conn->error);
-}
-if ($result->num_rows > 0) {
+if ($data) {
     $user_exists = true;
-    while ($row = $result->fetch_array()) {
-        $firstname = $row["firstName"];
-        $lastname = $row["lastName"];
-        $email = $row["email"];
-        break;
-    }
+
+    $firstname = $data["firstName"];
+    $lastname = $data["lastName"];
+    $email = $data["email"];
 }
 
 ?>

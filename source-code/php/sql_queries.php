@@ -47,6 +47,7 @@ function accessDB_InsertNewPost($user, $content) {
     $new_postID = $data['postID'];
 
     return $new_postID;
+
 }
 
 //edit existing post in database
@@ -399,6 +400,39 @@ function accessDB_GetPostsByUser($user, $start, $limit) {
     $data = $stmt->fetchAll();
 
     return $data;
+}
+
+//check username
+function accessDB_CheckValidUsername($username, $email)
+{
+
+    $paramerters = [$username, $email];
+    $query = "SELECT COUNT(*) FROM users WHERE id = ? OR email = ?";
+
+    $stmt = runSQLStatement($query, $paramerters);
+
+    $data = $stmt->fetchColumn();
+    //username taken
+    if ($data > 0) {
+        return false;
+    }
+    //comment exists
+    else {
+        return true;
+    }
+}
+//create new account
+function accessDB_CreateNewUser($firstname, $lastname, $fullname, $email, $username, $password)
+{
+    
+    
+    $parameters = [$username, $firstname, $lastname, $email, $fullname, $password];
+    $query = "INSERT INTO users (id, firstName, lastName,  email, name, password) VALUES (?, ?, ?, ?, ?,?)";
+    $stmt = runSQLStatement($query, $parameters);
+
+    return true;
+    
+    
 }
 
 //wrapper function for creating a post

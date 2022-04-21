@@ -371,8 +371,9 @@ else if ($_GET['action'] == 'view') {
         var content = document.getElementById('c.new').querySelector('textarea').value;
 
         $.post(
-            "add_comment.php",
+            "php/controller.php",
             {
+                function: "addComment",
                 postID: postID,
                 content: content
             },

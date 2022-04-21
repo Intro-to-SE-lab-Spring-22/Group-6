@@ -80,7 +80,23 @@ function createAccount($firstname, $lastname, $email, $username, $password)
 //like_post
 
 //login
+function login($username, $password)
+{
+    $user_data = getUserDataById($username);
 
+    if ($user_data) {
+        if (password_verify($password, $user_data['password'])) {           
+            $_SESSION['username'] = $username;
+            return array("success" => "true", "location" => "home.php");
+        }
+        else {
+            return array("success" => "false");
+        }
+    }
+    else {
+        return array("success" => "false");
+    }
+}
 //logout
 
 //post (all of the actions and functions within regarding the get variables)

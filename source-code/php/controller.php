@@ -49,4 +49,13 @@ if($_REQUEST['function']== "createAcct"){
 
     exit(json_encode($return));
 }
+
+//login request
+if($_REQUEST['function'] == "login")
+{
+    $username = $_REQUEST['username'];
+    $password = $_REQUEST['password'];
+    $return = login($username, $password);
+    exit(json_encode($return));
+}
 ?>

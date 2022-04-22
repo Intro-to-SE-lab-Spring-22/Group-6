@@ -58,4 +58,31 @@ if($_REQUEST['function'] == "login")
     $return = login($username, $password);
     exit(json_encode($return));
 }
+
+//serach request
+if($_REQUEST['function'] == "search")
+{
+    $searchq = $_POST['searchVal'];
+
+    $return = search($searchq);
+    if($return == "THERE ARE NO RESULTS")
+    {
+        exit($return);
+    }
+    //$response;
+    //THERE IS A BUG HERE THAT IS BEING THROWN IDK WHAT IT IS THO
+    
+    // foreach ($return as $row) {
+    //     $response .='
+    //         <div class="post">
+    //             <a href="userpage.php?user='.$row['id'].'">
+    //                 <h2>'.$row['id'].'</h2>
+    //             </a>                
+    //         </div>    
+    //     ';
+    // }
+    exit(json_encode($return));
+}
+
+
 ?>

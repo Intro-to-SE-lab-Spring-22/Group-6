@@ -351,7 +351,7 @@ function accessDB_UpdateComment($commentID, $content) {
 
 //search database for user
 function accessDB_SearchDatabase($search_term) {
-    $query = "SELECT * FROM users WHERE firstName LIKE ? OR lastName LIKE ? or id LIKE ?";
+    $query = "SELECT id, name FROM users WHERE firstName LIKE ? OR lastName LIKE ? or id LIKE ?";
     $parameters = ["%$search_term%", "%$search_term%", "%$search_term%"];
 
     $stmt = runSQLStatement($query, $parameters);

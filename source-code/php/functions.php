@@ -102,7 +102,24 @@ function login($username, $password)
 //post (all of the actions and functions within regarding the get variables)
 
 //search
-
+function search($searchq)
+{
+    $searchq = preg_replace("#[^0-9a-z]#i","", $searchq);
+            
+    $data = searchDatabase($searchq);
+    
+    $response = '';
+    if (count($data) == 0) {
+        $response = "THERE ARE NO RESULTS";
+    }
+    else{
+        $response = array();
+        foreach ($data as $row) {
+            array_push($response, $row);
+        }
+    }
+    return ($response);
+}
 //userpage (loading posts)
 //verify_user
 

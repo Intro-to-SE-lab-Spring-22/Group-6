@@ -1,23 +1,21 @@
 <?php
 require_once('sql_queries.php');
 
-function editPost($postID, $content, $username) {
-    if (!accessDB_PostExists($postID)) {
-        return array("success" => "false", "message" => "post_does_not_exist");
-    }
-    $post_data = accessDB_PostById($postID);
-    if (!($post_data['user_id'] == $username)) {
-        return array("success" => "false", "message" => "access_error");
-    }
-    $success = accessDB_UpdatePost($postID, $content);
-    return array("success" => "true", "data" => [$postID]);
-}
+// function editPost($postID, $content, $username) {
+//     if (!accessDB_PostExists($postID)) {
+//         return array("success" => "false", "message" => "post_does_not_exist");
+//     }
+//     $post_data = accessDB_PostById($postID);
+//     if (!($post_data['user_id'] == $username)) {
+//         return array("success" => "false", "message" => "access_error");
+//     }
+//     $success = accessDB_UpdatePost($postID, $content);
+//     return array("success" => "true", "data" => [$postID]);
+// }
 
 //add comment
 function addComments($content, $postID, $user)
 {
-   
-
     if (!postExists($postID)) {
         echo json_encode(array("success" => "false"));
     }
@@ -70,14 +68,89 @@ function createAccount($firstname, $lastname, $email, $username, $password)
 //edit comment
 
 //edit post
+function editPost($postID, $content, $sessionUser) {
+
+    if (!accessDB_PostExists($postID)) {
+        return array("success" => "false", "message" => "post_does_not_exist");
+    }
+
+    if (!accessDB_PostBelongsToUser($postID, $sessionUser)) {
+        return array("success" => "false", "message" => "access_error");
+    }
+
+    updatePost($postID, $content);
+    $post_data = accessDB_PostById($postID);
+    $post_data['num_likes'] = accessDB_GetNumLikesById($postID);
+    $post_data['is_liked'] = accessDB_PostIsLikedByUser($postID, $sessionUser);
+    if ($post_data['user_id'] == $sessionUser) {
+        $post_data['is_editable'] = true;
+    }
+    else {
+        $post_data['is_editable'] = false;
+    }
+
+    //send data back
+    return array("success" => "true", "data" => $post_data);
+}
 
 //friend request
 
-//getpost
+//get a post
+function getOnePost($postID, $sessionUsername) {
+    if (!accessDB_PostExists($postID)) {
+        return array("success" => "false", "message" => "post_does_not_exist");
+    }
+    
+    $post_data = accessDB_PostById($postID);
+
+    if (!accessDB_PostBelongsToUser($postID, $sessionUsername) && !accessDB_AreFriends($post_data['user_id'], $sessionUsername)) {
+        return array("success" => "false", "message" => "access_error");
+    }
+
+    $post_data['num_likes'] = accessDB_GetNumLikesById($postID);
+    $post_data['is_liked'] = accessDB_PostIsLikedByUser($postID, $sessionUsername);
+    if ($post_data['user_id'] == $sessionUsername) {
+        $post_data['is_editable'] = true;
+    }
+    else {
+        $post_data['is_editable'] = false;
+    }
+
+    return array("success" => "true", "data" => $post_data);
+}
+
+//get many posts
 
 //home page load posts
 
 //like_post
+function likePost($postID, $sessionUsername) {
+    if (!accessDB_PostExists($postID)) {
+        return array("success" => "false", "message" => "post_does_not_exist");
+    }
+
+    if (accessDB_PostIsLikedByUser($postID, $sessionUsername)) {
+        accessDB_RemoveLikeFromPost($postID, $sessionUsername);
+
+        $num_likes = getNumLikesById($postID);
+
+        exit(json_encode(array("success" => "true", "action" => "unliked", "num_likes" => $num_likes)));
+    }
+    else {
+        $post_data = accessDB_PostById($postID);
+
+        if (!accessDB_PostBelongsToUser($postID, $sessionUsername) && !accessDB_AreFriends($post_data['user_id'], $sessionUsername)) {
+            return array("success" => "false", "message" => "access_error");
+        }
+
+        accessDB_AddLikeToPost($postID, $sessionUsername);
+
+        $num_likes = getNumLikesById($postID);
+
+        exit(json_encode(array("success" => "true", "action" => "liked", "num_likes" => $num_likes)));
+    }
+
+}
 
 //login
 function login($username, $password)
@@ -97,9 +170,6 @@ function login($username, $password)
         return array("success" => "false");
     }
 }
-//logout
-
-//post (all of the actions and functions within regarding the get variables)
 
 //search
 function search($searchq)
@@ -121,7 +191,30 @@ function search($searchq)
     return ($response);
 }
 //userpage (loading posts)
-//verify_user
 
-//
+//get all post comments
+function getAllPostComments($postID, $sessionUsername) {
+    if (!accessDB_PostExists($postID)) {
+        return array("success" => "false", "message" => "post_does_not_exist");
+    }
+
+    $post_data = accessDB_PostById($postID);
+
+    if (!accessDB_PostBelongsToUser($postID, $sessionUsername) && !accessDB_AreFriends($post_data['user_id'], $sessionUsername)) {
+        return array("success" => "false", "message" => "access_error");
+    }
+
+    $comments = accessDB_AllCommentDataByPostId($postID);
+
+    foreach ($comments as &$comment) {
+        if ($comment['username'] == $sessionUsername) {
+            $comment['is_editable'] = true;
+        }
+        else {
+            $comment['is_editable'] = false;
+        }
+    }
+
+    return array("success" => "true", "data" => $comments);
+}
 ?>

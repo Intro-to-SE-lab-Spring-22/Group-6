@@ -67,7 +67,7 @@ function accessDB_PostById($postID) {
 
     $stmt = runSQLStatement($query, $parameters);  
 
-    $data = $stmt->fetch(); 
+    $data = $stmt->fetch(PDO::FETCH_ASSOC); 
     return $data;
 }
 
@@ -160,7 +160,7 @@ function accessDB_AllCommentDataByPostId($postID) {
 
     $stmt = runSQLStatement($query, $parameters);
 
-    $data = $stmt->fetchAll();
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     return $data;
 }

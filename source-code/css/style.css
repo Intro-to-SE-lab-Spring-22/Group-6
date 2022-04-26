@@ -95,6 +95,7 @@ body::-webkit-scrollbar-thumb{
   position: fixed;
   background-color: #2554FF;
   transition: width 200ms ease;
+  z-index: 1001;
   /* overflow: scroll; */
   
 }
@@ -153,6 +154,7 @@ body::-webkit-scrollbar-thumb{
   display: flex;
   background-color: #008cff;
   position: fixed;
+  z-index: 1000;
 }
 
 .topnav a {
@@ -429,4 +431,43 @@ body::-webkit-scrollbar-thumb{
 .comment-header-container img {
   height: 2em;
   margin-right: 0.5em;
+}
+
+.userpage-display {
+  display: flex;
+  align-items: flex-end;
+}
+
+.userpage-display img {
+  width: 6em;
+}
+
+.userpage-display p {
+  margin-bottom: 0;
+}
+
+.userpage-display-image {
+  position: relative;
+  margin-right: 1em;
+  height: fit-content;
+}
+
+.userpage-display-image .file-upload-button {
+  position: absolute;
+  height: 1.5em;
+  width: 1.5em;
+  bottom: 0.5em;
+  right: 0.5em;
+  background-color: #008cff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.userpage-display-image .file-upload-button:hover {
+  background-color: white;
+  color: #008cff;
 }

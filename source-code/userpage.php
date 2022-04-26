@@ -31,6 +31,8 @@ if ($data) {
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
   <title>Home</title>
+  <script src="js/post_requests.js"></script>
+  <script src="js/functions.js"></script>
   <!-- jQuery + Bootstrap JS -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -94,9 +96,30 @@ if ($data) {
         <?php 
         //load personal data
         if ($user_exists) {
+            $path = "../images/profile/$display_username.*";
+            $result = glob($path);
+            if (!empty($result)) {
+                $img_src = $result[0];
+            }
+            else {
+                $img_src = "../images/profile/default.png";
+            }
+            echo "<div class=\"userpage-display\">";
+            echo "<div class=\"userpage-display-image\">";
+            echo "<img src=\"$img_src\" />";
+            if ($user_username == $display_username) {
+                echo "<input type=\"file\" id=\"upload-image\" name=\"upload-image\" style=\"display:none\" onInput=\"updateImage(this)\">";
+                echo "<div class=\"file-upload-button\" onclick=\"document.getElementById('upload-image').click()\">";
+                echo "<i class = \"fa-solid fa-pencil\"></i>";
+                echo "</div>";
+            }      
+            echo "</div>";
+            echo "<div class=\"userpage-display-text\">";
             echo "<h1>$display_username</h1>";
             echo "<p>$firstname $lastname<br>";
             echo "<p>$email</p>";
+            echo "</div>";
+            echo "</div>";
             //if you are visiting another users page, you can request to be friends with them
             if ($display_username != $user_username) {
                 echo "<br>";
@@ -221,4 +244,6 @@ function friend_request(username, update) {
         }
     );
 }
+
+
 </script>

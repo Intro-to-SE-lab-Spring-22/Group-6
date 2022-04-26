@@ -217,4 +217,36 @@ function getAllPostComments($postID, $sessionUsername) {
 
     return array("success" => "true", "data" => $comments);
 }
+
+function uploadFile($img, $tmp, $imgerror, $filename) {
+    $path = "../../images/profile/";
+    array_map('unlink', glob($path.$filename.".*"));
+
+    $imageFileType = strtolower(pathinfo($img,PATHINFO_EXTENSION));
+
+    $path = $path.$filename.".".$imageFileType;
+
+    if (move_uploaded_file($tmp, $path)) {
+        return array("success" => "true");
+    }
+    else {
+        return array("success" => "false", "message" => $tmp);
+    }
+}
+
+function getUserProfilePicture($username) {
+    $path = "../../images/profile/$username.*";
+
+    //die($path);
+
+    $result = glob($path);
+    if (!empty($result)) {
+        $img_src = pathinfo($result[0])['basename'];
+    }
+    else {
+        $img_src = "default.png";
+    }
+
+    return array("success" => "true", "filename" => $img_src);
+}
 ?>

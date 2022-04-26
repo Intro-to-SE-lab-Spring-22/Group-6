@@ -296,3 +296,44 @@ function post_logout() {
         }
     );
 }
+
+function post_uploadImage(formData) {
+
+    //var data = {formData: formData, function: "uploadFile"};
+
+    formData.append('function', 'uploadProfilePicture');
+
+    $.ajax({
+        url: "php/controller.php",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        cache: false,
+        processData:false,
+        
+        success: function(data) {
+            console.log(data);
+        }         
+    });
+}
+
+function post_setUserProfilePicture(username, imageElement) {
+    $.post(
+        "php/controller.php",
+        {
+            function: "getUserProfilePicture",
+            username: username
+        },
+        function(result) {
+
+            var json = JSON.parse(result);
+
+            if (json.success == "true") {
+                imageElement.src = "../images/profile/" + json.filename;
+            }
+            else {
+                console.log(json.message);
+            }
+        }
+    );
+}

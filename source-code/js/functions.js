@@ -36,6 +36,8 @@ function generatePostElement(postID, postUser, content, num_likes, is_liked, num
     var headerImage = document.createElement("img");
     headerImage.src = "../images/profile/default.png";
 
+    post_setUserProfilePicture(postUser, headerImage);
+
     // <h2>postUser</h2>
     var headerTextElement = document.createElement("h2");
     var headerTextText = document.createTextNode(postUser);
@@ -176,6 +178,8 @@ function addNewCommentBox(user) {
 
     var headerImage = document.createElement("img");
     headerImage.src = "../images/profile/default.png";
+
+    post_setUserProfilePicture(user, headerImage);
 
     var commentHeaderContainer = document.createElement("div");
     commentHeaderContainer.classList.add("comment-header-container");
@@ -347,6 +351,8 @@ function addNewPostBox(postUser) {
     var headerImage = document.createElement("img");
     headerImage.src = "../images/profile/default.png";
 
+    post_setUserProfilePicture(postUser, headerImage);
+
     var postHeader = document.createElement("div");
     postHeader.classList.add("post-header-container");
 
@@ -459,6 +465,8 @@ function generateCommentElement(commentID, commentUser, content, is_editable, is
     var headerImage = document.createElement("img");
     headerImage.src = "../images/profile/default.png";
 
+    post_setUserProfilePicture(commentUser, headerImage);
+
     var commentHeader = document.createElement("div");
     commentHeader.classList.add("comment-header-container");
 
@@ -524,4 +532,18 @@ function generateCommentElement(commentID, commentUser, content, is_editable, is
     commentFooter.appendChild(commentDateHolder);
     commentElement.appendChild(commentFooter);
     document.querySelector('main').appendChild(commentElement);
+}
+
+function updateImage(eventElement) {
+    var imageContainer = eventElement.closest(".userpage-display-image");
+    var image = imageContainer.querySelector("img");
+    files = eventElement.files;
+    image.src = URL.createObjectURL(files[0]);
+
+    var formData = new FormData();
+    formData.append('image', files[0]);
+
+    post_uploadImage(formData);
+
+    console.log(URL.createObjectURL(files[0]));
 }

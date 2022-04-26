@@ -25,16 +25,26 @@ function generatePostElement(postID, postUser, content, num_likes, is_liked, num
     postDivElement.id = "p." + postID;
 
     // <a href="userpage.php?user=postUser">
-    var postHeaderElement = document.createElement("a");
-    postHeaderElement.setAttribute("href", "userpage.php?user=" + postUser);
+    var postHeaderLink = document.createElement("a");
+    postHeaderLink.href = "userpage.php?user=" + postUser;
+
+    // <div class="post-header-container">
+    var postHeaderContainer = document.createElement("div");
+    postHeaderContainer.classList.add('post-header-container');
+
+    // <img src="images/profile/default.png />"
+    var headerImage = document.createElement("img");
+    headerImage.src = "../images/profile/default.png";
 
     // <h2>postUser</h2>
     var headerTextElement = document.createElement("h2");
     var headerTextText = document.createTextNode(postUser);
 
     headerTextElement.appendChild(headerTextText);
-    postHeaderElement.appendChild(headerTextElement);
-    postDivElement.appendChild(postHeaderElement)
+    postHeaderContainer.appendChild(headerImage);
+    postHeaderContainer.appendChild(headerTextElement);
+    postHeaderLink.appendChild(postHeaderContainer);
+    postDivElement.appendChild(postHeaderLink);
 
     // <p class="post-content">
     var postContentElement = document.createElement("p");
@@ -163,6 +173,16 @@ function addNewCommentBox(user) {
     var textboxHeaderLink = document.createElement('a');
     textboxHeaderLink.href = 'userpage.php?user=' + user;
     textboxHeaderLink.appendChild(textboxHeader);
+
+    var headerImage = document.createElement("img");
+    headerImage.src = "../images/profile/default.png";
+
+    var commentHeaderContainer = document.createElement("div");
+    commentHeaderContainer.classList.add("comment-header-container");
+
+    commentHeaderContainer.appendChild(headerImage);
+    commentHeaderContainer.appendChild(textboxHeader);
+    textboxHeaderLink.appendChild(commentHeaderContainer);
 
     //create editable textbox
     var textboxElement = document.createElement('div');
@@ -324,8 +344,17 @@ function addNewPostBox(postUser) {
     var headerTextElement = document.createElement("h2");
     var headerTextText = document.createTextNode(postUser);
 
+    var headerImage = document.createElement("img");
+    headerImage.src = "../images/profile/default.png";
+
+    var postHeader = document.createElement("div");
+    postHeader.classList.add("post-header-container");
+
+    postHeader.appendChild(headerImage);
     headerTextElement.appendChild(headerTextText);
-    postHeaderElement.appendChild(headerTextElement);
+    postHeader.appendChild(headerTextElement);
+
+    postHeaderElement.appendChild(postHeader);
     postDivElement.appendChild(postHeaderElement)
 
     var postContentElement = document.createElement("div");
@@ -400,9 +429,40 @@ function generateCommentElement(commentID, commentUser, content, is_editable, is
     commentElement.id = "c." + commentID;
     commentElement.classList.add("comment");
 
+    // // <a href="userpage.php?user=postUser">
+    // var postHeaderLink = document.createElement("a");
+    // postHeaderLink.href = "userpage.php?user=" + postUser;
+
+    // // <div class="post-header-container">
+    // var postHeaderContainer = document.createElement("div");
+    // postHeaderContainer.classList.add('post-header-container');
+
+    // // <img src="images/profile/default.png />"
+    // var headerImage = document.createElement("img");
+    // headerImage.src = "../images/profile/default.png";
+
+    // // <h2>postUser</h2>
+    // var headerTextElement = document.createElement("h2");
+    // var headerTextText = document.createTextNode(postUser);
+
+    // headerTextElement.appendChild(headerTextText);
+    // postHeaderContainer.appendChild(headerImage);
+    // postHeaderContainer.appendChild(headerTextElement);
+    // postHeaderLink.appendChild(postHeaderContainer);
+    // postDivElement.appendChild(postHeaderLink);
+
     //create new textbox header
-    var commentHeader = document.createElement('h2');
-    var commentHeaderText = document.createTextNode(commentUser);
+    var commentHeaderText = document.createElement('h2');
+    var commentHeaderTextText = document.createTextNode(commentUser);
+    commentHeaderText.appendChild(commentHeaderTextText);
+
+    var headerImage = document.createElement("img");
+    headerImage.src = "../images/profile/default.png";
+
+    var commentHeader = document.createElement("div");
+    commentHeader.classList.add("comment-header-container");
+
+    commentHeader.appendChild(headerImage);
     commentHeader.appendChild(commentHeaderText);
 
     var commentHeaderLink = document.createElement('a');

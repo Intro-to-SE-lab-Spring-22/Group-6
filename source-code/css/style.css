@@ -233,6 +233,7 @@ body::-webkit-scrollbar-thumb{
 .post h2 {
   color: #008cff;
   font-weight: 550;
+  width: fit-content;
 }
 
 .post-content {
@@ -406,4 +407,26 @@ body::-webkit-scrollbar-thumb{
 
   /* Place on top of each other */
   grid-area: 1 / 1 / 2 / 2;
+}
+
+.post-header-container {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+
+.post-header-container img {
+  height: 2em;
+  margin-right: 0.5em;
+}
+
+.comment-header-container {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+
+.comment-header-container img {
+  height: 2em;
+  margin-right: 0.5em;
 }

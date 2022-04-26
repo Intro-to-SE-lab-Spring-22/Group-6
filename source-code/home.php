@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="css/style.css">
   <title>Home</title>
   <!-- jQuery + Bootstrap JS -->
+  <script src="js/functions.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script src="https://kit.fontawesome.com/c56bd8cfd4.js" crossorigin="anonymous"></script>
@@ -122,12 +123,25 @@ require_once("verify_user.php");
                     limit: limit
                 },
                 success: function(response) {
-                    if(response == "reachedMax")
-                        reachedMax == true;
-                    else {
-                        start += limit;
-                        $("#homepage").append(response);
+                    json = JSON.parse(response);
+                    data = json.data;
+
+                    for (var i = 0; i < data.length; i++) {
+                        document.querySelector("main").appendChild(
+                            generatePostElement(
+                                json.data[i].postID,
+                                json.data[i].user_id,
+                                json.data[i].content,
+                                json.data[i].num_likes,
+                                json.data[i].is_liked,
+                                json.data[i].num_comments,
+                                json.data[i].is_editable,
+                                (json.data[i].created_at != json.data[i].last_edited_at),
+                                json.data[i].last_edited_at)
+                        );
                     }
+
+                    start += limit;
                 }
             })
         }

@@ -101,6 +101,8 @@ function generatePostElement(postID, postUser, content, num_likes, is_liked, num
 
         commentIconTextElement.appendChild(commentIconTextText);
         commentIconHolderElement.appendChild(commentIconTextElement);
+
+        commentIconElement.onclick = function() {document.location = "post.php?id="+postID}
     }
 
     if (is_editable) {

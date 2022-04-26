@@ -15,7 +15,7 @@
     <div class="App">
         <div class="vertical-center">
             <div class="inner-block">
-                <form action="Controller/register.php" method="POST">
+                <form onsubmit="return false" > 
                     <h3>Register</h3>
                     <div class="form-group">
                         <label>Username</label>
@@ -37,12 +37,47 @@
                         <label>Password</label>
                         <input type="password" class="form-control" name="password" id="password" />
                     </div>
-                    <button type="submit" name="submit_signup" id="submit_signup" class="btn btn-outline-primary btn-lg btn-block">
+                    <button type="submit" name="submit_signup" id="submit_signup" class="btn btn-outline-primary btn-lg btn-block" onclick="submitSignUp()">
                         Sign up
                     </button>
                 </form>
+                <div id="placeholder"></div>
             </div>
         </div>
     </div>
 </body>
 </html>
+
+<script>
+    function submitSignUp()
+    {
+        var username = document.getElementById('username').value;
+        var firstname = document.getElementById('firstName').value;
+        var lastname = document.getElementById('lastName').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+    $.post(
+        "php/controller.php",
+        {
+        function: "createAcct",
+        username: username,
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+        password: password
+        },
+        function(result) {
+            var json = JSON.parse(result);
+            //get result and if login is successful, will redirect you to the home page
+            if (json.success == "true") {
+                document.location = json.location;
+            }
+            //else notify of faulty login credentials
+            else {
+                document.getElementById('placeholder').innerHTML = "Your username or email is already taken";
+            }
+        }
+    );
+    }
+</script>

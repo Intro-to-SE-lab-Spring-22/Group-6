@@ -39,11 +39,12 @@ if (isset($_SESSION['username'])) {
           <a href="create_acct.php" class="btn btn-outline-primary btn-lg btn-block">
             Sign Up
           </a>
+          <div id="placeholder"></div>
       </div>
     </div>
   </div>
 </form>
-    <div id="placeholder"></div>
+    
    
 </body>
 </html>
@@ -56,8 +57,9 @@ function submitButton() {
 
 //send input fields to login.php
   $.post(
-    "login.php",
+    "php/controller.php",
     {
+      function: "login",
       username: username,
       password: password
     },

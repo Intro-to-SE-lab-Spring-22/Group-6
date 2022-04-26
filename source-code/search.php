@@ -70,12 +70,23 @@
     //javascript to send POST to php at top of the page
     function searchF(){
             var searchTxt = "<?php echo $_POST['search'] ?>"
-            console.log(searchTxt);
+            // console.log(searchTxt);
             if(searchTxt != "")
             {
-                $.post("search.php", {searchVal: searchTxt}, function(result) {
-                $("#homepage").html(result);
-            
+                $.post
+                    ("php/controller.php", 
+                    {
+                        function: "search",
+                        searchVal: searchTxt
+                    }, 
+                    function(result) {
+                        result = JSON.parse(result);
+                        var response ='';
+                        if(result != "THERE ARE NO RESULTS")
+                        {
+                            html2result(result);                    
+                        }
+        
                 });
             }
 
@@ -84,14 +95,40 @@
     $(document).ready(function (){
         searchF();
     });
+
+    function html2result(result)
+    {
+        var response ='';
+        console.log("made it here")
+        for(var i = 0; i < result.length; i++) //
+        {
+            var obj = result[i];
+            response += "<div class='post'><a href='userpage.php?user='" + obj.id + "><h2>" + obj.id +"</h2></a></div> ";
+            console.log(response);
+        }
+        
+        console.log(response);
+        $("#homepage").html(response);
+    }
     //search when you input text into textbox on another page and then hit submit
     function searchq() {
-        console.log("FIREING FUNCTION");
+        // console.log("FIREING FUNCTION");
         var searchTxt = $("input[name='search']").val();
-        console.log(searchTxt);
-        $.post("search.php", {searchVal: searchTxt}, function(result) {
-            $("#homepage").html(result);
         
+        $.post
+            ("php/controller.php", 
+            {
+                function: "search", 
+                searchVal: searchTxt
+            }, 
+            function(result) {
+                result = JSON.parse(result);
+                var response ='';
+                if(result != "THERE ARE NO RESULTS")
+                {
+                    html2result(result);                    
+                }
+                
         });
     }
 </script>

@@ -46,7 +46,26 @@ function post_updatePost(postElement) {
             var json = JSON.parse(result);
 
             if (json.success == "true") {
-                postElement.querySelector('.post-content').innerHTML = json.data.content;
+                postElement.querySelector('.post-content').querySelector('p').innerHTML = json.data.content;
+                if (json.data.has_image) {
+                    if (!postElement.querySelector('.post-images-holder')) {
+                        postImagesHolder = document.createElement("div");
+                        postImagesHolder.classList.add('post-images-holder');
+
+                        var imageContainer = document.createElement("div");
+                        imageContainer.classList.add("post-image-container");
+                        var image = document.createElement("img");
+
+                        image.src = "../images/post/" + json.data.postID + "/" + json.data.image_filename;
+
+                        imageContainer.appendChild(image);
+                        postImagesHolder.appendChild(imageContainer);
+                        postElement.querySelector('.post-content').appendChild(postImagesHolder);
+                    }
+                    else {
+                        postElement.querySelector('.post-image-container').querySelector('img').src = "../images/post/" + json.data.postID + "/" + json.data.image_filename;
+                    }
+                }
                 postElement.querySelector('.post-icon-like').querySelector('p').innerHTML = json.data.num_likes
                 postElement.querySelector('.post-icon-comment').querySelector('p').innerHTML = json.data.num_comments
                 if (json.data.is_liked == true) {

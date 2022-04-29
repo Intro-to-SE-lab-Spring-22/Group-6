@@ -32,7 +32,7 @@ if(ISSET($_POST['userPost'])) {
                 $data['is_editable'] = false;
             }
 
-            $path = "../../images/post/".$data['postID']."/".$data['postID'].".*";
+            $path = "../images/post/".$data['postID']."/".$data['postID'].".*";
 
             //die($path);
         
@@ -45,6 +45,8 @@ if(ISSET($_POST['userPost'])) {
                 $data['has_image'] = false;
                 $data['image_filename'] = "";
             }
+
+            $data['path'] = $path;
         }
         exit(json_encode(array("success" => "true", "data" => $post_data)));
     }

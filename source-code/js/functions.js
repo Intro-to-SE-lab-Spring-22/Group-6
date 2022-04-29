@@ -49,12 +49,14 @@ function generatePostElement(postID, postUser, content, num_likes, is_liked, num
     postDivElement.appendChild(postHeaderLink);
 
     // <p class="post-content">
-    var postContentElement = document.createElement("p");
+    var postContentElement = document.createElement("div");
     postContentElement.classList.add("post-content");
 
+    var postContentTextHolder = document.createElement("p");
     var contentText = document.createTextNode(content);
 
-    postContentElement.appendChild(contentText);
+    postContentTextHolder.appendChild(contentText);
+    postContentElement.appendChild(postContentTextHolder);
 
     // console.log(has_image);
 
@@ -438,7 +440,7 @@ function makePostEditable(eventElement) {
     //save comment id
     var postElement = eventElement.closest('.post');
 
-    var content = postElement.querySelector('.post-content').childNodes[0].nodeValue.trim();
+    var content = postElement.querySelector('.post-content').querySelector("p").childNodes[0].nodeValue.trim();
 
     if (postElement.querySelector('.post-content').querySelector('.post-images-holder')) {
         var has_image = true;
@@ -625,6 +627,7 @@ function updatePosts(post_list) {
     for (var i = 0; i < post_list.length; i++) {
         post_updatePost(post_list[i]);
     }
+}
 
 function updatePostImage(eventElement) {
     var postElement = eventElement.closest(".post");

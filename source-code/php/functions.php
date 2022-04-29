@@ -142,6 +142,7 @@ function getOnePost($postID, $sessionUsername) {
 
     $post_data['num_likes'] = accessDB_GetNumLikesById($postID);
     $post_data['is_liked'] = accessDB_PostIsLikedByUser($postID, $sessionUsername);
+    $post_data['num_comments'] = accessDB_GetNumCommentsById($postID);
     if ($post_data['user_id'] == $sessionUsername) {
         $post_data['is_editable'] = true;
     }

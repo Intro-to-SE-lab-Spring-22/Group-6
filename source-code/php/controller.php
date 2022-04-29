@@ -24,7 +24,21 @@ else if ($_REQUEST['function'] == "editPost") {
     if (!isset($_SESSION['username'])) {
         exit(json_encode(array("success" => "false", "message" => "not_logged_in")));
     }
-    $return_data = editPost($_REQUEST['postID'], $_REQUEST['content'], $_SESSION['username']);
+
+    if (isset($_FILES["image"])) {
+        $has_image = true;
+        $img = $_FILES["image"]["name"];
+        $tmp = $_FILES["image"]["tmp_name"];
+        $errorimg = $_FILES["image"]["error"];
+    }
+    else {
+        $has_image = false;
+        $img = "";
+        $tmp = "";
+        $errorimg = "";
+    }
+
+    $return_data = editPost($_REQUEST['postID'], $_REQUEST['content'], $_SESSION['username'], $has_image, $img, $tmp, $errorimg);
     exit(json_encode($return_data));
 }
 
@@ -169,6 +183,22 @@ else if ($_REQUEST['function'] == "getUserProfilePicture") {
     }
 
     exit(json_encode(getUserProfilePicture($_REQUEST['username'])));
+}
+
+else if ($_REQUEST['function'] == "uploadPostImage") {
+    if (!isset($_FILES["image"]) || !isset($_REQUEST['postID'])) {
+        exit(json_encode(array("success" => "false", "message" => "invalid_parameters")));
+    }
+    if (!isset($_SESSION['username'])) {
+        exit(json_encode(array("success" => "false", "message" => "not_logged_in")));
+    }
+
+    $img = $_FILES["image"]["name"];
+    $tmp = $_FILES["image"]["tmp_name"];
+    $errorimg = $_FILES["image"]["error"];
+
+    exit(json_encode(uploadPostFile($img, $tmp, $errorimg, $_SESSION['username'], $_REQUEST['postID'])));
+    // exit("test");
 }
 
 else {

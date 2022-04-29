@@ -18,7 +18,7 @@ function scrollToAddComment() {
     document.getElementById("c.new").scrollIntoView();
 }
 
-function generatePostElement(postID, postUser, content, num_likes, is_liked, num_comments, is_editable, is_edited, timestamp) {
+function generatePostElement(postID, postUser, content, num_likes, is_liked, num_comments, is_editable, is_edited, timestamp, has_image, image_filename) {
     // <div class="post" id="p.postID">
     var postDivElement = document.createElement("div");
     postDivElement.classList.add("post");
@@ -55,6 +55,24 @@ function generatePostElement(postID, postUser, content, num_likes, is_liked, num
     var contentText = document.createTextNode(content);
 
     postContentElement.appendChild(contentText);
+
+    // console.log(has_image);
+
+    if (has_image) {
+        postImagesHolder = document.createElement("div");
+        postImagesHolder.classList.add('post-images-holder');
+
+        var imageContainer = document.createElement("div");
+        imageContainer.classList.add("post-image-container");
+        var image = document.createElement("img");
+
+        image.src = "../images/post/" + postID + "/" + image_filename;
+
+        imageContainer.appendChild(image);
+        postImagesHolder.appendChild(imageContainer);
+        postContentElement.appendChild(postImagesHolder);
+    }
+
     postDivElement.appendChild(postContentElement);
 
     // <div class="post-footer">
@@ -370,7 +388,7 @@ function addNewPostBox(postUser) {
 
     var contentTextarea = document.createElement("textarea");
     contentTextarea.name = "post_content";
-    contentTextarea.onInput = function() {this.parentNode.dataset.replicatedValue = this.value};
+    contentTextarea.oninput = function() {this.parentNode.dataset.replicatedValue = this.value};
     
     postContentElement.appendChild(contentTextarea);
     postDivElement.appendChild(postContentElement);
@@ -385,7 +403,32 @@ function addNewPostBox(postUser) {
     footerButton.type = "submit";
     footerButton.innerHTML = "Save";
 
-    postFooterElement.appendChild(footerButton);
+    // echo "<input type=\"file\" id=\"upload-image\" name=\"upload-image\" style=\"display:none\" onInput=\"updateImage(this)\">";
+    // echo "<div class=\"file-upload-button\" onclick=\"document.getElementById('upload-image').click()\">";
+    // echo "<i class = \"fa-solid fa-pencil\"></i>";
+    // echo "</div>";
+
+    var uploadImageInput = document.createElement("input");
+    uploadImageInput.type = "file";
+    uploadImageInput.id = "upload-image";
+    uploadImageInput.name = "upload-image";
+    uploadImageInput.style = "display:none";
+    uploadImageInput.oninput = function() {updatePostImage(this)};
+
+    var uploadImageButton = document.createElement("button");
+    uploadImageButton.classList.add("btn", "btn-outline-primary", "btn-small", "btn-block");
+    uploadImageButton.onclick = function() {document.getElementById('upload-image').click()};
+    uploadImageButton.id = "upload-image-button";
+    uploadImageButton.type = "submit";
+    uploadImageButton.innerHTML = "Upload Image";
+
+    var footerButtonHolder = document.createElement("div");
+    footerButtonHolder.classList.add("footer-button-holder");
+    footerButtonHolder.appendChild(footerButton);
+    footerButtonHolder.appendChild(uploadImageInput);
+    footerButtonHolder.appendChild(uploadImageButton);
+
+    postFooterElement.appendChild(footerButtonHolder);
     postDivElement.appendChild(postFooterElement);
 
     document.querySelector('main').appendChild(postDivElement);
@@ -397,8 +440,21 @@ function makePostEditable(eventElement) {
 
     var content = postElement.querySelector('.post-content').childNodes[0].nodeValue.trim();
 
+    if (postElement.querySelector('.post-content').querySelector('.post-images-holder')) {
+        var has_image = true;
+        var image_src = postElement.querySelector('.post-content').querySelector('.post-images-holder').querySelector('img').src;
+    }
+    else {
+        var has_image = false;
+        var image_src = "";
+    }
+
+    console.log(image_src);
+
     //remove static content
-    postElement.querySelector('.post-content').remove();
+    postContentElement = postElement.querySelector('.post-content')
+    postContentElement.removeChild(postContentElement.firstChild);
+    postContentElement.classList.add('grow-wrap');
 
     //add editable textarea
     var postContentTextarea = document.createElement('textarea');
@@ -407,15 +463,10 @@ function makePostEditable(eventElement) {
     var postContentTextareaText = document.createTextNode(content);
     postContentTextarea.appendChild(postContentTextareaText);
 
-    //add container for textarea that grows with line breaks
-    var postContentTextareaContainer = document.createElement('div');
-    postContentTextareaContainer.classList.add('grow-wrap', 'post-content');
-
-    postContentTextareaContainer.appendChild(postContentTextarea);
+    postContentElement.prepend(postContentTextarea);
 
     //add new footer
     var postFooter = postElement.querySelector('.post-footer');
-    postElement.insertBefore(postContentTextareaContainer, postFooter);
 
     postFooter.querySelector('.post-icon-holder').remove();
 
@@ -429,7 +480,27 @@ function makePostEditable(eventElement) {
     var postFooterButtonText = document.createTextNode('Save');
     postFooterButton.appendChild(postFooterButtonText);
 
-    postFooter.prepend(postFooterButton);
+    var uploadImageInput = document.createElement("input");
+    uploadImageInput.type = "file";
+    uploadImageInput.id = "upload-image";
+    uploadImageInput.name = "upload-image";
+    uploadImageInput.style = "display:none";
+    uploadImageInput.oninput = function() {updatePostImage(this)};
+
+    var uploadImageButton = document.createElement("button");
+    uploadImageButton.classList.add("btn", "btn-outline-primary", "btn-small", "btn-block");
+    uploadImageButton.onclick = function() {document.getElementById('upload-image').click()};
+    uploadImageButton.id = "upload-image-button";
+    uploadImageButton.type = "submit";
+    uploadImageButton.innerHTML = "Upload Image";
+
+    var footerButtonHolder = document.createElement("div");
+    footerButtonHolder.classList.add("footer-button-holder");
+    footerButtonHolder.appendChild(postFooterButton);
+    footerButtonHolder.appendChild(uploadImageInput);
+    footerButtonHolder.appendChild(uploadImageButton);
+
+    postFooter.prepend(footerButtonHolder);
 }
 
 function generateCommentElement(commentID, commentUser, content, is_editable, is_edited, timestamp) {
@@ -554,4 +625,47 @@ function updatePosts(post_list) {
     for (var i = 0; i < post_list.length; i++) {
         post_updatePost(post_list[i]);
     }
+
+function updatePostImage(eventElement) {
+    var postElement = eventElement.closest(".post");
+    var postID = postElement.id.substring(2);
+    var postContent = postElement.querySelector(".post-content");
+
+    if (!postContent.querySelector('.post-images-holder')) {
+        postImagesHolder = document.createElement("div");
+        postImagesHolder.classList.add('post-images-holder');
+        postContent.appendChild(postImagesHolder);
+    }
+    else {
+        postImagesHolder = postContent.querySelector('.post-images-holder');
+    }
+
+    while (postImagesHolder.firstChild) {
+        postImagesHolder.removeChild(postImagesHolder.firstChild);
+    }
+
+    files = eventElement.files;
+
+    for (var i = 0; i < files.length; i++) {
+        var imageContainer = document.createElement("div");
+        imageContainer.classList.add("post-image-container");
+        var image = document.createElement("img");
+
+        image.src = URL.createObjectURL(files[i]);
+
+        imageContainer.appendChild(image);
+        postImagesHolder.appendChild(imageContainer);
+
+        break;
+    }
+
+    // var formData = new FormData();
+    // formData.append('image', files[0]);
+
+    // // post_uploadImage(formData);
+
+    // console.log("=====");
+    // for (var i = 0; i < files.length; i++) {
+    //     console.log(URL.createObjectURL(files[i]));
+    // }
 }

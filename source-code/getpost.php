@@ -31,6 +31,20 @@ if(ISSET($_POST['userPost'])) {
             else {
                 $data['is_editable'] = false;
             }
+
+            $path = "../../images/post/".$data['postID']."/".$data['postID'].".*";
+
+            //die($path);
+        
+            $result = glob($path);
+            if (!empty($result)) {
+                $data['has_image'] = true;
+                $data['image_filename'] = pathinfo($result[0])['basename'];
+            }
+            else {
+                $data['has_image'] = false;
+                $data['image_filename'] = "";
+            }
         }
         exit(json_encode(array("success" => "true", "data" => $post_data)));
     }

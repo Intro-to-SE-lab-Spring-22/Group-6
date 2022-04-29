@@ -68,7 +68,7 @@ function createAccount($firstname, $lastname, $email, $username, $password)
 //edit comment
 
 //edit post
-function editPost($postID, $content, $sessionUser) {
+function editPost($postID, $content, $sessionUser, $has_image, $img, $tmp, $errorimg) {
 
     if (!accessDB_PostExists($postID)) {
         return array("success" => "false", "message" => "post_does_not_exist");
@@ -79,6 +79,25 @@ function editPost($postID, $content, $sessionUser) {
     }
 
     updatePost($postID, $content);
+
+    if ($has_image) {
+        $path = "../../images/post/";
+        if (!is_dir($path.$postID)) {
+            mkdir($path.$postID);
+        }
+        $path = $path.$postID."/";
+
+        array_map('unlink', glob($path.$postID.".*"));
+
+        $imageFileType = strtolower(pathinfo($img,PATHINFO_EXTENSION));
+
+        $path = $path.$postID.".".$imageFileType;
+    
+        if (!move_uploaded_file($tmp, $path)) {
+            return array("success" => "false");
+        }
+    }
+
     $post_data = accessDB_PostById($postID);
     $post_data['num_likes'] = accessDB_GetNumLikesById($postID);
     $post_data['is_liked'] = accessDB_PostIsLikedByUser($postID, $sessionUser);
@@ -87,6 +106,20 @@ function editPost($postID, $content, $sessionUser) {
     }
     else {
         $post_data['is_editable'] = false;
+    }
+
+    $path = "../../images/post/$postID/$postID.*";
+
+    //die($path);
+
+    $result = glob($path);
+    if (!empty($result)) {
+        $post_data['has_image'] = true;
+        $post_data['image_filename'] = pathinfo($result[0])['basename'];
+    }
+    else {
+        $post_data['has_image'] = false;
+        $post_data['image_filename'] = "";
     }
 
     //send data back
@@ -116,7 +149,21 @@ function getOnePost($postID, $sessionUsername) {
         $post_data['is_editable'] = false;
     }
 
-    return array("success" => "true", "data" => $post_data);
+    $path = "../../images/post/$postID/$postID.*";
+
+    //die($path);
+
+    $result = glob($path);
+    if (!empty($result)) {
+        $post_data['has_image'] = true;
+        $post_data['image_filename'] = pathinfo($result[0])['basename'];
+    }
+    else {
+        $post_data['has_image'] = false;
+        $post_data['image_filename'] = "";
+    }
+
+    return array("success" => "true", "data" => $post_data, "message" => $path);
 }
 
 //get many posts
@@ -232,6 +279,36 @@ function uploadFile($img, $tmp, $imgerror, $filename) {
     else {
         return array("success" => "false", "message" => $tmp);
     }
+}
+
+function uploadPostFile($img, $tmp, $imgerror, $sessionUser, $postID) {
+    if (!accessDB_PostExists($postID)) {
+        return array("success" => "false", "message" => "post_does_not_exist");
+    }
+    if (!accessDB_PostBelongsToUser($postID, $sessionUser)) {
+        return array("success" => "false", "message" => "access_error");
+    }
+
+    $path = "../../images/post/";
+    if (!is_dir($path.$postID)) {
+        mkdir($path.$postID);
+    }
+    $path = $path."/".$postID;
+
+    array_map('unlink', glob($path.$postID.".*"));
+
+    return array("success" => "true", "message" => "test");
+
+    // $imageFileType = strtolower(pathinfo($img,PATHINFO_EXTENSION));
+
+    // $path = $path.$filename.".".$imageFileType;
+
+    // if (move_uploaded_file($tmp, $path)) {
+    //     return array("success" => "true");
+    // }
+    // else {
+    //     return array("success" => "false", "message" => $tmp);
+    // }
 }
 
 function getUserProfilePicture($username) {

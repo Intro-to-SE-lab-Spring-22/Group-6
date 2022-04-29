@@ -20,7 +20,9 @@ function post_getOnePost(postID) {
                         -1,
                         json.data.is_editable,
                         (json.data.created_at != json.data.last_edited_at),
-                        json.data.last_edited_at)
+                        json.data.last_edited_at,
+                        json.data.has_image,
+                        json.data.image_filename)
                 );
             }
             else {
@@ -199,15 +201,27 @@ function post_editPost(eventElement) {
     var postID = postElement.id.substring(2);
     var content = postElement.querySelector('.post-content').querySelector('textarea').value;
 
-    $.post(
-        "php/controller.php",
-        {
-            function: "editPost",
-            postID: postID,
-            content: content
-        },
-        function(result) {
+    var formData = new FormData();
 
+    formData.append('function', 'editPost');
+    formData.append('postID', postID);
+    formData.append('content', content);
+
+    var files = document.getElementsByClassName('post')[0].querySelector('input').files;
+
+    if (files.length > 0) {
+        formData.append('image', files[0]);
+    }
+
+    $.ajax({
+        url: "php/controller.php",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        cache: false,
+        processData:false,
+        
+        success: function(result) {
             var json = JSON.parse(result);
 
             if (json.success == "true") {
@@ -224,7 +238,9 @@ function post_editPost(eventElement) {
                         -1,
                         json.data.is_editable,
                         (json.data.created_at != json.data.last_edited_at),
-                        json.data.last_edited_at),
+                        json.data.last_edited_at,
+                        json.data.has_image,
+                        json.data.image_filename),
                     postElement
                 );
                 postElement.remove()
@@ -234,27 +250,101 @@ function post_editPost(eventElement) {
             else {
                 console.log(result);
             }
-        }
-    );
+        }         
+    });
+
+    // $.post(
+    //     "php/controller.php",
+    //     {
+    //         function: "editPost",
+    //         postID: postID,
+    //         content: content
+    //     },
+    //     function(result) {
+
+    //         var json = JSON.parse(result);
+
+    //         if (json.success == "true") {
+    //             console.log(json.data);
+    //             console.log(json.data.created_at == json.data.last_edited_at);
+    //             postElement.id = "p.old";
+    //             main.insertBefore(
+    //                 generatePostElement(
+    //                     json.data.postID,
+    //                     json.data.user_id,
+    //                     json.data.content,
+    //                     json.data.num_likes,
+    //                     json.data.is_liked,
+    //                     -1,
+    //                     json.data.is_editable,
+    //                     (json.data.created_at != json.data.last_edited_at),
+    //                     json.data.last_edited_at,
+    //                     json.data.has_image,
+    //                     json.data.image_filename),
+    //                 postElement
+    //             );
+    //             postElement.remove()
+
+    //             // document.location = json.location;
+    //         }
+    //         else {
+    //             console.log(result);
+    //         }
+    //     }
+    // );
 }
 //send post to controller which sends to db
 function post_createPost() {
+
+    var formData = new FormData();
     var content = document.getElementsByClassName('post')[0].querySelector('textarea').value;
+    
+    formData.append('content', content);
 
-    $.post(
-        "create_post.php",
-        {
-            content: content
-        },
-        function(result) {
+    var files = document.getElementsByClassName('post')[0].querySelector('input').files;
 
+    if (files.length > 0) {
+        formData.append('image', files[0]);
+    }
+
+    for (var value of formData.values()) {
+        console.log(value);
+    }
+
+    // post_uploadPostImage(formData, postID);
+
+    $.ajax({
+        url: "create_post.php",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        cache: false,
+        processData:false,
+        
+        success: function(result) {
+            console.log(result);
             var json = JSON.parse(result);
 
             if (json.success == "true") {
                 document.location = json.location;
             }
-        }
-    );
+        }         
+    });
+
+    // $.post(
+    //     "create_post.php",
+    //     {
+    //         content: content
+    //     },
+    //     function(result) {
+
+    //         var json = JSON.parse(result);
+
+    //         if (json.success == "true") {
+    //             document.location = json.location;
+    //         }
+    //     }
+    // );
 }
 
 function post_addNewPostBox() {
@@ -302,6 +392,29 @@ function post_uploadImage(formData) {
     //var data = {formData: formData, function: "uploadFile"};
 
     formData.append('function', 'uploadProfilePicture');
+
+    $.ajax({
+        url: "php/controller.php",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        cache: false,
+        processData:false,
+        
+        success: function(data) {
+            console.log(data);
+        }         
+    });
+}
+
+function post_uploadPostImage(formData, postID) {
+
+    //var data = {formData: formData, function: "uploadFile"};
+
+    console.log(psotID);
+
+    formData.append('function', 'uploadPostImage');
+    formData.append('postID', postID);
 
     $.ajax({
         url: "php/controller.php",

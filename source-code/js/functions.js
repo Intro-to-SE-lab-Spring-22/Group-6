@@ -549,3 +549,9 @@ function updateImage(eventElement) {
 
     console.log(URL.createObjectURL(files[0]));
 }
+
+function updatePosts(post_list) {
+    for (var i = 0; i < post_list.length; i++) {
+        post_updatePost(post_list[i]);
+    }
+}

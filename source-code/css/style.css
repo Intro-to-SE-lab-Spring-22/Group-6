@@ -471,3 +471,30 @@ body::-webkit-scrollbar-thumb{
   background-color: white;
   color: #008cff;
 }
+
+.footer-button-holder {
+  display: flex;
+}
+
+.footer-button-holder button {
+  margin-right: 1em;
+}
+
+.post-images-holder {
+  display: flex;
+  justify-content: flex-start;
+  column-gap: 1em;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+.post-image-container {
+  margin-top: 1em;
+  max-height: 10em;
+  width: fit-content;
+}
+
+.post-image-container img {
+  max-height: 10em;
+  max-width: 100%;
+}

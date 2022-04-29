@@ -88,7 +88,9 @@ include("navbar.php");
                                 json.data[i].num_comments,
                                 json.data[i].is_editable,
                                 (json.data[i].created_at != json.data[i].last_edited_at),
-                                json.data[i].last_edited_at)
+                                json.data[i].last_edited_at,
+                                json.data[i].has_image,
+                                json.data[i].image_filename)
                         );
                     }
 

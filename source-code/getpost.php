@@ -19,64 +19,20 @@ if(ISSET($_POST['userPost'])) {
 
         $response = "";
 
-        foreach ($post_data as $data) {
-            $num_likes = getNumLikesById($data['postID']);
+        foreach ($post_data as &$data) {
+            $data['num_likes'] = getNumLikesById($data['postID']);
 
-            if (postIsLikedByUser($data['postID'], $username)) {
-                $like_class = " is-liked";
-            }
-            else {
-                $like_class = "";
-            }
-
-            $num_comments = getNumCommentsById($data['postID']);
+            $data['is_liked'] = postIsLikedByUser($data['postID'], $username);
+            $data['num_comments'] = getNumCommentsById($data['postID']);
 
             if ($data['user_id'] == $username) {
-                $edit_button = 
-                    '<div class="post-icon post-icon-edit">
-                        <a href="post.php?action=edit&id='.$data['postID'].'">
-                            <i class="fa-solid fa-pencil"></i>
-                        </a>         
-                    </div>';
+                $data['is_editable'] = true;
             }
             else {
-                $edit_button = "";
+                $data['is_editable'] = false;
             }
-
-            $response .='
-                
-                    <div class="post" id="p.'.$data['postID'].'" href="post.php?action=view&id='.$data['postID'].'">
-
-                        <a href="userpage.php?user='.$data['user_id'].'">
-                            <h2>'.$data['user_id'].'</h2>
-                        </a>
-                        <p>
-                        '.$data['content'].'
-                        </p>
-                        <div class="post-footer">
-                            <div class="post-icon-holder">
-                                <div class="post-icon post-icon-like'.$like_class.'">
-                                    <div onclick=likePost('.$data['postID'].')>
-                                        <i class="fa-solid fa-heart"></i>
-                                    </div>
-                                    <p>'.$num_likes.'</p>
-                                </div>
-                                <div class="post-icon post-icon-comment">
-                                    <a href="post.php?action=view&id='.$data['postID'].'">
-                                        <i class="fa-solid fa-comment"></i>
-                                    </a>      
-                                    <p>'.$num_comments.'</p>
-                                </div>'.$edit_button.'
-                            </div>
-                            <div class="post-date">'.$data['created_at'].'</div>
-                        </div>  
-
-                                    
-                    </div>
-                        
-            ';
         }
-        exit($response);
+        exit(json_encode(array("success" => "true", "data" => $post_data)));
     }
 
     else{

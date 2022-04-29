@@ -122,6 +122,10 @@ include("navbar.php");
                 }
             );
         }
+
+        setInterval(() => {
+            updatePosts(document.getElementsByClassName('post'));
+        }, 1000);
     </script>
 
 

@@ -30,6 +30,58 @@ function post_getOnePost(postID) {
     );
 }
 
+function post_updatePost(postElement) {
+    postID = postElement.id.substring(2);
+    // console.log(postID);
+    $.post(
+        "php/controller.php",
+        {
+            function: "getOnePost",
+            postID: postID,
+        },
+        function(result) {
+
+            var json = JSON.parse(result);
+
+            if (json.success == "true") {
+                postElement.querySelector('.post-content').innerHTML = json.data.content;
+                postElement.querySelector('.post-icon-like').querySelector('p').innerHTML = json.data.num_likes
+                postElement.querySelector('.post-icon-comment').querySelector('p').innerHTML = json.data.num_comments
+                if (json.data.is_liked == true) {
+                    if (!postElement.querySelector('.post-icon-like').classList.contains('is-liked')) {
+                        postElement.querySelector('.post-icon-like').classList.add('is-liked');
+                    }
+                }
+                else {
+                    if (postElement.querySelector('.post-icon-like').classList.contains('is-liked')) {
+                        postElement.querySelector('.post-icon-like').classList.remove('is-liked');
+                    }
+                }
+
+                if (json.data.created_at != json.data.last_edited_at) {
+                    var date_string = "Edited: "
+                }
+                else {
+                    var date_string = "Created: "
+                }
+            
+                var date = new Date(json.data.last_edited_at);
+            
+                var date_options = {year: 'numeric', month: 'short', day: 'numeric'};
+                var time_options = {hour: 'numeric', minute: '2-digit', second: '2-digit', hourCycle: 'h24'}
+            
+                date_string += date.toLocaleDateString("en-us", date_options) + " at ";
+                date_string += date.toLocaleTimeString("en-us", time_options);
+
+                postElement.querySelector('.post-date').innerHTML = date_string;
+            }
+            else {
+                console.log(json.message);
+            }
+        }
+    );
+}
+
 function post_getAllCommentsByPost(postID) {
     $.post(
         "php/controller.php",

@@ -1,7 +1,10 @@
 <?php
-
+include("../../source-code");
 class unitTest extends \Codeception\Test\Unit
 {
+    
+    
+
     private function _executeCreateAccount(array $parrams = array())
     {
         $_POST = $parrams;
@@ -9,22 +12,25 @@ class unitTest extends \Codeception\Test\Unit
         include 'register.php';
         return ob_get_clean();
     }
-    public function createAccount()
-    {
-        if(isset($_POST['submit_signup']))
-        {
-            unset($_POST['submit_signup']);
-        }
-        $username = "bobby23";
-        $post = array('firstName'=>"Bobby", 
-                        'lastName'=>'Jenkins',
-                        'email'=>"bobby@gmail.com", 
-                        'username'=>"bobby23", 
-                        'password'=>'password');
-        $this->_executeCreateAccount($post);
-        $this->assertTrue($_SESSION['username'], $username );
+    // public function testcreateAccount()
+    // {
+    //     require_once("source-code/php/credentials.php");
+    //     $firstname = "Bob";
+    //     $lastname = "Jenkins";
+    //     $email = "bob@gmail.com";
+    //     $username = "bobbyj";
+    //     $password = "password";
+
+    //     $response = createAccount($firstname,$lastname,$email,$username,$password);
+
+    //     // this-> asserttrue(response[0]);
 
 
 
-    }
+    // }
+    // public function getOnePost()
+    // {
+
+    // }
+
 }

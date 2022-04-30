@@ -42,8 +42,8 @@
 
     <div id="right" class="column">
         <form method="POST" action="search.php" class="topnav">
-            <input type="text" name="search" placeholder="Search"  id='search'>
-            <input type="submit" id="search" >
+            <input type="text" name="search" placeholder="Search"  id='searchtext'>
+            <input type="submit" id="searchsbumit" >
                 <span class="link-text">Search</span>
             </input>
         </form>

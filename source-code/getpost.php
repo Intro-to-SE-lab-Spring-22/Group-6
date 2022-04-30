@@ -4,6 +4,7 @@ session_start();
 require_once('sql_queries.php');
 
 if(ISSET($_POST['userPost'])) {
+    $response = "";
     if($_POST['userPost'] == 0){
 
         $start = $_POST['start'];
@@ -17,7 +18,7 @@ if(ISSET($_POST['userPost'])) {
 
         $post_data = getPostsByUserList($friendList, $start, $limit);
 
-        $response = "";
+        
 
         foreach ($post_data as &$data) {
             $data['num_likes'] = getNumLikesById($data['postID']);

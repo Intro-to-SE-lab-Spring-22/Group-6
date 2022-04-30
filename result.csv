@@ -1,0 +1,609 @@
+ ------ --------------------------------------------------------------------------------------------------- 
+  Line   Controller/register.php                                                                            
+ ------ --------------------------------------------------------------------------------------------------- 
+  5      Variable $db might not be defined.                                                                 
+  5      Variable $hn might not be defined.                                                                 
+  5      Variable $pw might not be defined.                                                                 
+  5      Variable $un might not be defined.                                                                 
+  21     Parameter #1 $mysql of function mysqli_query expects mysqli, mysqli|false given.                   
+  22     Parameter #1 $result of function mysqli_num_rows expects mysqli_result, bool|mysqli_result given.  
+  38     Parameter #1 $mysql of function mysqli_real_escape_string expects mysqli, mysqli|false given.      
+  38     Variable $firstname might not be defined.                                                          
+  39     Parameter #1 $mysql of function mysqli_real_escape_string expects mysqli, mysqli|false given.      
+  39     Variable $lastname might not be defined.                                                           
+  40     Parameter #1 $mysql of function mysqli_real_escape_string expects mysqli, mysqli|false given.      
+  41     Parameter #1 $mysql of function mysqli_real_escape_string expects mysqli, mysqli|false given.      
+  42     Parameter #1 $mysql of function mysqli_real_escape_string expects mysqli, mysqli|false given.      
+  58     Parameter #1 $mysql of function mysqli_query expects mysqli, mysqli|false given.                   
+  61     Parameter #1 $mysql of function mysqli_error expects mysqli, mysqli|false given.                   
+ ------ --------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------ 
+  Line   create_post.php                     
+ ------ ------------------------------------ 
+  11     Variable $db might not be defined.  
+  11     Variable $hn might not be defined.  
+  11     Variable $pw might not be defined.  
+  11     Variable $un might not be defined.  
+ ------ ------------------------------------ 
+
+ ------ -------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+  Line   credentials.php                                                                                                                                               
+ ------ -------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+  8      File ends with a trailing whitespace. This may cause problems when running the code in the web browser. Remove the closing ?> mark or remove the whitespace.  
+ ------ -------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+
+ ------ -------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+  Line   friend_request.php                                                                                                                                            
+ ------ -------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+  69     File ends with a trailing whitespace. This may cause problems when running the code in the web browser. Remove the closing ?> mark or remove the whitespace.  
+ ------ -------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------ 
+  Line   getpost.php                               
+ ------ ------------------------------------------ 
+  74     Variable $response might not be defined.  
+  102    Variable $response might not be defined.  
+ ------ ------------------------------------------ 
+
+ ------ ------------------------------------------------------- 
+  Line   like_post.php                                          
+ ------ ------------------------------------------------------- 
+  10     Variable $db might not be defined.                     
+  10     Variable $hn might not be defined.                     
+  10     Variable $pw might not be defined.                     
+  10     Variable $un might not be defined.                     
+  14     Unreachable statement - code above always terminates.  
+ ------ ------------------------------------------------------- 
+
+ ------ -------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+  Line   php/credentials.php                                                                                                                                           
+ ------ -------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+  8      File ends with a trailing whitespace. This may cause problems when running the code in the web browser. Remove the closing ?> mark or remove the whitespace.  
+  8      File ends with a trailing whitespace. This may cause problems when running the code in the web browser. Remove the closing ?> mark or remove the whitespace.  
+ ------ -------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------ 
+  Line   php/functions.php                                                                         
+ ------ ------------------------------------------------------------------------------------------ 
+  17     Function addComments() has no return type specified.                                      
+  17     Function addComments() has no return type specified.                                      
+  17     Function addComments() has parameter $content with no type specified.                     
+  17     Function addComments() has parameter $content with no type specified.                     
+  17     Function addComments() has parameter $postID with no type specified.                      
+  17     Function addComments() has parameter $postID with no type specified.                      
+  17     Function addComments() has parameter $user with no type specified.                        
+  17     Function addComments() has parameter $user with no type specified.                        
+  47     Function createAccount() has no return type specified.                                    
+  47     Function createAccount() has no return type specified.                                    
+  47     Function createAccount() has parameter $email with no type specified.                     
+  47     Function createAccount() has parameter $email with no type specified.                     
+  47     Function createAccount() has parameter $firstname with no type specified.                 
+  47     Function createAccount() has parameter $firstname with no type specified.                 
+  47     Function createAccount() has parameter $lastname with no type specified.                  
+  47     Function createAccount() has parameter $lastname with no type specified.                  
+  47     Function createAccount() has parameter $password with no type specified.                  
+  47     Function createAccount() has parameter $password with no type specified.                  
+  47     Function createAccount() has parameter $username with no type specified.                  
+  47     Function createAccount() has parameter $username with no type specified.                  
+  71     Function editPost() has no return type specified.                                         
+  71     Function editPost() has no return type specified.                                         
+  71     Function editPost() has parameter $content with no type specified.                        
+  71     Function editPost() has parameter $content with no type specified.                        
+  71     Function editPost() has parameter $postID with no type specified.                         
+  71     Function editPost() has parameter $postID with no type specified.                         
+  71     Function editPost() has parameter $sessionUser with no type specified.                    
+  71     Function editPost() has parameter $sessionUser with no type specified.                    
+  99     Function getOnePost() has no return type specified.                                       
+  99     Function getOnePost() has no return type specified.                                       
+  99     Function getOnePost() has parameter $postID with no type specified.                       
+  99     Function getOnePost() has parameter $postID with no type specified.                       
+  99     Function getOnePost() has parameter $sessionUsername with no type specified.              
+  99     Function getOnePost() has parameter $sessionUsername with no type specified.              
+  127    Function likePost() has no return type specified.                                         
+  127    Function likePost() has no return type specified.                                         
+  127    Function likePost() has parameter $postID with no type specified.                         
+  127    Function likePost() has parameter $postID with no type specified.                         
+  127    Function likePost() has parameter $sessionUsername with no type specified.                
+  127    Function likePost() has parameter $sessionUsername with no type specified.                
+  156    Function login() has no return type specified.                                            
+  156    Function login() has no return type specified.                                            
+  156    Function login() has parameter $password with no type specified.                          
+  156    Function login() has parameter $password with no type specified.                          
+  156    Function login() has parameter $username with no type specified.                          
+  156    Function login() has parameter $username with no type specified.                          
+  175    Function search() has no return type specified.                                           
+  175    Function search() has no return type specified.                                           
+  175    Function search() has parameter $searchq with no type specified.                          
+  175    Function search() has parameter $searchq with no type specified.                          
+  196    Function getAllPostComments() has no return type specified.                               
+  196    Function getAllPostComments() has no return type specified.                               
+  196    Function getAllPostComments() has parameter $postID with no type specified.               
+  196    Function getAllPostComments() has parameter $postID with no type specified.               
+  196    Function getAllPostComments() has parameter $sessionUsername with no type specified.      
+  196    Function getAllPostComments() has parameter $sessionUsername with no type specified.      
+  221    Function uploadFile() has no return type specified.                                       
+  221    Function uploadFile() has no return type specified.                                       
+  221    Function uploadFile() has parameter $filename with no type specified.                     
+  221    Function uploadFile() has parameter $filename with no type specified.                     
+  221    Function uploadFile() has parameter $img with no type specified.                          
+  221    Function uploadFile() has parameter $img with no type specified.                          
+  221    Function uploadFile() has parameter $imgerror with no type specified.                     
+  221    Function uploadFile() has parameter $imgerror with no type specified.                     
+  221    Function uploadFile() has parameter $tmp with no type specified.                          
+  221    Function uploadFile() has parameter $tmp with no type specified.                          
+  223    Parameter #2 $array of function array_map expects array, array<int, string>|false given.  
+  223    Parameter #2 $array of function array_map expects array, array<int, string>|false given.  
+  237    Function getUserProfilePicture() has no return type specified.                            
+  237    Function getUserProfilePicture() has no return type specified.                            
+  237    Function getUserProfilePicture() has parameter $username with no type specified.          
+  237    Function getUserProfilePicture() has parameter $username with no type specified.          
+ ------ ------------------------------------------------------------------------------------------ 
+
+ ------ ------------------------------------------------------------------------------------------- 
+  Line   php/sql_queries.php                                                                        
+ ------ ------------------------------------------------------------------------------------------- 
+  6      Variable $db might not be defined.                                                         
+  6      Variable $db might not be defined.                                                         
+  6      Variable $hn might not be defined.                                                         
+  6      Variable $hn might not be defined.                                                         
+  6      Variable $pw might not be defined.                                                         
+  6      Variable $pw might not be defined.                                                         
+  6      Variable $un might not be defined.                                                         
+  6      Variable $un might not be defined.                                                         
+  10     Function handleSQLError() has no return type specified.                                    
+  10     Function handleSQLError() has no return type specified.                                    
+  10     Function handleSQLError() has parameter $error_message with no type specified.             
+  10     Function handleSQLError() has parameter $error_message with no type specified.             
+  10     Function handleSQLError() has parameter $query with no type specified.                     
+  10     Function handleSQLError() has parameter $query with no type specified.                     
+  19     Function runSQLStatement() has no return type specified.                                   
+  19     Function runSQLStatement() has no return type specified.                                   
+  19     Function runSQLStatement() has parameter $parameters with no type specified.               
+  19     Function runSQLStatement() has parameter $parameters with no type specified.               
+  19     Function runSQLStatement() has parameter $query with no type specified.                    
+  19     Function runSQLStatement() has parameter $query with no type specified.                    
+  30     Variable $stmt might not be defined.                                                       
+  30     Variable $stmt might not be defined.                                                       
+  34     Function accessDB_InsertNewPost() has no return type specified.                            
+  34     Function accessDB_InsertNewPost() has no return type specified.                            
+  34     Function accessDB_InsertNewPost() has parameter $content with no type specified.           
+  34     Function accessDB_InsertNewPost() has parameter $content with no type specified.           
+  34     Function accessDB_InsertNewPost() has parameter $user with no type specified.              
+  34     Function accessDB_InsertNewPost() has parameter $user with no type specified.              
+  54     Function accessDB_UpdatePost() has no return type specified.                               
+  54     Function accessDB_UpdatePost() has no return type specified.                               
+  54     Function accessDB_UpdatePost() has parameter $content with no type specified.              
+  54     Function accessDB_UpdatePost() has parameter $content with no type specified.              
+  54     Function accessDB_UpdatePost() has parameter $postID with no type specified.               
+  54     Function accessDB_UpdatePost() has parameter $postID with no type specified.               
+  64     Function accessDB_PostById() has no return type specified.                                 
+  64     Function accessDB_PostById() has no return type specified.                                 
+  64     Function accessDB_PostById() has parameter $postID with no type specified.                 
+  64     Function accessDB_PostById() has parameter $postID with no type specified.                 
+  75     Function accessDB_GetNumLikesById() has parameter $postID with no type specified.          
+  75     Function accessDB_GetNumLikesById() has parameter $postID with no type specified.          
+  86     Function accessDB_GetNumCommentsById() has no return type specified.                       
+  86     Function accessDB_GetNumCommentsById() has no return type specified.                       
+  86     Function accessDB_GetNumCommentsById() has parameter $postID with no type specified.       
+  86     Function accessDB_GetNumCommentsById() has parameter $postID with no type specified.       
+  97     Function accessDB_PostIsLikedByUser() has no return type specified.                        
+  97     Function accessDB_PostIsLikedByUser() has no return type specified.                        
+  97     Function accessDB_PostIsLikedByUser() has parameter $postID with no type specified.        
+  97     Function accessDB_PostIsLikedByUser() has parameter $postID with no type specified.        
+  97     Function accessDB_PostIsLikedByUser() has parameter $user with no type specified.          
+  97     Function accessDB_PostIsLikedByUser() has parameter $user with no type specified.          
+  117    Function accessDB_RemoveLikeFromPost() has no return type specified.                       
+  117    Function accessDB_RemoveLikeFromPost() has no return type specified.                       
+  117    Function accessDB_RemoveLikeFromPost() has parameter $postID with no type specified.       
+  117    Function accessDB_RemoveLikeFromPost() has parameter $postID with no type specified.       
+  117    Function accessDB_RemoveLikeFromPost() has parameter $user with no type specified.         
+  117    Function accessDB_RemoveLikeFromPost() has parameter $user with no type specified.         
+  127    Function accessDB_AddLikeToPost() has no return type specified.                            
+  127    Function accessDB_AddLikeToPost() has no return type specified.                            
+  127    Function accessDB_AddLikeToPost() has parameter $postID with no type specified.            
+  127    Function accessDB_AddLikeToPost() has parameter $postID with no type specified.            
+  127    Function accessDB_AddLikeToPost() has parameter $user with no type specified.              
+  127    Function accessDB_AddLikeToPost() has parameter $user with no type specified.              
+  137    Function accessDB_PostExists() has no return type specified.                               
+  137    Function accessDB_PostExists() has no return type specified.                               
+  137    Function accessDB_PostExists() has parameter $postID with no type specified.               
+  137    Function accessDB_PostExists() has parameter $postID with no type specified.               
+  157    Function accessDB_AllCommentDataByPostId() has no return type specified.                   
+  157    Function accessDB_AllCommentDataByPostId() has no return type specified.                   
+  157    Function accessDB_AllCommentDataByPostId() has parameter $postID with no type specified.   
+  157    Function accessDB_AllCommentDataByPostId() has parameter $postID with no type specified.   
+  169    Function accessDB_PostBelongsToUser() has no return type specified.                        
+  169    Function accessDB_PostBelongsToUser() has no return type specified.                        
+  169    Function accessDB_PostBelongsToUser() has parameter $postID with no type specified.        
+  169    Function accessDB_PostBelongsToUser() has parameter $postID with no type specified.        
+  169    Function accessDB_PostBelongsToUser() has parameter $user with no type specified.          
+  169    Function accessDB_PostBelongsToUser() has parameter $user with no type specified.          
+  188    Function accessDB_AreFriends() has no return type specified.                               
+  188    Function accessDB_AreFriends() has no return type specified.                               
+  188    Function accessDB_AreFriends() has parameter $user1 with no type specified.                
+  188    Function accessDB_AreFriends() has parameter $user1 with no type specified.                
+  188    Function accessDB_AreFriends() has parameter $user2 with no type specified.                
+  188    Function accessDB_AreFriends() has parameter $user2 with no type specified.                
+  208    Function accessDB_RemoveFriends() has no return type specified.                            
+  208    Function accessDB_RemoveFriends() has no return type specified.                            
+  208    Function accessDB_RemoveFriends() has parameter $user1 with no type specified.             
+  208    Function accessDB_RemoveFriends() has parameter $user1 with no type specified.             
+  208    Function accessDB_RemoveFriends() has parameter $user2 with no type specified.             
+  208    Function accessDB_RemoveFriends() has parameter $user2 with no type specified.             
+  225    Function accessDB_AddFriends() has no return type specified.                               
+  225    Function accessDB_AddFriends() has no return type specified.                               
+  225    Function accessDB_AddFriends() has parameter $user1 with no type specified.                
+  225    Function accessDB_AddFriends() has parameter $user1 with no type specified.                
+  225    Function accessDB_AddFriends() has parameter $user2 with no type specified.                
+  225    Function accessDB_AddFriends() has parameter $user2 with no type specified.                
+  242    Function accessDB_FriendRequestPending() has no return type specified.                     
+  242    Function accessDB_FriendRequestPending() has no return type specified.                     
+  242    Function accessDB_FriendRequestPending() has parameter $user_from with no type specified.  
+  242    Function accessDB_FriendRequestPending() has parameter $user_from with no type specified.  
+  242    Function accessDB_FriendRequestPending() has parameter $user_to with no type specified.    
+  242    Function accessDB_FriendRequestPending() has parameter $user_to with no type specified.    
+  262    Function accessDB_AddFriendRequest() has no return type specified.                         
+  262    Function accessDB_AddFriendRequest() has no return type specified.                         
+  262    Function accessDB_AddFriendRequest() has parameter $user_from with no type specified.      
+  262    Function accessDB_AddFriendRequest() has parameter $user_from with no type specified.      
+  262    Function accessDB_AddFriendRequest() has parameter $user_to with no type specified.        
+  262    Function accessDB_AddFriendRequest() has parameter $user_to with no type specified.        
+  272    Function accessDB_RemoveFriendRequest() has no return type specified.                      
+  272    Function accessDB_RemoveFriendRequest() has no return type specified.                      
+  272    Function accessDB_RemoveFriendRequest() has parameter $user_from with no type specified.   
+  272    Function accessDB_RemoveFriendRequest() has parameter $user_from with no type specified.   
+  272    Function accessDB_RemoveFriendRequest() has parameter $user_to with no type specified.     
+  272    Function accessDB_RemoveFriendRequest() has parameter $user_to with no type specified.     
+  282    Function accessDB_GetUserDataById() has no return type specified.                          
+  282    Function accessDB_GetUserDataById() has no return type specified.                          
+  282    Function accessDB_GetUserDataById() has parameter $user with no type specified.            
+  282    Function accessDB_GetUserDataById() has parameter $user with no type specified.            
+  294    Function accessDB_InsertNewComment() has no return type specified.                         
+  294    Function accessDB_InsertNewComment() has no return type specified.                         
+  294    Function accessDB_InsertNewComment() has parameter $content with no type specified.        
+  294    Function accessDB_InsertNewComment() has parameter $content with no type specified.        
+  294    Function accessDB_InsertNewComment() has parameter $postID with no type specified.         
+  294    Function accessDB_InsertNewComment() has parameter $postID with no type specified.         
+  294    Function accessDB_InsertNewComment() has parameter $user with no type specified.           
+  294    Function accessDB_InsertNewComment() has parameter $user with no type specified.           
+  312    Function accessDB_GetCommentDataById() has no return type specified.                       
+  312    Function accessDB_GetCommentDataById() has no return type specified.                       
+  312    Function accessDB_GetCommentDataById() has parameter $commentID with no type specified.    
+  312    Function accessDB_GetCommentDataById() has parameter $commentID with no type specified.    
+  323    Function accessDB_CommentExists() has no return type specified.                            
+  323    Function accessDB_CommentExists() has no return type specified.                            
+  323    Function accessDB_CommentExists() has parameter $commentID with no type specified.         
+  323    Function accessDB_CommentExists() has parameter $commentID with no type specified.         
+  343    Function accessDB_UpdateComment() has no return type specified.                            
+  343    Function accessDB_UpdateComment() has no return type specified.                            
+  343    Function accessDB_UpdateComment() has parameter $commentID with no type specified.         
+  343    Function accessDB_UpdateComment() has parameter $commentID with no type specified.         
+  343    Function accessDB_UpdateComment() has parameter $content with no type specified.           
+  343    Function accessDB_UpdateComment() has parameter $content with no type specified.           
+  353    Function accessDB_SearchDatabase() has no return type specified.                           
+  353    Function accessDB_SearchDatabase() has no return type specified.                           
+  353    Function accessDB_SearchDatabase() has parameter $search_term with no type specified.      
+  353    Function accessDB_SearchDatabase() has parameter $search_term with no type specified.      
+  365    Function accessDB_GetUserFriends() has no return type specified.                           
+  365    Function accessDB_GetUserFriends() has no return type specified.                           
+  365    Function accessDB_GetUserFriends() has parameter $user with no type specified.             
+  365    Function accessDB_GetUserFriends() has parameter $user with no type specified.             
+  377    Function accessDB_GetPostsByUserList() has no return type specified.                       
+  377    Function accessDB_GetPostsByUserList() has no return type specified.                       
+  377    Function accessDB_GetPostsByUserList() has parameter $limit with no type specified.        
+  377    Function accessDB_GetPostsByUserList() has parameter $limit with no type specified.        
+  377    Function accessDB_GetPostsByUserList() has parameter $start with no type specified.        
+  377    Function accessDB_GetPostsByUserList() has parameter $start with no type specified.        
+  377    Function accessDB_GetPostsByUserList() has parameter $user_list with no type specified.    
+  377    Function accessDB_GetPostsByUserList() has parameter $user_list with no type specified.    
+  392    Function accessDB_GetPostsByUser() has no return type specified.                           
+  392    Function accessDB_GetPostsByUser() has no return type specified.                           
+  392    Function accessDB_GetPostsByUser() has parameter $limit with no type specified.            
+  392    Function accessDB_GetPostsByUser() has parameter $limit with no type specified.            
+  392    Function accessDB_GetPostsByUser() has parameter $start with no type specified.            
+  392    Function accessDB_GetPostsByUser() has parameter $start with no type specified.            
+  392    Function accessDB_GetPostsByUser() has parameter $user with no type specified.             
+  392    Function accessDB_GetPostsByUser() has parameter $user with no type specified.             
+  406    Function accessDB_CheckValidUsername() has no return type specified.                       
+  406    Function accessDB_CheckValidUsername() has no return type specified.                       
+  406    Function accessDB_CheckValidUsername() has parameter $email with no type specified.        
+  406    Function accessDB_CheckValidUsername() has parameter $email with no type specified.        
+  406    Function accessDB_CheckValidUsername() has parameter $username with no type specified.     
+  406    Function accessDB_CheckValidUsername() has parameter $username with no type specified.     
+  425    Function accessDB_CreateNewUser() has no return type specified.                            
+  425    Function accessDB_CreateNewUser() has no return type specified.                            
+  425    Function accessDB_CreateNewUser() has parameter $email with no type specified.             
+  425    Function accessDB_CreateNewUser() has parameter $email with no type specified.             
+  425    Function accessDB_CreateNewUser() has parameter $firstname with no type specified.         
+  425    Function accessDB_CreateNewUser() has parameter $firstname with no type specified.         
+  425    Function accessDB_CreateNewUser() has parameter $fullname with no type specified.          
+  425    Function accessDB_CreateNewUser() has parameter $fullname with no type specified.          
+  425    Function accessDB_CreateNewUser() has parameter $lastname with no type specified.          
+  425    Function accessDB_CreateNewUser() has parameter $lastname with no type specified.          
+  425    Function accessDB_CreateNewUser() has parameter $password with no type specified.          
+  425    Function accessDB_CreateNewUser() has parameter $password with no type specified.          
+  425    Function accessDB_CreateNewUser() has parameter $username with no type specified.          
+  425    Function accessDB_CreateNewUser() has parameter $username with no type specified.          
+  439    Function insertNewPost() has parameter $content with no type specified.                    
+  439    Function insertNewPost() has parameter $content with no type specified.                    
+  439    Function insertNewPost() has parameter $user with no type specified.                       
+  439    Function insertNewPost() has parameter $user with no type specified.                       
+  446    Function updatePost() has no return type specified.                                        
+  446    Function updatePost() has no return type specified.                                        
+  446    Function updatePost() has parameter $content with no type specified.                       
+  446    Function updatePost() has parameter $content with no type specified.                       
+  446    Function updatePost() has parameter $postID with no type specified.                        
+  446    Function updatePost() has parameter $postID with no type specified.                        
+  451    Function getPostDataById() has no return type specified.                                   
+  451    Function getPostDataById() has no return type specified.                                   
+  451    Function getPostDataById() has parameter $postID with no type specified.                   
+  451    Function getPostDataById() has parameter $postID with no type specified.                   
+  451    Function getPostDataById() has parameter $user with no type specified.                     
+  451    Function getPostDataById() has parameter $user with no type specified.                     
+  461    Function getPostsByUser() has no return type specified.                                    
+  461    Function getPostsByUser() has no return type specified.                                    
+  461    Function getPostsByUser() has parameter $limit with no type specified.                     
+  461    Function getPostsByUser() has parameter $limit with no type specified.                     
+  461    Function getPostsByUser() has parameter $start with no type specified.                     
+  461    Function getPostsByUser() has parameter $start with no type specified.                     
+  461    Function getPostsByUser() has parameter $user with no type specified.                      
+  461    Function getPostsByUser() has parameter $user with no type specified.                      
+  468    Function postIsLikedByUser() has parameter $postID with no type specified.                 
+  468    Function postIsLikedByUser() has parameter $postID with no type specified.                 
+  468    Function postIsLikedByUser() has parameter $user with no type specified.                   
+  468    Function postIsLikedByUser() has parameter $user with no type specified.                   
+  475    Function removeLikeFromPost() has no return type specified.                                
+  475    Function removeLikeFromPost() has no return type specified.                                
+  475    Function removeLikeFromPost() has parameter $postID with no type specified.                
+  475    Function removeLikeFromPost() has parameter $postID with no type specified.                
+  475    Function removeLikeFromPost() has parameter $user with no type specified.                  
+  475    Function removeLikeFromPost() has parameter $user with no type specified.                  
+  480    Function addLikeToPost() has no return type specified.                                     
+  480    Function addLikeToPost() has no return type specified.                                     
+  480    Function addLikeToPost() has parameter $postID with no type specified.                     
+  480    Function addLikeToPost() has parameter $postID with no type specified.                     
+  480    Function addLikeToPost() has parameter $user with no type specified.                       
+  480    Function addLikeToPost() has parameter $user with no type specified.                       
+  485    Function getNumLikesById() has parameter $postID with no type specified.                   
+  485    Function getNumLikesById() has parameter $postID with no type specified.                   
+  492    Function getNumCommentsById() has parameter $postID with no type specified.                
+  492    Function getNumCommentsById() has parameter $postID with no type specified.                
+  499    Function getAllCommentDataByPostId() has no return type specified.                         
+  499    Function getAllCommentDataByPostId() has no return type specified.                         
+  499    Function getAllCommentDataByPostId() has parameter $postID with no type specified.         
+  499    Function getAllCommentDataByPostId() has parameter $postID with no type specified.         
+  506    Function postExists() has parameter $postID with no type specified.                        
+  506    Function postExists() has parameter $postID with no type specified.                        
+  512    Function postBelongsToUser() has parameter $postID with no type specified.                 
+  512    Function postBelongsToUser() has parameter $postID with no type specified.                 
+  512    Function postBelongsToUser() has parameter $user with no type specified.                   
+  512    Function postBelongsToUser() has parameter $user with no type specified.                   
+  519    Function areFriends() has parameter $user1 with no type specified.                         
+  519    Function areFriends() has parameter $user1 with no type specified.                         
+  519    Function areFriends() has parameter $user2 with no type specified.                         
+  519    Function areFriends() has parameter $user2 with no type specified.                         
+  526    Function removeFriends() has no return type specified.                                     
+  526    Function removeFriends() has no return type specified.                                     
+  526    Function removeFriends() has parameter $user1 with no type specified.                      
+  526    Function removeFriends() has parameter $user1 with no type specified.                      
+  526    Function removeFriends() has parameter $user2 with no type specified.                      
+  526    Function removeFriends() has parameter $user2 with no type specified.                      
+  531    Function addFriends() has no return type specified.                                        
+  531    Function addFriends() has no return type specified.                                        
+  531    Function addFriends() has parameter $user1 with no type specified.                         
+  531    Function addFriends() has parameter $user1 with no type specified.                         
+  531    Function addFriends() has parameter $user2 with no type specified.                         
+  531    Function addFriends() has parameter $user2 with no type specified.                         
+  536    Function friendRequestPending() has parameter $user_from with no type specified.           
+  536    Function friendRequestPending() has parameter $user_from with no type specified.           
+  536    Function friendRequestPending() has parameter $user_to with no type specified.             
+  536    Function friendRequestPending() has parameter $user_to with no type specified.             
+  543    Function addFriendRequest() has no return type specified.                                  
+  543    Function addFriendRequest() has no return type specified.                                  
+  543    Function addFriendRequest() has parameter $user_from with no type specified.               
+  543    Function addFriendRequest() has parameter $user_from with no type specified.               
+  543    Function addFriendRequest() has parameter $user_to with no type specified.                 
+  543    Function addFriendRequest() has parameter $user_to with no type specified.                 
+  548    Function removeFriendRequest() has no return type specified.                               
+  548    Function removeFriendRequest() has no return type specified.                               
+  548    Function removeFriendRequest() has parameter $user_from with no type specified.            
+  548    Function removeFriendRequest() has parameter $user_from with no type specified.            
+  548    Function removeFriendRequest() has parameter $user_to with no type specified.              
+  548    Function removeFriendRequest() has parameter $user_to with no type specified.              
+  553    Function getUserDataById() has no return type specified.                                   
+  553    Function getUserDataById() has no return type specified.                                   
+  553    Function getUserDataById() has parameter $user with no type specified.                     
+  553    Function getUserDataById() has parameter $user with no type specified.                     
+  560    Function insertNewComment() has parameter $content with no type specified.                 
+  560    Function insertNewComment() has parameter $content with no type specified.                 
+  560    Function insertNewComment() has parameter $postID with no type specified.                  
+  560    Function insertNewComment() has parameter $postID with no type specified.                  
+  560    Function insertNewComment() has parameter $user with no type specified.                    
+  560    Function insertNewComment() has parameter $user with no type specified.                    
+  567    Function getCommentDataById() has no return type specified.                                
+  567    Function getCommentDataById() has no return type specified.                                
+  567    Function getCommentDataById() has parameter $commentID with no type specified.             
+  567    Function getCommentDataById() has parameter $commentID with no type specified.             
+  574    Function commentExists() has parameter $commentID with no type specified.                  
+  574    Function commentExists() has parameter $commentID with no type specified.                  
+  581    Function updateComment() has no return type specified.                                     
+  581    Function updateComment() has no return type specified.                                     
+  581    Function updateComment() has parameter $commentID with no type specified.                  
+  581    Function updateComment() has parameter $commentID with no type specified.                  
+  581    Function updateComment() has parameter $content with no type specified.                    
+  581    Function updateComment() has parameter $content with no type specified.                    
+  586    Function searchDatabase() has no return type specified.                                    
+  586    Function searchDatabase() has no return type specified.                                    
+  586    Function searchDatabase() has parameter $search_term with no type specified.               
+  586    Function searchDatabase() has parameter $search_term with no type specified.               
+  593    Function getUserFriends() has no return type specified.                                    
+  593    Function getUserFriends() has no return type specified.                                    
+  593    Function getUserFriends() has parameter $user with no type specified.                      
+  593    Function getUserFriends() has parameter $user with no type specified.                      
+  600    Function getPostsByUserList() has no return type specified.                                
+  600    Function getPostsByUserList() has no return type specified.                                
+  600    Function getPostsByUserList() has parameter $limit with no type specified.                 
+  600    Function getPostsByUserList() has parameter $limit with no type specified.                 
+  600    Function getPostsByUserList() has parameter $start with no type specified.                 
+  600    Function getPostsByUserList() has parameter $start with no type specified.                 
+  600    Function getPostsByUserList() has parameter $user_list with no type specified.             
+  600    Function getPostsByUserList() has parameter $user_list with no type specified.             
+ ------ ------------------------------------------------------------------------------------------- 
+
+ ------ ---------------------------------------- 
+  Line   post.php                                
+ ------ ---------------------------------------- 
+  22     Variable $onload might not be defined.  
+ ------ ---------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------- 
+  Line   sql_queries.php                                                                            
+ ------ ------------------------------------------------------------------------------------------- 
+  6      Variable $db might not be defined.                                                         
+  6      Variable $hn might not be defined.                                                         
+  6      Variable $pw might not be defined.                                                         
+  6      Variable $un might not be defined.                                                         
+  10     Function handleSQLError() has no return type specified.                                    
+  10     Function handleSQLError() has parameter $error_message with no type specified.             
+  10     Function handleSQLError() has parameter $query with no type specified.                     
+  19     Function runSQLStatement() has no return type specified.                                   
+  19     Function runSQLStatement() has parameter $parameters with no type specified.               
+  19     Function runSQLStatement() has parameter $query with no type specified.                    
+  30     Variable $stmt might not be defined.                                                       
+  34     Function accessDB_InsertNewPost() has no return type specified.                            
+  34     Function accessDB_InsertNewPost() has parameter $content with no type specified.           
+  34     Function accessDB_InsertNewPost() has parameter $user with no type specified.              
+  53     Function accessDB_UpdatePost() has no return type specified.                               
+  53     Function accessDB_UpdatePost() has parameter $content with no type specified.              
+  53     Function accessDB_UpdatePost() has parameter $postID with no type specified.               
+  63     Function accessDB_PostById() has no return type specified.                                 
+  63     Function accessDB_PostById() has parameter $postID with no type specified.                 
+  74     Function accessDB_GetNumLikesById() has parameter $postID with no type specified.          
+  85     Function accessDB_GetNumCommentsById() has no return type specified.                       
+  85     Function accessDB_GetNumCommentsById() has parameter $postID with no type specified.       
+  96     Function accessDB_PostIsLikedByUser() has no return type specified.                        
+  96     Function accessDB_PostIsLikedByUser() has parameter $postID with no type specified.        
+  96     Function accessDB_PostIsLikedByUser() has parameter $user with no type specified.          
+  116    Function accessDB_RemoveLikeFromPost() has no return type specified.                       
+  116    Function accessDB_RemoveLikeFromPost() has parameter $postID with no type specified.       
+  116    Function accessDB_RemoveLikeFromPost() has parameter $user with no type specified.         
+  126    Function accessDB_AddLikeToPost() has no return type specified.                            
+  126    Function accessDB_AddLikeToPost() has parameter $postID with no type specified.            
+  126    Function accessDB_AddLikeToPost() has parameter $user with no type specified.              
+  136    Function accessDB_PostExists() has no return type specified.                               
+  136    Function accessDB_PostExists() has parameter $postID with no type specified.               
+  156    Function accessDB_AllCommentDataByPostId() has no return type specified.                   
+  156    Function accessDB_AllCommentDataByPostId() has parameter $postID with no type specified.   
+  168    Function accessDB_PostBelongsToUser() has no return type specified.                        
+  168    Function accessDB_PostBelongsToUser() has parameter $postID with no type specified.        
+  168    Function accessDB_PostBelongsToUser() has parameter $user with no type specified.          
+  187    Function accessDB_AreFriends() has no return type specified.                               
+  187    Function accessDB_AreFriends() has parameter $user1 with no type specified.                
+  187    Function accessDB_AreFriends() has parameter $user2 with no type specified.                
+  207    Function accessDB_RemoveFriends() has no return type specified.                            
+  207    Function accessDB_RemoveFriends() has parameter $user1 with no type specified.             
+  207    Function accessDB_RemoveFriends() has parameter $user2 with no type specified.             
+  224    Function accessDB_AddFriends() has no return type specified.                               
+  224    Function accessDB_AddFriends() has parameter $user1 with no type specified.                
+  224    Function accessDB_AddFriends() has parameter $user2 with no type specified.                
+  241    Function accessDB_FriendRequestPending() has no return type specified.                     
+  241    Function accessDB_FriendRequestPending() has parameter $user_from with no type specified.  
+  241    Function accessDB_FriendRequestPending() has parameter $user_to with no type specified.    
+  261    Function accessDB_AddFriendRequest() has no return type specified.                         
+  261    Function accessDB_AddFriendRequest() has parameter $user_from with no type specified.      
+  261    Function accessDB_AddFriendRequest() has parameter $user_to with no type specified.        
+  271    Function accessDB_RemoveFriendRequest() has no return type specified.                      
+  271    Function accessDB_RemoveFriendRequest() has parameter $user_from with no type specified.   
+  271    Function accessDB_RemoveFriendRequest() has parameter $user_to with no type specified.     
+  281    Function accessDB_GetUserDataById() has no return type specified.                          
+  281    Function accessDB_GetUserDataById() has parameter $user with no type specified.            
+  293    Function accessDB_InsertNewComment() has no return type specified.                         
+  293    Function accessDB_InsertNewComment() has parameter $content with no type specified.        
+  293    Function accessDB_InsertNewComment() has parameter $postID with no type specified.         
+  293    Function accessDB_InsertNewComment() has parameter $user with no type specified.           
+  311    Function accessDB_GetCommentDataById() has no return type specified.                       
+  311    Function accessDB_GetCommentDataById() has parameter $commentID with no type specified.    
+  322    Function accessDB_CommentExists() has no return type specified.                            
+  322    Function accessDB_CommentExists() has parameter $commentID with no type specified.         
+  342    Function accessDB_UpdateComment() has no return type specified.                            
+  342    Function accessDB_UpdateComment() has parameter $commentID with no type specified.         
+  342    Function accessDB_UpdateComment() has parameter $content with no type specified.           
+  352    Function accessDB_SearchDatabase() has no return type specified.                           
+  352    Function accessDB_SearchDatabase() has parameter $search_term with no type specified.      
+  364    Function accessDB_GetUserFriends() has no return type specified.                           
+  364    Function accessDB_GetUserFriends() has parameter $user with no type specified.             
+  376    Function accessDB_GetPostsByUserList() has no return type specified.                       
+  376    Function accessDB_GetPostsByUserList() has parameter $limit with no type specified.        
+  376    Function accessDB_GetPostsByUserList() has parameter $start with no type specified.        
+  376    Function accessDB_GetPostsByUserList() has parameter $user_list with no type specified.    
+  391    Function accessDB_GetPostsByUser() has no return type specified.                           
+  391    Function accessDB_GetPostsByUser() has parameter $limit with no type specified.            
+  391    Function accessDB_GetPostsByUser() has parameter $start with no type specified.            
+  391    Function accessDB_GetPostsByUser() has parameter $user with no type specified.             
+  405    Function insertNewPost() has parameter $content with no type specified.                    
+  405    Function insertNewPost() has parameter $user with no type specified.                       
+  412    Function updatePost() has no return type specified.                                        
+  412    Function updatePost() has parameter $content with no type specified.                       
+  412    Function updatePost() has parameter $postID with no type specified.                        
+  417    Function getPostDataById() has no return type specified.                                   
+  417    Function getPostDataById() has parameter $postID with no type specified.                   
+  417    Function getPostDataById() has parameter $user with no type specified.                     
+  427    Function getPostsByUser() has no return type specified.                                    
+  427    Function getPostsByUser() has parameter $limit with no type specified.                     
+  427    Function getPostsByUser() has parameter $start with no type specified.                     
+  427    Function getPostsByUser() has parameter $user with no type specified.                      
+  434    Function postIsLikedByUser() has parameter $postID with no type specified.                 
+  434    Function postIsLikedByUser() has parameter $user with no type specified.                   
+  441    Function removeLikeFromPost() has no return type specified.                                
+  441    Function removeLikeFromPost() has parameter $postID with no type specified.                
+  441    Function removeLikeFromPost() has parameter $user with no type specified.                  
+  446    Function addLikeToPost() has no return type specified.                                     
+  446    Function addLikeToPost() has parameter $postID with no type specified.                     
+  446    Function addLikeToPost() has parameter $user with no type specified.                       
+  451    Function getNumLikesById() has parameter $postID with no type specified.                   
+  458    Function getNumCommentsById() has parameter $postID with no type specified.                
+  465    Function getAllCommentDataByPostId() has no return type specified.                         
+  465    Function getAllCommentDataByPostId() has parameter $postID with no type specified.         
+  472    Function postExists() has parameter $postID with no type specified.                        
+  478    Function postBelongsToUser() has parameter $postID with no type specified.                 
+  478    Function postBelongsToUser() has parameter $user with no type specified.                   
+  485    Function areFriends() has parameter $user1 with no type specified.                         
+  485    Function areFriends() has parameter $user2 with no type specified.                         
+  492    Function removeFriends() has no return type specified.                                     
+  492    Function removeFriends() has parameter $user1 with no type specified.                      
+  492    Function removeFriends() has parameter $user2 with no type specified.                      
+  497    Function addFriends() has no return type specified.                                        
+  497    Function addFriends() has parameter $user1 with no type specified.                         
+  497    Function addFriends() has parameter $user2 with no type specified.                         
+  502    Function friendRequestPending() has parameter $user_from with no type specified.           
+  502    Function friendRequestPending() has parameter $user_to with no type specified.             
+  509    Function addFriendRequest() has no return type specified.                                  
+  509    Function addFriendRequest() has parameter $user_from with no type specified.               
+  509    Function addFriendRequest() has parameter $user_to with no type specified.                 
+  514    Function removeFriendRequest() has no return type specified.                               
+  514    Function removeFriendRequest() has parameter $user_from with no type specified.            
+  514    Function removeFriendRequest() has parameter $user_to with no type specified.              
+  519    Function getUserDataById() has no return type specified.                                   
+  519    Function getUserDataById() has parameter $user with no type specified.                     
+  526    Function insertNewComment() has parameter $content with no type specified.                 
+  526    Function insertNewComment() has parameter $postID with no type specified.                  
+  526    Function insertNewComment() has parameter $user with no type specified.                    
+  533    Function getCommentDataById() has no return type specified.                                
+  533    Function getCommentDataById() has parameter $commentID with no type specified.             
+  540    Function commentExists() has parameter $commentID with no type specified.                  
+  547    Function updateComment() has no return type specified.                                     
+  547    Function updateComment() has parameter $commentID with no type specified.                  
+  547    Function updateComment() has parameter $content with no type specified.                    
+  552    Function searchDatabase() has no return type specified.                                    
+  552    Function searchDatabase() has parameter $search_term with no type specified.               
+  559    Function getUserFriends() has no return type specified.                                    
+  559    Function getUserFriends() has parameter $user with no type specified.                      
+  566    Function getPostsByUserList() has no return type specified.                                
+  566    Function getPostsByUserList() has parameter $limit with no type specified.                 
+  566    Function getPostsByUserList() has parameter $start with no type specified.                 
+  566    Function getPostsByUserList() has parameter $user_list with no type specified.             
+ ------ ------------------------------------------------------------------------------------------- 
+
+ [ERROR] Found 552 errors                                                                                               
+

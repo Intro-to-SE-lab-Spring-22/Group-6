@@ -19,7 +19,7 @@ require_once("verify_user.php");
 
 </head>
 
-<body <?=$onload?>>
+<body <?=$onload?> >
     <?php include ("navbar.php"); ?>
     <main>
     </main>

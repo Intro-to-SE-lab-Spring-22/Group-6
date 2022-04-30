@@ -34,6 +34,7 @@ function generatePostElement(postID, postUser, content, num_likes, is_liked, num
 
     // <img src="images/profile/default.png />"
     var headerImage = document.createElement("img");
+    headerImage.setAttribute("id", "profilePicture");
     headerImage.src = "../images/profile/default.png";
 
     post_setUserProfilePicture(postUser, headerImage);
@@ -75,6 +76,8 @@ function generatePostElement(postID, postUser, content, num_likes, is_liked, num
 
     //<div onclick=likePost(this)>
     var likeIconElement = document.createElement("div");
+    likeIconElement.setAttribute("id", "likeButton");
+    //I NEED THIS DIV ELEMENT TO HAVE AN ID HOW DO I ADD IT? 
     likeIconElement.onclick = function() {post_likePost(this)};
 
     // <i class="fa-solid fa-heart"></i>
@@ -94,6 +97,7 @@ function generatePostElement(postID, postUser, content, num_likes, is_liked, num
     // <div class="post-icon post-icon-comment">
     var commentIconHolderElement = document.createElement("div");
     commentIconHolderElement.classList.add("post-icon", "post-icon-comment");
+    
 
     // <div onclick="scrollToAddComment()">
     var commentIconElement = document.createElement("div");
@@ -122,10 +126,11 @@ function generatePostElement(postID, postUser, content, num_likes, is_liked, num
         var editIconHolderElement = document.createElement("div");
         editIconHolderElement.classList.add("post-icon", "post-icon-edit");
 
+
         // <a href="post.php?action=edit&id=25">
         var editIconElement = document.createElement("div");
         editIconElement.onclick = function() {makePostEditable(this)};
-
+        editIconElement.setAttribute("id", "editPost");
         // <i class="fa-solid fa-pencil"></i>
         var editIconDisplayElement = document.createElement("i")
         editIconDisplayElement.classList.add("fa-solid", "fa-pencil");

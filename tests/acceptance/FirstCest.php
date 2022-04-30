@@ -49,8 +49,10 @@ class FirstCest
     public function userCanSearchForUser(AcceptanceTester $I)
     {
         $this->userCanLogIn($I);
-        $I->fillField('#searchbar', 'hailey');
-        $I->click('#search');
+        $I->click(['id'=>'searchsbumit']);
+        $I->fillField('#searchtext', 'hailey');
+        $I->click(['id'=>'searchsbumit']);
+        $I->wait(1);
         $I->see('Results');
         $I->see('hailey');
     }
@@ -59,7 +61,7 @@ class FirstCest
         $this->userCanLogIn($I);
         $I->click('Compose');
         $I->wait(1);
-        $I->fillField('comment_content', "This is a test post and I am testing the post functionality");
+        $I->fillField('post_content', "This is a test post and I am testing the post functionality");
         $I->click('#submit_post');
         $I->wait(1);
         $I->see("Created:");
@@ -67,7 +69,8 @@ class FirstCest
     public function userCanLikePost(AcceptanceTester $I)
     {
         $this->userCanLogIn($I);
-        $I->click('//*[@id="p.22"]/div/div[1]/div[1]');
+        $I->click("#likeButton");
+        
     }
     public function userCanLogOut(AcceptanceTester $I)
     {
@@ -75,6 +78,28 @@ class FirstCest
         $I->click('Log Out');
         $I->see('Log In');
     }
+    public function userCanSeePhotos(AcceptanceTester $I)
+    {
+        $this->userCanLogIn($I);
+        $I->seeElement("#profilePicture");
+    }
+    public function userCanChangeProfilePhoto(AcceptanceTester $I)
+    {
+        $this->userCanLogIn($I);
+        $I->click("Profile");
+        $I->click(["class" => "file-upload-button"]);
+    }
+    public function userCanEditPost(AcceptanceTester $I)
+    {
+        $this->userCanLogIn($I);
+        $I->click(["id"=>"editPost"]);
+        $I->fillField('post_content', "This is a test post for editing");
+        $I->click("Save");
+        $I->click("Home");
+        $I->see("This is a test post for editing");
+    }
+
+    
     public function _before(AcceptanceTester $I)
     {
     }
